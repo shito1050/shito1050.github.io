@@ -60,35 +60,89 @@
       margin-top: 0;
     }
 
+    .menu-button {
+      display: none;
+    }
+
+    .overlay {
+      display: none;
+    }
+
     @media (max-width: 700px) {
       .container {
         display: block;
         min-height: auto;
       }
 
+      .menu-button {
+        display: block;
+        position: fixed;
+        top: 12px;
+        left: 12px;
+        z-index: 1001;
+        width: 48px;
+        height: 48px;
+        border: none;
+        border-radius: 12px;
+        background-color: #ffd9ec;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+        cursor: pointer;
+        padding: 0;
+      }
+
+      .menu-button span {
+        display: block;
+        width: 24px;
+        height: 3px;
+        background-color: #cc3366;
+        margin: 5px auto;
+        border-radius: 2px;
+      }
+
       .sidebar {
-        width: auto;
-        padding: 16px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 240px;
+        height: 100vh;
+        z-index: 1002;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        box-shadow: 4px 0 12px rgba(0, 0, 0, 0.18);
       }
 
-      .sidebar h2 {
-        font-size: 20px;
-        margin-bottom: 12px;
+      .sidebar.open {
+        transform: translateX(0);
       }
 
-      .sidebar a {
-        margin: 8px 0;
+      .overlay {
+        position: fixed;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.35);
+        z-index: 1000;
+      }
+
+      .overlay.show {
+        display: block;
       }
 
       .main-content {
-        padding: 20px 16px;
+        padding: 72px 16px 24px 16px;
       }
     }
   </style>
 </head>
 <body>
+  <button class="menu-button" id="menuButton" aria-label="メニューを開く">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <div class="overlay" id="overlay"></div>
+
   <div class="container">
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
       <h2>メニュー</h2>
       <a href="materials.html">教材</a>
       <a href="article-test.html">ブログ</a>
@@ -100,5 +154,21 @@
       <p>メニューから，教材やブログに進めます．</p>
     </div>
   </div>
+
+  <script>
+    const menuButton = document.getElementById('menuButton');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+
+    menuButton.addEventListener('click', function() {
+      sidebar.classList.add('open');
+      overlay.classList.add('show');
+    });
+
+    overlay.addEventListener('click', function() {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('show');
+    });
+  </script>
 </body>
 </html>
