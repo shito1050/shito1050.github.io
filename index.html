@@ -11,6 +11,12 @@
       padding: 0 16px;
       font-family: sans-serif;
       line-height: 1.8;
+      opacity: 1;
+      transition: opacity 0.4s;
+    }
+
+    body.fade-out {
+      opacity: 0;
     }
 
     .menu-link {
@@ -21,16 +27,6 @@
       color: #333;
       text-decoration: none;
       border-radius: 12px;
-      transition: transform 0.2s, background-color 0.2s;
-    }
-
-    .menu-link:hover {
-      transform: translateY(-3px);
-      background-color: #ffb9db;
-    }
-
-    .menu-link:active {
-      transform: scale(0.95);
     }
   </style>
 </head>
@@ -39,5 +35,22 @@
 
   <p><a class="menu-link" href="materials.html">教材</a></p>
   <p><a class="menu-link" href="article-test.html">記事テスト</a></p>
+
+  <script>
+    const links = document.querySelectorAll('.menu-link');
+
+    links.forEach(link => {
+      link.addEventListener('click', function(event) {
+        event.preventDefault();
+        const url = this.href;
+
+        document.body.classList.add('fade-out');
+
+        setTimeout(() => {
+          window.location.href = url;
+        }, 400);
+      });
+    });
+  </script>
 </body>
 </html>
