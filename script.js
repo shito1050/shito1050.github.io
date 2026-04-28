@@ -71,3 +71,18 @@ if (dailyProblemArea) {
     MathJax.typesetPromise();
   }
 }
+
+const gradeModal = document.getElementById("gradeModal");
+const gradeButtons = document.querySelectorAll(".grade-button");
+
+if (gradeModal && gradeButtons.length > 0) {
+  gradeButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      const selectedGrade = button.dataset.grade;
+
+      gradeModal.classList.add("is-hidden");
+
+      console.log("選択された学年:", selectedGrade);
+    });
+  });
+}
