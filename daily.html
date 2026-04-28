@@ -25,10 +25,11 @@
 
   <div class="overlay" id="overlay"></div>
 
-<a class="site-title site-title-link" href="index.html">
-  <div class="site-title-main">しぃとの</div>
-  <div class="site-title-sub">ホームページ</div>
-</a>
+  <aside class="sidebar" id="sidebar">
+    <a class="site-title site-title-link" href="index.html">
+      <div class="site-title-main">しぃとの</div>
+      <div class="site-title-sub">ホームページ</div>
+    </a>
 
     <nav class="side-nav">
       <a href="about.html">このサイトについて</a>
@@ -38,14 +39,35 @@
       <a href="daily.html" class="active">今日の1問</a>
       <a href="blog.html">ブログ</a>
     </nav>
+
+    <div class="grade-setting-box">
+      <div class="grade-setting-title">学年設定</div>
+
+      <label class="grade-setting-item">
+        <input type="radio" name="sidebarGrade" value="高校1年">
+        <span>高1</span>
+      </label>
+
+      <label class="grade-setting-item">
+        <input type="radio" name="sidebarGrade" value="高校2年">
+        <span>高2</span>
+      </label>
+
+      <label class="grade-setting-item">
+        <input type="radio" name="sidebarGrade" value="高校3年文系">
+        <span>高3文系</span>
+      </label>
+
+      <label class="grade-setting-item">
+        <input type="radio" name="sidebarGrade" value="高校3年理系">
+        <span>高3理系</span>
+      </label>
+    </div>
   </aside>
 
-<main class="main-content daily-main">
+  <main class="main-content daily-main">
     <section class="hero">
       <h1>今日の1問</h1>
-      <p>
-        問題演習の中から，ランダムに1問を表示します．
-      </p>
     </section>
 
     <section class="content-section">
