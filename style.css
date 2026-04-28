@@ -191,6 +191,68 @@ body {
 }
 
 /* =========================
+   初回既習範囲設定モーダル
+========================= */
+
+.learned-range-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.learned-range-modal-content {
+  width: min(560px, 100%);
+  max-height: calc(100vh - 40px);
+  padding: 28px 24px;
+  border-radius: 24px;
+  background: var(--white);
+  box-shadow: var(--shadow);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.learned-range-modal-title {
+  margin: 0 0 18px;
+  color: var(--deep-pink);
+  font-size: 1.2rem;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.learned-range-setting-modal {
+  padding: 16px 14px;
+  border-radius: 18px;
+  background: var(--light-pink);
+  border: 1px solid rgba(217, 95, 152, 0.25);
+}
+
+.learned-range-start-button {
+  display: block;
+  width: 100%;
+  margin-top: 18px;
+  padding: 13px 16px;
+  border: none;
+  border-radius: 999px;
+  background: var(--deep-pink);
+  color: var(--white);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.learned-range-start-button:hover {
+  transform: translateY(-2px);
+  opacity: 0.88;
+}
+
+/* =========================
    メイン
 ========================= */
 
@@ -378,67 +440,6 @@ body {
 }
 
 /* =========================
-   学年選択モーダル
-========================= */
-
-.grade-modal {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  background: rgba(0, 0, 0, 0.35);
-  z-index: 2000;
-}
-
-.grade-modal.is-hidden {
-  display: none;
-}
-
-.grade-modal-content {
-  width: min(420px, 100%);
-  padding: 28px 24px;
-  border-radius: 24px;
-  background: var(--white);
-  box-shadow: var(--shadow);
-  text-align: center;
-}
-
-.grade-modal-content .grade-modal-title {
-  display: block;
-  margin: 0 0 18px;
-  color: var(--deep-pink);
-  font-size: 1.35rem;
-  line-height: 1.6;
-  text-align: center;
-  font-weight: bold;
-}
-
-.grade-button-area {
-  display: grid;
-  gap: 12px;
-}
-
-.grade-button {
-  width: 100%;
-  padding: 13px 16px;
-  border: none;
-  border-radius: 999px;
-  background: var(--light-pink);
-  color: var(--deep-pink);
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: transform 0.2s, background 0.2s;
-}
-
-.grade-button:hover {
-  transform: translateY(-2px);
-  background: #ffd6e8;
-}
-
-/* =========================
    入場問題モーダル
 ========================= */
 
@@ -483,6 +484,7 @@ body {
   border-radius: 999px;
   background: var(--white);
   color: var(--text-color);
+  font-family: inherit;
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
@@ -531,6 +533,7 @@ body {
   border-radius: 999px;
   background: var(--deep-pink);
   color: var(--white);
+  font-family: inherit;
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
@@ -664,12 +667,16 @@ body {
     font-size: 1rem;
   }
 
-  .grade-modal-content {
+  .learned-range-modal-content {
     padding: 24px 18px;
   }
 
-  .grade-modal-content .grade-modal-title {
-    font-size: 1.15rem;
+  .learned-range-modal-title {
+    font-size: 1.05rem;
+  }
+
+  .learned-range-setting-modal {
+    padding: 14px 12px;
   }
 
   .entrance-modal-content {
