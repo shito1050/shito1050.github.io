@@ -164,31 +164,31 @@ const halfDayMs = 10 * 1000;
 const entranceProblems = [
   {
     grades: ["高校1年", "高校2年", "高校3年文系", "高校3年理系"],
-    question: "\\sqrt{9} の値はどれか．",
-    choices: ["3", "-3", "\\pm 3", "9"],
+    questionHtml: "\\(\\sqrt{9}\\) の値はどれか．",
+    choices: ["\\(3\\)", "\\(-3\\)", "\\(\\pm 3\\)", "\\(9\\)"],
     correctIndex: 0,
-    explanation: "\\sqrt{9} は，2乗して9になる正の数なので，3である．"
+    explanationHtml: "\\(\\sqrt{9}\\) は，2乗して9になる正の数なので，\\(3\\) である．"
   },
   {
     grades: ["高校1年", "高校2年", "高校3年文系", "高校3年理系"],
-    question: "2^3 の値はどれか．",
-    choices: ["5", "6", "8", "9"],
+    questionHtml: "\\(2^3\\) の値はどれか．",
+    choices: ["\\(5\\)", "\\(6\\)", "\\(8\\)", "\\(9\\)"],
     correctIndex: 2,
-    explanation: "2^3=2\\times2\\times2=8である．"
+    explanationHtml: "\\(2^3=2\\times2\\times2=8\\) である．"
   },
   {
     grades: ["高校2年", "高校3年文系", "高校3年理系"],
-    question: "\\sin 0 の値はどれか．",
-    choices: ["0", "1", "-1", "\\frac{1}{2}"],
+    questionHtml: "\\(\\sin 0\\) の値はどれか．",
+    choices: ["\\(0\\)", "\\(1\\)", "\\(-1\\)", "\\(\\frac{1}{2}\\)"],
     correctIndex: 0,
-    explanation: "単位円で考えると，角0の点は(1,0)なので，\\sin 0=0である．"
+    explanationHtml: "単位円で考えると，\\(\\sin 0=0\\) である．"
   },
   {
     grades: ["高校3年理系"],
-    question: "\\lim_{x\\to 0} x の値はどれか．",
-    choices: ["0", "1", "\\infty", "存在しない"],
+    questionHtml: "\\(\\lim_{x\\to 0}x\\) の値はどれか．",
+    choices: ["\\(0\\)", "\\(1\\)", "\\(\\infty\\)", "存在しない"],
     correctIndex: 0,
-    explanation: "xが0に近づくと，x自身も0に近づくので，極限値は0である．"
+    explanationHtml: "\\(x\\) が \\(0\\) に近づくと，\\(x\\) 自身も \\(0\\) に近づく．"
   }
 ];
 
