@@ -78,6 +78,11 @@ body {
   transform: translateX(4px);
 }
 
+.side-nav a.active {
+  background: var(--light-pink);
+  color: var(--deep-pink);
+}
+
 /* メイン */
 .main-content {
   margin-left: var(--sidebar-width);
