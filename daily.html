@@ -5,15 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>今日の1問｜しぃとのホームページ</title>
   <link rel="stylesheet" href="style.css">
+
   <script>
-  window.MathJax = {
-    tex: {
-      inlineMath: [['\\(', '\\)']],
-      displayMath: [['\\[', '\\]']]
-    }
-  };
-</script>
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']]
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 </head>
 <body>
   <button class="menu-button" id="menuButton" aria-label="メニューを開く">
@@ -44,67 +45,16 @@
     <section class="hero">
       <h1>今日の1問</h1>
       <p>
-        1日1問，短時間で取り組める数学の問題を載せていきます．
+        問題演習の中から，ランダムに1問を表示します．
       </p>
     </section>
 
     <section class="content-section">
       <h2>今日の問題</h2>
 
-      <div class="problem-box">
-        <p class="problem-label">問題</p>
-        <p>
-          次の数の分母を有理化せよ．
-        </p>
-        <p class="math-display">
-          \( \frac{1}{1+\sqrt{2}+\sqrt{3}} \)
-        </p>
+      <div id="dailyProblemArea">
+        読み込み中です．
       </div>
-
-      <div class="answer-box">
-        <div class="answer-box">
-  <p class="problem-label">解答</p>
-
-  <p>
-    分母のうち，まず \(1+\sqrt{2}\) を1つのかたまりと見て，
-    \(1+\sqrt{2}-\sqrt{3}\) をかける．
-  </p>
-
-  <div class="math-block">
-    \[
-    \begin{aligned}
-    &(1+\sqrt{2}+\sqrt{3})(1+\sqrt{2}-\sqrt{3})\\
-    &=(1+\sqrt{2})^2-3\\
-    &=1+2\sqrt{2}+2-3\\
-    &=2\sqrt{2}
-    \end{aligned}
-    \]
-  </div>
-
-  <p>
-    よって，
-  </p>
-
-  <div class="math-block">
-    \[
-    \begin{aligned}
-    \frac{1}{1+\sqrt{2}+\sqrt{3}}
-    &=\frac{1+\sqrt{2}-\sqrt{3}}{2\sqrt{2}}\\
-    &=\frac{\sqrt{2}+2-\sqrt{6}}{4}
-    \end{aligned}
-    \]
-  </div>
-
-  <p>
-    したがって，答えは
-  </p>
-
-  <div class="math-block answer">
-    \[
-    \frac{2+\sqrt{2}-\sqrt{6}}{4}
-    \]
-  </div>
-</div>
     </section>
   </main>
 
