@@ -236,13 +236,13 @@ function createEntranceProblemModal() {
   modal.className = "entrance-modal";
   modal.id = "entranceModal";
 
-  const choicesHtml = problem.choices.map(function (choice, index) {
-    return `
-      <button class="entrance-choice-button" data-index="${index}">
-        \\(${choice}\\)
-      </button>
-    `;
-  }).join("");
+const choicesHtml = problem.choices.map(function (choice, index) {
+  return `
+    <button class="entrance-choice-button" data-index="${index}">
+      ${choice}
+    </button>
+  `;
+}).join("");
 
 modal.innerHTML = `
   <div class="entrance-modal-content">
