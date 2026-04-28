@@ -193,13 +193,7 @@ const entranceProblems = [
 ];
 
 function shouldShowEntranceProblem() {
-  const lastTime = Number(localStorage.getItem(entranceProblemStorageKey));
-
-  if (!lastTime) {
-    return true;
-  }
-
-  return Date.now() - lastTime >= halfDayMs;
+  return true;
 }
 
 function saveEntranceProblemTime() {
