@@ -244,18 +244,33 @@ function createEntranceProblemModal() {
     `;
   }).join("");
 
-  modal.innerHTML = `
-    <div class="entrance-modal-content">
-      <div class="entrance-modal-title">入場問題</div>
-      <p class="entrance-modal-lead">
-        10秒くらいで解ける確認問題です．
-      </p>
+modal.innerHTML = `
+  <div class="entrance-modal-content">
+    <div class="entrance-question">
+      \\[
+      ${problem.question}
+      \\]
+    </div>
 
-      <div class="entrance-question">
+    <div class="entrance-choice-area">
+      ${choicesHtml}
+    </div>
+
+    <div class="entrance-result" id="entranceResult"></div>
+
+    <div class="entrance-explanation is-hidden" id="entranceExplanation">
+      <div>
         \\[
-        ${problem.question}
+        ${problem.explanation}
         \\]
       </div>
+    </div>
+
+    <button class="entrance-close-button is-hidden" id="entranceCloseButton">
+      サイトに入る
+    </button>
+  </div>
+`;
 
       <div class="entrance-choice-area">
         ${choicesHtml}
