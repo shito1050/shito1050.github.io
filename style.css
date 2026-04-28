@@ -23,7 +23,10 @@ body {
   background: var(--light-pink);
 }
 
-/* サイドバー */
+/* =========================
+   サイドバー
+========================= */
+
 .sidebar {
   position: fixed;
   top: 0;
@@ -37,14 +40,20 @@ body {
   z-index: 1000;
   overflow-y: auto;
   overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 .site-title {
-  margin-bottom: 32px;
+  display: block;
+  margin-bottom: 28px;
   padding: 18px 14px;
   border-radius: 18px;
   background: linear-gradient(135deg, var(--main-pink), #ffd6e8);
   color: var(--white);
+}
+
+.site-title-link {
+  text-decoration: none;
 }
 
 .site-title-main {
@@ -61,16 +70,17 @@ body {
 .side-nav {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 4px;
 }
 
 .side-nav a {
   display: block;
-  padding: 13px 14px;
+  padding: 9px 12px;
   border-radius: 14px;
   color: var(--text-color);
   text-decoration: none;
   font-weight: 600;
+  line-height: 1.4;
   transition: background 0.2s, color 0.2s, transform 0.2s;
 }
 
@@ -85,261 +95,12 @@ body {
   color: var(--deep-pink);
 }
 
-/* メイン */
-.main-content {
-  margin-left: var(--sidebar-width);
-  padding: 40px;
-}
-
-.hero {
-  padding: 48px;
-  margin-bottom: 32px;
-  border-radius: 28px;
-  background: var(--white);
-  box-shadow: var(--shadow);
-}
-
-.hero h1 {
-  margin: 0 0 16px;
-  font-size: 34px;
-  line-height: 1.5;
-  color: var(--deep-pink);
-}
-
-.hero p {
-  margin: 0;
-  font-size: 17px;
-  line-height: 1.9;
-}
-
-.content-section {
-  padding: 32px;
-  margin-bottom: 24px;
-  border-radius: 24px;
-  background: var(--white);
-  box-shadow: var(--shadow);
-}
-
-.content-section h2 {
-  margin: 0 0 14px;
-  padding-left: 14px;
-  border-left: 6px solid var(--main-pink);
-  font-size: 24px;
-  color: var(--deep-pink);
-}
-
-.content-section p {
-  margin: 0;
-  line-height: 1.9;
-}
-
-/* スマホ用メニューボタン */
-.menu-button {
-  display: none;
-  position: fixed;
-  top: 16px;
-  left: 16px;
-  width: 46px;
-  height: 46px;
-  border: none;
-  border-radius: 14px;
-  background: var(--deep-pink);
-  box-shadow: var(--shadow);
-  z-index: 1200;
-  cursor: pointer;
-}
-
-.menu-button span {
-  display: block;
-  width: 22px;
-  height: 2px;
-  margin: 5px auto;
-  background: var(--white);
-  border-radius: 999px;
-  transition: transform 0.2s, opacity 0.2s;
-}
-
-.menu-button.is-open span:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
-}
-
-.menu-button.is-open span:nth-child(2) {
-  opacity: 0;
-}
-
-.menu-button.is-open span:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
-}
-
-/* スマホ用の背景オーバーレイ */
-.overlay {
-  display: none;
-}
-
-/* スマホ対応 */
-@media (max-width: 768px) {
-  .menu-button {
-    display: block;
-  }
-
-  .sidebar {
-    transform: translateX(-105%);
-    transition: transform 0.25s ease;
-  }
-
-  .sidebar.is-open {
-    transform: translateX(0);
-  }
-
-  .overlay {
-    display: block;
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.28);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.25s ease;
-    z-index: 900;
-  }
-
-  .overlay.is-open {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .main-content {
-    margin-left: 0;
-    padding: 84px 18px 28px;
-  }
-
-  .hero {
-    padding: 30px 22px;
-    border-radius: 24px;
-  }
-
-  .hero h1 {
-    font-size: 25px;
-  }
-
-  .hero p {
-    font-size: 15px;
-  }
-
-  .content-section {
-    padding: 24px 20px;
-  }
-
-  .content-section h2 {
-    font-size: 21px;
-  }
-}
-
-.problem-box,
-.answer-box {
-  margin-top: 20px;
-  padding: 24px;
-  border-radius: 20px;
-  background: var(--light-pink);
-  border: 1px solid rgba(217, 95, 152, 0.25);
-}
-
-.answer-box {
-  background: #ffffff;
-}
-
-.problem-label {
-  display: inline-block;
-  margin: 0 0 12px;
-  padding: 6px 14px;
-  border-radius: 999px;
-  background: var(--deep-pink);
-  color: var(--white);
-  font-weight: bold;
-}
-
-.math-display {
-  overflow-x: auto;
-  padding: 12px 0;
-  font-size: 1.25rem;
-  text-align: center;
-}
-
-.math-display.answer {
-  font-size: 1.4rem;
-  font-weight: bold;
-  color: var(--deep-pink);
-}
-
-.grade-modal {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  background: rgba(0, 0, 0, 0.35);
-  z-index: 2000;
-}
-
-.grade-modal.is-hidden {
-  display: none;
-}
-
-.grade-modal-content {
-  width: min(420px, 100%);
-  padding: 28px 24px;
-  border-radius: 24px;
-  background: var(--white);
-  box-shadow: var(--shadow);
-  text-align: center;
-}
-
-.grade-modal-content h2 {
-  margin: 0 0 12px;
-  color: var(--deep-pink);
-  font-size: 1.7rem;
-}
-
-.grade-modal-content p {
-  margin: 0 0 22px;
-  line-height: 1.8;
-}
-
-.grade-button-area {
-  display: grid;
-  gap: 12px;
-}
-
-.grade-button {
-  width: 100%;
-  padding: 13px 16px;
-  border: none;
-  border-radius: 999px;
-  background: var(--light-pink);
-  color: var(--deep-pink);
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: transform 0.2s, background 0.2s;
-}
-
-.grade-button:hover {
-  transform: translateY(-2px);
-  background: #ffd6e8;
-}
-
-@media (max-width: 768px) {
-  .grade-modal-content {
-    padding: 24px 18px;
-  }
-
-  .grade-modal-content h2 {
-    font-size: 1.45rem;
-  }
-}
+/* =========================
+   学年設定
+========================= */
 
 .grade-setting-box {
-  margin-top: 26px;
+  margin-top: 24px;
   padding: 16px 14px;
   border-radius: 18px;
   background: var(--light-pink);
@@ -368,6 +129,250 @@ body {
   cursor: pointer;
 }
 
+/* =========================
+   メイン
+========================= */
+
+.main-content {
+  margin-left: var(--sidebar-width);
+  padding: 28px 40px 40px;
+}
+
+.hero {
+  margin-bottom: 18px;
+  padding: 32px 40px;
+  border-radius: 28px;
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: 34px;
+  line-height: 1.5;
+  color: var(--deep-pink);
+}
+
+.hero p {
+  margin: 10px 0 0;
+  font-size: 17px;
+  line-height: 1.9;
+}
+
+.content-section {
+  margin-top: 0;
+  margin-bottom: 24px;
+  padding: 32px;
+  border-radius: 24px;
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.content-section h2 {
+  margin: 0 0 14px;
+  padding-left: 14px;
+  border-left: 6px solid var(--main-pink);
+  font-size: 24px;
+  color: var(--deep-pink);
+}
+
+.content-section p {
+  margin: 0;
+  line-height: 1.9;
+}
+
+.content-section p + p {
+  margin-top: 12px;
+}
+
+/* =========================
+   今日の1問
+========================= */
+
+.daily-main {
+  padding-top: 24px;
+}
+
+.daily-main .hero {
+  margin-bottom: 18px;
+  padding: 28px 36px;
+}
+
+.daily-main .content-section {
+  margin-top: 0;
+}
+
+/* =========================
+   問題表示
+========================= */
+
+.problem-box,
+.answer-box {
+  margin-top: 20px;
+  padding: 24px;
+  border-radius: 20px;
+  background: var(--light-pink);
+  border: 1px solid rgba(217, 95, 152, 0.25);
+}
+
+.answer-box {
+  background: var(--white);
+}
+
+.problem-label {
+  display: inline-block;
+  margin: 0 0 12px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--deep-pink);
+  color: var(--white);
+  font-weight: bold;
+}
+
+.math-display,
+.math-block {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 10px 0;
+  font-size: 1.18rem;
+  text-align: center;
+}
+
+.math-block mjx-container {
+  min-width: max-content;
+}
+
+.math-display.answer,
+.math-block.answer {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--deep-pink);
+}
+
+.answer-link-button {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  background: var(--deep-pink);
+  color: var(--white);
+  text-decoration: none;
+  font-weight: bold;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.answer-link-button:hover {
+  transform: translateY(-2px);
+  opacity: 0.88;
+}
+
+.back-link-area {
+  margin-top: 20px;
+}
+
+/* =========================
+   問題一覧
+========================= */
+
+.problem-list {
+  display: grid;
+  gap: 16px;
+}
+
+.problem-card {
+  display: block;
+  padding: 20px;
+  border-radius: 18px;
+  background: var(--light-pink);
+  border: 1px solid rgba(217, 95, 152, 0.25);
+  color: var(--text-color);
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.problem-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+}
+
+.simple-problem-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.problem-title {
+  color: var(--text-color);
+  font-weight: bold;
+}
+
+/* =========================
+   学年選択モーダル
+========================= */
+
+.grade-modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 2000;
+}
+
+.grade-modal.is-hidden {
+  display: none;
+}
+
+.grade-modal-content {
+  width: min(420px, 100%);
+  padding: 28px 24px;
+  border-radius: 24px;
+  background: var(--white);
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.grade-modal-content .grade-modal-title {
+  display: block;
+  margin: 0 0 18px;
+  color: var(--deep-pink);
+  font-size: 1.35rem;
+  line-height: 1.6;
+  text-align: center;
+  font-weight: bold;
+}
+
+.grade-button-area {
+  display: grid;
+  gap: 12px;
+}
+
+.grade-button {
+  width: 100%;
+  padding: 13px 16px;
+  border: none;
+  border-radius: 999px;
+  background: var(--light-pink);
+  color: var(--deep-pink);
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.grade-button:hover {
+  transform: translateY(-2px);
+  background: #ffd6e8;
+}
+
+/* =========================
+   入場問題モーダル
+========================= */
+
 .entrance-modal {
   position: fixed;
   inset: 0;
@@ -387,26 +392,13 @@ body {
   box-shadow: var(--shadow);
 }
 
-.entrance-modal-title {
-  margin-bottom: 8px;
-  color: var(--deep-pink);
-  font-size: 1.6rem;
-  font-weight: bold;
-  text-align: center;
-}
-
-.entrance-modal-lead {
-  margin: 0 0 18px;
-  line-height: 1.8;
-  text-align: center;
-}
-
 .entrance-question {
-  margin: 16px 0;
+  margin: 0 0 16px;
   padding: 14px;
   border-radius: 18px;
   background: var(--light-pink);
   overflow-x: auto;
+  text-align: center;
 }
 
 .entrance-choice-area {
@@ -461,12 +453,6 @@ body {
   overflow-x: auto;
 }
 
-.entrance-explanation-title {
-  margin-bottom: 6px;
-  color: var(--deep-pink);
-  font-weight: bold;
-}
-
 .entrance-close-button {
   display: block;
   width: 100%;
@@ -481,87 +467,143 @@ body {
   cursor: pointer;
 }
 
+/* =========================
+   共通
+========================= */
+
 .is-hidden {
   display: none;
 }
 
-@media (max-width: 768px) {
-  .entrance-modal-content {
-    padding: 24px 18px;
-  }
+/* =========================
+   スマホ用メニュー
+========================= */
 
-  .entrance-modal-title {
-    font-size: 1.4rem;
-  }
+.menu-button {
+  display: none;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  width: 46px;
+  height: 46px;
+  border: none;
+  border-radius: 14px;
+  background: var(--deep-pink);
+  box-shadow: var(--shadow);
+  z-index: 1200;
+  cursor: pointer;
 }
 
-.site-title-link {
+.menu-button span {
   display: block;
-  text-decoration: none;
+  width: 22px;
+  height: 2px;
+  margin: 5px auto;
+  background: var(--white);
+  border-radius: 999px;
+  transition: transform 0.2s, opacity 0.2s;
 }
 
-.side-nav {
-  gap: 4px;
+.menu-button.is-open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
 }
 
-.side-nav a {
-  padding: 9px 12px;
-  margin: 0;
-  line-height: 1.4;
+.menu-button.is-open span:nth-child(2) {
+  opacity: 0;
 }
 
-.daily-main {
-  padding-top: 24px;
+.menu-button.is-open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
 }
 
-.daily-main .hero {
-  margin-bottom: 18px;
-  padding: 28px 36px;
+.overlay {
+  display: none;
 }
 
-.daily-main .content-section {
-  margin-top: 0;
-}
+/* =========================
+   スマホ対応
+========================= */
 
 @media (max-width: 768px) {
+  .menu-button {
+    display: block;
+  }
+
+  .sidebar {
+    transform: translateX(-105%);
+    transition: transform 0.25s ease;
+  }
+
+  .sidebar.is-open {
+    transform: translateX(0);
+  }
+
+  .overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.28);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 900;
+  }
+
+  .overlay.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding: 76px 18px 28px;
+  }
+
   .daily-main {
     padding-top: 72px;
-  }
-
-  .daily-main .hero {
-    padding: 24px 20px;
-    margin-bottom: 16px;
-  }
-}
-
-.main-content {
-  padding-top: 28px;
-}
-
-.hero {
-  margin-bottom: 18px;
-  padding: 32px 40px;
-}
-
-.content-section {
-  margin-top: 0;
-}
-
-@media (max-width: 768px) {
-  .main-content {
-    padding-top: 76px;
   }
 
   .hero {
     padding: 24px 20px;
     margin-bottom: 16px;
+    border-radius: 24px;
   }
-}
 
-.grade-modal-title {
-  margin: 0 0 18px;
-  color: var(--deep-pink);
-  font-size: 1.35rem;
-  line-height: 1.6;
-  text-align: center;
+  .hero h1 {
+    font-size: 25px;
+  }
+
+  .hero p {
+    font-size: 15px;
+  }
+
+  .content-section {
+    padding: 24px 20px;
+  }
+
+  .content-section h2 {
+    font-size: 21px;
+  }
+
+  .problem-box,
+  .answer-box {
+    padding: 18px 14px;
+  }
+
+  .math-display,
+  .math-block {
+    font-size: 1rem;
+  }
+
+  .grade-modal-content {
+    padding: 24px 18px;
+  }
+
+  .grade-modal-content .grade-modal-title {
+    font-size: 1.15rem;
+  }
+
+  .entrance-modal-content {
+    padding: 24px 18px;
+  }
 }
