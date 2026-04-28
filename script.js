@@ -159,7 +159,7 @@ showDailyProblem();
 ========================= */
 
 const entranceProblemStorageKey = "lastEntranceProblemTime";
-const halfDayMs = 12 * 60 * 60 * 1000;
+const halfDayMs = 10 * 1000;
 
 const entranceProblems = [
   {
