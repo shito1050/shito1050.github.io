@@ -36,10 +36,69 @@ if (menuButton && sidebar && overlay) {
   });
 }
 
+/* =========================
+   学年設定
+========================= */
+
+const gradeStorageKey = "selectedGrade";
+const defaultGrade = "高校1年";
+
+const sidebarGradeRadios = document.querySelectorAll('input[name="sidebarGrade"]');
+const gradeButtons = document.querySelectorAll(".grade-button");
+
+function getSelectedGrade() {
+  return localStorage.getItem(gradeStorageKey) || defaultGrade;
+}
+
+function saveSelectedGrade(grade) {
+  localStorage.setItem(gradeStorageKey, grade);
+}
+
+function applyGradeToSidebar(grade) {
+  sidebarGradeRadios.forEach(function (radio) {
+    radio.checked = radio.value === grade;
+  });
+}
+
+function setupGradeSetting() {
+  const selectedGrade = getSelectedGrade();
+  applyGradeToSidebar(selectedGrade);
+
+  sidebarGradeRadios.forEach(function (radio) {
+    radio.addEventListener("change", function () {
+      saveSelectedGrade(radio.value);
+      applyGradeToSidebar(radio.value);
+      showDailyProblem();
+    });
+  });
+
+  gradeButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      const selectedGrade = button.dataset.grade;
+
+      saveSelectedGrade(selectedGrade);
+      applyGradeToSidebar(selectedGrade);
+      showDailyProblem();
+
+      const gradeModal = document.getElementById("gradeModal");
+      if (gradeModal) {
+        gradeModal.classList.add("is-hidden");
+      }
+    });
+  });
+}
+
+setupGradeSetting();
+
+/* =========================
+   今日の1問用データ
+   問題演習から出す
+========================= */
+
 const practiceProblems = [
   {
-    title: "分母の有理化001",
-    category: "数学I・数と式",
+    title: "数学I_数と式_分母の有理化_001",
+    grades: ["高校1年", "高校2年", "高校3年文系", "高校3年理系"],
     problemText: "次の数の分母を有理化せよ．",
     formula: "\\frac{1}{1+\\sqrt{2}+\\sqrt{3}}",
     url: "practice/rationalize-001.html"
@@ -48,41 +107,220 @@ const practiceProblems = [
 
 const dailyProblemArea = document.getElementById("dailyProblemArea");
 
-if (dailyProblemArea) {
-  const randomIndex = Math.floor(Math.random() * practiceProblems.length);
-  const problem = practiceProblems[randomIndex];
+function showDailyProblem() {
+  if (!dailyProblemArea) {
+    return;
+  }
 
- dailyProblemArea.innerHTML = `
-  <div class="problem-box">
-    <p class="problem-label">問題</p>
-    <p>${problem.problemText}</p>
-    <div class="math-block">
-      \\[
-      ${problem.formula}
-      \\]
+  const selectedGrade = getSelectedGrade();
+
+  const filteredProblems = practiceProblems.filter(function (problem) {
+    return problem.grades.includes(selectedGrade);
+  });
+
+  if (filteredProblems.length === 0) {
+    dailyProblemArea.innerHTML = `
+      <div class="problem-box">
+        <p class="problem-label">問題</p>
+        <p>現在，${selectedGrade}向けの問題は準備中です．</p>
+      </div>
+    `;
+    return;
+  }
+
+  const randomIndex = Math.floor(Math.random() * filteredProblems.length);
+  const problem = filteredProblems[randomIndex];
+
+  dailyProblemArea.innerHTML = `
+    <div class="problem-box">
+      <p class="problem-label">問題</p>
+      <p>${problem.problemText}</p>
+      <div class="math-block">
+        \\[
+        ${problem.formula}
+        \\]
+      </div>
+      <a class="answer-link-button" href="${problem.url}">
+        解答を見る
+      </a>
     </div>
-    <a class="answer-link-button" href="${problem.url}">
-      解答を見る
-    </a>
-  </div>
-`;
+  `;
 
   if (window.MathJax) {
     MathJax.typesetPromise();
   }
 }
 
-const gradeModal = document.getElementById("gradeModal");
-const gradeButtons = document.querySelectorAll(".grade-button");
+showDailyProblem();
 
-if (gradeModal && gradeButtons.length > 0) {
-  gradeButtons.forEach(function (button) {
+/* =========================
+   入場問題用データ
+   問題演習とは別管理
+========================= */
+
+const entranceProblemStorageKey = "lastEntranceProblemTime";
+const halfDayMs = 12 * 60 * 60 * 1000;
+
+const entranceProblems = [
+  {
+    grades: ["高校1年", "高校2年", "高校3年文系", "高校3年理系"],
+    question: "\\sqrt{9} の値はどれか．",
+    choices: ["3", "-3", "\\pm 3", "9"],
+    correctIndex: 0,
+    explanation: "\\sqrt{9} は，2乗して9になる正の数なので，3である．"
+  },
+  {
+    grades: ["高校1年", "高校2年", "高校3年文系", "高校3年理系"],
+    question: "2^3 の値はどれか．",
+    choices: ["5", "6", "8", "9"],
+    correctIndex: 2,
+    explanation: "2^3=2\\times2\\times2=8である．"
+  },
+  {
+    grades: ["高校2年", "高校3年文系", "高校3年理系"],
+    question: "\\sin 0 の値はどれか．",
+    choices: ["0", "1", "-1", "\\frac{1}{2}"],
+    correctIndex: 0,
+    explanation: "単位円で考えると，角0の点は(1,0)なので，\\sin 0=0である．"
+  },
+  {
+    grades: ["高校3年理系"],
+    question: "\\lim_{x\\to 0} x の値はどれか．",
+    choices: ["0", "1", "\\infty", "存在しない"],
+    correctIndex: 0,
+    explanation: "xが0に近づくと，x自身も0に近づくので，極限値は0である．"
+  }
+];
+
+function shouldShowEntranceProblem() {
+  const lastTime = Number(localStorage.getItem(entranceProblemStorageKey));
+
+  if (!lastTime) {
+    return true;
+  }
+
+  return Date.now() - lastTime >= halfDayMs;
+}
+
+function saveEntranceProblemTime() {
+  localStorage.setItem(entranceProblemStorageKey, String(Date.now()));
+}
+
+function getEntranceProblemForGrade() {
+  const selectedGrade = getSelectedGrade();
+
+  const filteredProblems = entranceProblems.filter(function (problem) {
+    return problem.grades.includes(selectedGrade);
+  });
+
+  if (filteredProblems.length === 0) {
+    return null;
+  }
+
+  const randomIndex = Math.floor(Math.random() * filteredProblems.length);
+  return filteredProblems[randomIndex];
+}
+
+function createEntranceProblemModal() {
+  if (!shouldShowEntranceProblem()) {
+    return;
+  }
+
+  const problem = getEntranceProblemForGrade();
+
+  if (!problem) {
+    return;
+  }
+
+  const modal = document.createElement("div");
+  modal.className = "entrance-modal";
+  modal.id = "entranceModal";
+
+  const choicesHtml = problem.choices.map(function (choice, index) {
+    return `
+      <button class="entrance-choice-button" data-index="${index}">
+        \\(${choice}\\)
+      </button>
+    `;
+  }).join("");
+
+  modal.innerHTML = `
+    <div class="entrance-modal-content">
+      <div class="entrance-modal-title">入場問題</div>
+      <p class="entrance-modal-lead">
+        10秒くらいで解ける確認問題です．
+      </p>
+
+      <div class="entrance-question">
+        \\[
+        ${problem.question}
+        \\]
+      </div>
+
+      <div class="entrance-choice-area">
+        ${choicesHtml}
+      </div>
+
+      <div class="entrance-result" id="entranceResult"></div>
+
+      <div class="entrance-explanation is-hidden" id="entranceExplanation">
+        <div class="entrance-explanation-title">解説</div>
+        <div>
+          \\[
+          ${problem.explanation}
+          \\]
+        </div>
+      </div>
+
+      <button class="entrance-close-button is-hidden" id="entranceCloseButton">
+        サイトに入る
+      </button>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  if (window.MathJax) {
+    MathJax.typesetPromise();
+  }
+
+  const choiceButtons = modal.querySelectorAll(".entrance-choice-button");
+  const resultArea = modal.querySelector("#entranceResult");
+  const explanationArea = modal.querySelector("#entranceExplanation");
+  const closeButton = modal.querySelector("#entranceCloseButton");
+
+  choiceButtons.forEach(function (button) {
     button.addEventListener("click", function () {
-      const selectedGrade = button.dataset.grade;
+      const selectedIndex = Number(button.dataset.index);
+      const isCorrect = selectedIndex === problem.correctIndex;
 
-      gradeModal.classList.add("is-hidden");
+      choiceButtons.forEach(function (choiceButton) {
+        choiceButton.disabled = true;
+      });
 
-      console.log("選択された学年:", selectedGrade);
+      if (isCorrect) {
+        resultArea.textContent = "正解です．";
+        resultArea.classList.add("is-correct");
+        resultArea.classList.remove("is-wrong");
+      } else {
+        resultArea.textContent = "不正解です．解説を確認しましょう．";
+        resultArea.classList.add("is-wrong");
+        resultArea.classList.remove("is-correct");
+      }
+
+      explanationArea.classList.remove("is-hidden");
+      closeButton.classList.remove("is-hidden");
+
+      if (window.MathJax) {
+        MathJax.typesetPromise();
+      }
     });
   });
+
+  closeButton.addEventListener("click", function () {
+    saveEntranceProblemTime();
+    modal.remove();
+  });
 }
+
+createEntranceProblemModal();
