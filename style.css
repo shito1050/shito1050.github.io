@@ -494,3 +494,8 @@ body {
     font-size: 1.4rem;
   }
 }
+
+.site-title-link {
+  display: block;
+  text-decoration: none;
+}
