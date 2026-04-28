@@ -144,5 +144,38 @@
   </main>
 
   <script src="../script.js"></script>
+
+  <script>
+    const answerBox = document.getElementById("answerBox");
+    const answerCloseButton = document.getElementById("answerCloseButton");
+    const answerOpenButton = document.getElementById("answerOpenButton");
+
+    function openAnswer() {
+      answerBox.classList.remove("is-hidden");
+      answerOpenButton.classList.add("is-hidden");
+
+      if (window.MathJax) {
+        MathJax.typesetPromise();
+      }
+    }
+
+    function closeAnswer() {
+      answerBox.classList.add("is-hidden");
+      answerOpenButton.classList.remove("is-hidden");
+    }
+
+    if (answerBox && answerCloseButton && answerOpenButton) {
+      answerOpenButton.addEventListener("click", openAnswer);
+      answerCloseButton.addEventListener("click", closeAnswer);
+
+      const urlParams = new URLSearchParams(window.location.search);
+
+      if (urlParams.get("answer") === "open") {
+        openAnswer();
+      } else {
+        closeAnswer();
+      }
+    }
+  </script>
 </body>
 </html>
