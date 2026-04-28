@@ -117,7 +117,7 @@ function showDailyProblem() {
         ${problem.formula}
         \\]
       </div>
-      <a class="answer-link-button" href="${problem.url}">
+      <a class="answer-link-button" href="${problem.url}?answer=open">
         解答を見る
       </a>
     </div>
@@ -186,18 +186,18 @@ function createGradeModal() {
     modal.className = "grade-modal";
     modal.id = "gradeModal";
 
-modal.innerHTML = `
-  <div class="grade-modal-content">
-    <h2 class="grade-modal-title">あなたの学習段階に最も近いものを選んでください．</h2>
+    modal.innerHTML = `
+      <div class="grade-modal-content">
+        <h2 class="grade-modal-title">あなたの学習段階に最も近いものを選んでください．</h2>
 
-    <div class="grade-button-area">
-      <button class="grade-button" data-grade="高校1年">高校1年</button>
-      <button class="grade-button" data-grade="高校2年">高校2年</button>
-      <button class="grade-button" data-grade="高校3年文系">高校3年文系</button>
-      <button class="grade-button" data-grade="高校3年理系">高校3年理系</button>
-    </div>
-  </div>
-`;
+        <div class="grade-button-area">
+          <button class="grade-button" data-grade="高校1年">高校1年</button>
+          <button class="grade-button" data-grade="高校2年">高校2年</button>
+          <button class="grade-button" data-grade="高校3年文系">高校3年文系</button>
+          <button class="grade-button" data-grade="高校3年理系">高校3年理系</button>
+        </div>
+      </div>
+    `;
 
     document.body.appendChild(modal);
   } else {
@@ -316,23 +316,48 @@ if (document.body.dataset.page === "home") {
   createGradeModal();
 }
 
+/* 個別問題ページの解答開閉 */
 
 const answerBox = document.getElementById("answerBox");
 const answerCloseButton = document.getElementById("answerCloseButton");
 const answerOpenButton = document.getElementById("answerOpenButton");
 
+function openAnswer() {
+  if (!answerBox || !answerOpenButton) {
+    return;
+  }
+
+  answerBox.classList.remove("is-hidden");
+  answerOpenButton.classList.add("is-hidden");
+
+  if (window.MathJax) {
+    MathJax.typesetPromise();
+  }
+}
+
+function closeAnswer() {
+  if (!answerBox || !answerOpenButton) {
+    return;
+  }
+
+  answerBox.classList.add("is-hidden");
+  answerOpenButton.classList.remove("is-hidden");
+}
+
 if (answerBox && answerCloseButton && answerOpenButton) {
   answerOpenButton.addEventListener("click", function () {
-    answerBox.classList.remove("is-hidden");
-    answerOpenButton.classList.add("is-hidden");
-
-    if (window.MathJax) {
-      MathJax.typesetPromise();
-    }
+    openAnswer();
   });
 
   answerCloseButton.addEventListener("click", function () {
-    answerBox.classList.add("is-hidden");
-    answerOpenButton.classList.remove("is-hidden");
+    closeAnswer();
   });
+
+  const urlParams = new URLSearchParams(window.location.search);
+
+  if (urlParams.get("answer") === "open") {
+    openAnswer();
+  } else {
+    closeAnswer();
+  }
 }
