@@ -231,3 +231,39 @@ body {
     font-size: 21px;
   }
 }
+
+.problem-box,
+.answer-box {
+  margin-top: 20px;
+  padding: 24px;
+  border-radius: 20px;
+  background: var(--light-pink);
+  border: 1px solid rgba(217, 95, 152, 0.25);
+}
+
+.answer-box {
+  background: #ffffff;
+}
+
+.problem-label {
+  display: inline-block;
+  margin: 0 0 12px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--deep-pink);
+  color: var(--white);
+  font-weight: bold;
+}
+
+.math-display {
+  overflow-x: auto;
+  padding: 12px 0;
+  font-size: 1.25rem;
+  text-align: center;
+}
+
+.math-display.answer {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--deep-pink);
+}
