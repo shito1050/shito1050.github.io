@@ -267,3 +267,71 @@ body {
   font-weight: bold;
   color: var(--deep-pink);
 }
+
+.grade-modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 2000;
+}
+
+.grade-modal.is-hidden {
+  display: none;
+}
+
+.grade-modal-content {
+  width: min(420px, 100%);
+  padding: 28px 24px;
+  border-radius: 24px;
+  background: var(--white);
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.grade-modal-content h2 {
+  margin: 0 0 12px;
+  color: var(--deep-pink);
+  font-size: 1.7rem;
+}
+
+.grade-modal-content p {
+  margin: 0 0 22px;
+  line-height: 1.8;
+}
+
+.grade-button-area {
+  display: grid;
+  gap: 12px;
+}
+
+.grade-button {
+  width: 100%;
+  padding: 13px 16px;
+  border: none;
+  border-radius: 999px;
+  background: var(--light-pink);
+  color: var(--deep-pink);
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.grade-button:hover {
+  transform: translateY(-2px);
+  background: #ffd6e8;
+}
+
+@media (max-width: 768px) {
+  .grade-modal-content {
+    padding: 24px 18px;
+  }
+
+  .grade-modal-content h2 {
+    font-size: 1.45rem;
+  }
+}
