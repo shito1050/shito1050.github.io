@@ -1,1 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>問題演習｜しぃとのホームページ</title>
+  <link rel="stylesheet" href="style.css">
 
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']]
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+  <button class="menu-button" id="menuButton" aria-label="メニューを開く">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <div class="overlay" id="overlay"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="site-title">
+      <div class="site-title-main">しぃとの</div>
+      <div class="site-title-sub">ホームページ</div>
+    </div>
+
+    <nav class="side-nav">
+      <a href="index.html">このサイトについて</a>
+      <a href="definitions.html">定義・用語・公式集</a>
+      <a href="lessons.html">授業</a>
+      <a href="practice.html" class="active">問題演習</a>
+      <a href="daily.html">今日の1問</a>
+      <a href="blog.html">ブログ</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <section class="hero">
+      <h1>問題演習</h1>
+      <p>
+        高校数学の問題を，分野ごとに整理していきます．
+      </p>
+    </section>
+
+    <section class="content-section">
+      <h2>問題一覧</h2>
+
+      <div class="problem-list">
+        <a class="problem-card" href="practice/rationalize-001.html">
+          <div class="problem-card-title">分母の有理化001</div>
+          <div class="problem-card-text">
+            \( \frac{1}{1+\sqrt{2}+\sqrt{3}} \) の分母を有理化する問題です．
+          </div>
+          <div class="problem-card-tag">数学I・数と式</div>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
