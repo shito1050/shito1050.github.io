@@ -36,7 +36,6 @@ if (menuButton && sidebar && overlay) {
   });
 }
 
-/* 今日の1問で使う問題リスト */
 const practiceProblems = [
   {
     title: "分母の有理化001",
@@ -47,7 +46,6 @@ const practiceProblems = [
   }
 ];
 
-/* daily.html にだけ表示する */
 const dailyProblemArea = document.getElementById("dailyProblemArea");
 
 if (dailyProblemArea) {
