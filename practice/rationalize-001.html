@@ -40,28 +40,9 @@
       <a href="../blog.html">ブログ</a>
     </nav>
 
-    <div class="grade-setting-box">
-      <div class="grade-setting-title">学年設定</div>
-
-      <label class="grade-setting-item">
-        <input type="radio" name="sidebarGrade" value="高校1年">
-        <span>高1</span>
-      </label>
-
-      <label class="grade-setting-item">
-        <input type="radio" name="sidebarGrade" value="高校2年">
-        <span>高2</span>
-      </label>
-
-      <label class="grade-setting-item">
-        <input type="radio" name="sidebarGrade" value="高校3年文系">
-        <span>高3文系</span>
-      </label>
-
-      <label class="grade-setting-item">
-        <input type="radio" name="sidebarGrade" value="高校3年理系">
-        <span>高3理系</span>
-      </label>
+    <div class="learned-range-box">
+      <div class="learned-range-title">既習範囲設定</div>
+      <div id="learnedRangeSetting" class="learned-range-setting"></div>
     </div>
   </aside>
 
@@ -144,38 +125,5 @@
   </main>
 
   <script src="../script.js"></script>
-
-  <script>
-    const answerBox = document.getElementById("answerBox");
-    const answerCloseButton = document.getElementById("answerCloseButton");
-    const answerOpenButton = document.getElementById("answerOpenButton");
-
-    function openAnswer() {
-      answerBox.classList.remove("is-hidden");
-      answerOpenButton.classList.add("is-hidden");
-
-      if (window.MathJax) {
-        MathJax.typesetPromise();
-      }
-    }
-
-    function closeAnswer() {
-      answerBox.classList.add("is-hidden");
-      answerOpenButton.classList.remove("is-hidden");
-    }
-
-    if (answerBox && answerCloseButton && answerOpenButton) {
-      answerOpenButton.addEventListener("click", openAnswer);
-      answerCloseButton.addEventListener("click", closeAnswer);
-
-      const urlParams = new URLSearchParams(window.location.search);
-
-      if (urlParams.get("answer") === "open") {
-        openAnswer();
-      } else {
-        closeAnswer();
-      }
-    }
-  </script>
 </body>
 </html>
