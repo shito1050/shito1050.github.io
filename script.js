@@ -44,7 +44,6 @@ const gradeStorageKey = "selectedGrade";
 const defaultGrade = "高校1年";
 
 const sidebarGradeRadios = document.querySelectorAll('input[name="sidebarGrade"]');
-const gradeButtons = document.querySelectorAll(".grade-button");
 
 function getSelectedGrade() {
   return localStorage.getItem(gradeStorageKey) || defaultGrade;
@@ -60,7 +59,7 @@ function applyGradeToSidebar(grade) {
   });
 }
 
-function setupGradeSetting() {
+function setupSidebarGradeSetting() {
   const selectedGrade = getSelectedGrade();
   applyGradeToSidebar(selectedGrade);
 
@@ -71,26 +70,9 @@ function setupGradeSetting() {
       showDailyProblem();
     });
   });
-
-  gradeButtons.forEach(function (button) {
-    button.addEventListener("click", function () {
-      const selectedGrade = button.dataset.grade;
-
-      saveSelectedGrade(selectedGrade);
-      applyGradeToSidebar(selectedGrade);
-      showDailyProblem();
-
-      const gradeModal = document.getElementById("gradeModal");
-      if (gradeModal) {
-        gradeModal.classList.add("is-hidden");
-      }
-
-      createEntranceProblemModal();
-    });
-  });
 }
 
-setupGradeSetting();
+setupSidebarGradeSetting();
 
 /* =========================
    今日の1問用データ
@@ -158,9 +140,6 @@ showDailyProblem();
    入場問題用データ
 ========================= */
 
-const entranceProblemStorageKey = "lastEntranceProblemTime";
-const halfDayMs = 10 * 1000;
-
 const entranceProblems = [
   {
     grades: ["高校1年", "高校2年", "高校3年文系", "高校3年理系"],
@@ -192,14 +171,6 @@ const entranceProblems = [
   }
 ];
 
-function shouldShowEntranceProblem() {
-  return true;
-}
-
-function saveEntranceProblemTime() {
-  localStorage.setItem(entranceProblemStorageKey, String(Date.now()));
-}
-
 function getEntranceProblemForGrade() {
   const selectedGrade = getSelectedGrade();
 
@@ -215,12 +186,46 @@ function getEntranceProblemForGrade() {
   return filteredProblems[randomIndex];
 }
 
-function createEntranceProblemModal() {
-  if (document.getElementById("entranceModal")) {
+function createGradeModal() {
+  if (document.getElementById("gradeModal")) {
     return;
   }
 
-  if (!shouldShowEntranceProblem()) {
+  const modal = document.createElement("div");
+  modal.className = "grade-modal";
+  modal.id = "gradeModal";
+
+  modal.innerHTML = `
+    <div class="grade-modal-content">
+      <div class="grade-button-area">
+        <button class="grade-button" data-grade="高校1年">高校1年</button>
+        <button class="grade-button" data-grade="高校2年">高校2年</button>
+        <button class="grade-button" data-grade="高校3年文系">高校3年文系</button>
+        <button class="grade-button" data-grade="高校3年理系">高校3年理系</button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  const gradeButtons = modal.querySelectorAll(".grade-button");
+
+  gradeButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      const selectedGrade = button.dataset.grade;
+
+      saveSelectedGrade(selectedGrade);
+      applyGradeToSidebar(selectedGrade);
+      showDailyProblem();
+
+      modal.remove();
+      createEntranceProblemModal();
+    });
+  });
+}
+
+function createEntranceProblemModal() {
+  if (document.getElementById("entranceModal")) {
     return;
   }
 
@@ -304,9 +309,8 @@ function createEntranceProblemModal() {
   });
 
   closeButton.addEventListener("click", function () {
-    saveEntranceProblemTime();
     modal.remove();
   });
 }
 
-createEntranceProblemModal();
+createGradeModal();
