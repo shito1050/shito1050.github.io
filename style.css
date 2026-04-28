@@ -499,3 +499,13 @@ body {
   display: block;
   text-decoration: none;
 }
+
+.side-nav {
+  gap: 4px;
+}
+
+.side-nav a {
+  padding: 9px 12px;
+  margin: 0;
+  line-height: 1.4;
+}
