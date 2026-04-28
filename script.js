@@ -84,6 +84,8 @@ function setupGradeSetting() {
       if (gradeModal) {
         gradeModal.classList.add("is-hidden");
       }
+
+      createEntranceProblemModal();
     });
   });
 }
@@ -92,7 +94,6 @@ setupGradeSetting();
 
 /* =========================
    今日の1問用データ
-   問題演習から出す
 ========================= */
 
 const practiceProblems = [
@@ -155,7 +156,6 @@ showDailyProblem();
 
 /* =========================
    入場問題用データ
-   問題演習とは別管理
 ========================= */
 
 const entranceProblemStorageKey = "lastEntranceProblemTime";
@@ -181,14 +181,14 @@ const entranceProblems = [
     questionHtml: "\\(\\sin 0\\) の値はどれか．",
     choices: ["\\(0\\)", "\\(1\\)", "\\(-1\\)", "\\(\\frac{1}{2}\\)"],
     correctIndex: 0,
-    explanationHtml: "単位円で考えると，\\(\\sin 0=0\\) である．"
+    explanationHtml: "\\(\\sin 0=0\\) である．"
   },
   {
     grades: ["高校3年理系"],
     questionHtml: "\\(\\lim_{x\\to 0}x\\) の値はどれか．",
     choices: ["\\(0\\)", "\\(1\\)", "\\(\\infty\\)", "存在しない"],
     correctIndex: 0,
-    explanationHtml: "\\(x\\) が \\(0\\) に近づくと，\\(x\\) 自身も \\(0\\) に近づく．"
+    explanationHtml: "\\(\\lim_{x\\to 0}x=0\\) である．"
   }
 ];
 
@@ -222,6 +222,10 @@ function getEntranceProblemForGrade() {
 }
 
 function createEntranceProblemModal() {
+  if (document.getElementById("entranceModal")) {
+    return;
+  }
+
   if (!shouldShowEntranceProblem()) {
     return;
   }
@@ -236,41 +240,19 @@ function createEntranceProblemModal() {
   modal.className = "entrance-modal";
   modal.id = "entranceModal";
 
-const choicesHtml = problem.choices.map(function (choice, index) {
-  return `
-    <button class="entrance-choice-button" data-index="${index}">
-      ${choice}
-    </button>
-  `;
-}).join("");
+  const choicesHtml = problem.choices.map(function (choice, index) {
+    return `
+      <button class="entrance-choice-button" data-index="${index}">
+        ${choice}
+      </button>
+    `;
+  }).join("");
 
-modal.innerHTML = `
-  <div class="entrance-modal-content">
-    <div class="entrance-question">
-      \\[
-      ${problem.question}
-      \\]
-    </div>
-
-    <div class="entrance-choice-area">
-      ${choicesHtml}
-    </div>
-
-    <div class="entrance-result" id="entranceResult"></div>
-
-    <div class="entrance-explanation is-hidden" id="entranceExplanation">
-      <div>
-        \\[
-        ${problem.explanation}
-        \\]
+  modal.innerHTML = `
+    <div class="entrance-modal-content">
+      <div class="entrance-question">
+        ${problem.questionHtml}
       </div>
-    </div>
-
-    <button class="entrance-close-button is-hidden" id="entranceCloseButton">
-      サイトに入る
-    </button>
-  </div>
-`;
 
       <div class="entrance-choice-area">
         ${choicesHtml}
@@ -279,12 +261,7 @@ modal.innerHTML = `
       <div class="entrance-result" id="entranceResult"></div>
 
       <div class="entrance-explanation is-hidden" id="entranceExplanation">
-        <div class="entrance-explanation-title">解説</div>
-        <div>
-          \\[
-          ${problem.explanation}
-          \\]
-        </div>
+        ${problem.explanationHtml}
       </div>
 
       <button class="entrance-close-button is-hidden" id="entranceCloseButton">
@@ -318,7 +295,7 @@ modal.innerHTML = `
         resultArea.classList.add("is-correct");
         resultArea.classList.remove("is-wrong");
       } else {
-        resultArea.textContent = "不正解です．解説を確認しましょう．";
+        resultArea.textContent = "不正解です．";
         resultArea.classList.add("is-wrong");
         resultArea.classList.remove("is-correct");
       }
