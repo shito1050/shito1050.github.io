@@ -315,3 +315,24 @@ function createEntranceProblemModal() {
 if (document.body.dataset.page === "home") {
   createGradeModal();
 }
+
+
+const answerBox = document.getElementById("answerBox");
+const answerCloseButton = document.getElementById("answerCloseButton");
+const answerOpenButton = document.getElementById("answerOpenButton");
+
+if (answerBox && answerCloseButton && answerOpenButton) {
+  answerOpenButton.addEventListener("click", function () {
+    answerBox.classList.remove("is-hidden");
+    answerOpenButton.classList.add("is-hidden");
+
+    if (window.MathJax) {
+      MathJax.typesetPromise();
+    }
+  });
+
+  answerCloseButton.addEventListener("click", function () {
+    answerBox.classList.add("is-hidden");
+    answerOpenButton.classList.remove("is-hidden");
+  });
+}
