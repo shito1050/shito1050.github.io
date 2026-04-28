@@ -36,46 +36,261 @@ if (menuButton && sidebar && overlay) {
   });
 }
 
-/* 学年設定 */
+/* 既習範囲設定 */
 
-const gradeStorageKey = "selectedGrade";
-const defaultGrade = "高校1年";
-const sidebarGradeRadios = document.querySelectorAll('input[name="sidebarGrade"]');
+const learnedUnitsStorageKey = "learnedUnitIds";
 
-function getSelectedGrade() {
-  return localStorage.getItem(gradeStorageKey) || defaultGrade;
-}
+const mathUnitGroups = [
+  {
+    id: "math1",
+    name: "数学I",
+    units: [
+      { id: "math1_numbers_and_expressions", name: "数と式" },
+      { id: "math1_sets_and_logic", name: "集合と命題" },
+      { id: "math1_quadratic_functions", name: "2次関数" },
+      { id: "math1_figures_and_measurement", name: "図形と計量" },
+      { id: "math1_data_analysis", name: "データの分析" }
+    ]
+  },
+  {
+    id: "mathA",
+    name: "数学A",
+    units: [
+      { id: "mathA_properties_of_figures", name: "図形の性質" },
+      { id: "mathA_counting_and_probability", name: "場合の数と確率" }
+    ]
+  },
+  {
+    id: "math2",
+    name: "数学II",
+    units: [
+      { id: "math2_various_expressions", name: "いろいろな式" },
+      { id: "math2_figures_and_equations", name: "図形と方程式" },
+      { id: "math2_exponential_and_logarithmic_functions", name: "指数関数・対数関数" },
+      { id: "math2_trigonometric_functions", name: "三角関数" },
+      { id: "math2_calculus", name: "微分・積分" }
+    ]
+  },
+  {
+    id: "mathB",
+    name: "数学B",
+    units: [
+      { id: "mathB_sequences", name: "数列" },
+      { id: "mathB_statistical_inference", name: "統計的な推測" }
+    ]
+  },
+  {
+    id: "mathC",
+    name: "数学C",
+    units: [
+      { id: "mathC_vectors", name: "ベクトル" },
+      { id: "mathC_plane_curves", name: "平面上の曲線" },
+      { id: "mathC_complex_plane", name: "複素数平面" }
+    ]
+  },
+  {
+    id: "math3",
+    name: "数学III",
+    units: [
+      { id: "math3_limits", name: "極限" },
+      { id: "math3_differentiation", name: "微分法" },
+      { id: "math3_integration", name: "積分法" }
+    ]
+  }
+];
 
-function saveSelectedGrade(grade) {
-  localStorage.setItem(gradeStorageKey, grade);
-}
+const defaultLearnedUnitIds = ["math1_numbers_and_expressions"];
 
-function applyGradeToSidebar(grade) {
-  sidebarGradeRadios.forEach(function (radio) {
-    radio.checked = radio.value === grade;
-  });
-}
-
-function setupSidebarGradeSetting() {
-  applyGradeToSidebar(getSelectedGrade());
-
-  sidebarGradeRadios.forEach(function (radio) {
-    radio.addEventListener("change", function () {
-      saveSelectedGrade(radio.value);
-      applyGradeToSidebar(radio.value);
-      showDailyProblem();
+function getAllUnitIds() {
+  return mathUnitGroups.flatMap(function (group) {
+    return group.units.map(function (unit) {
+      return unit.id;
     });
   });
 }
 
-setupSidebarGradeSetting();
+function saveLearnedUnitIds(unitIds) {
+  localStorage.setItem(learnedUnitsStorageKey, JSON.stringify(unitIds));
+}
+
+function loadLearnedUnitIds() {
+  const savedValue = localStorage.getItem(learnedUnitsStorageKey);
+
+  if (!savedValue) {
+    saveLearnedUnitIds(defaultLearnedUnitIds);
+    return [...defaultLearnedUnitIds];
+  }
+
+  try {
+    const parsedValue = JSON.parse(savedValue);
+
+    if (!Array.isArray(parsedValue)) {
+      saveLearnedUnitIds(defaultLearnedUnitIds);
+      return [...defaultLearnedUnitIds];
+    }
+
+    const allUnitIds = getAllUnitIds();
+
+    const validUnitIds = parsedValue.filter(function (unitId) {
+      return allUnitIds.includes(unitId);
+    });
+
+    if (validUnitIds.length === 0) {
+      saveLearnedUnitIds(defaultLearnedUnitIds);
+      return [...defaultLearnedUnitIds];
+    }
+
+    return validUnitIds;
+  } catch (error) {
+    saveLearnedUnitIds(defaultLearnedUnitIds);
+    return [...defaultLearnedUnitIds];
+  }
+}
+
+function renderLearnedRangeSetting() {
+  const container = document.getElementById("learnedRangeSetting");
+
+  if (!container) {
+    return;
+  }
+
+  const learnedUnitIds = loadLearnedUnitIds();
+
+  container.innerHTML = "";
+
+  mathUnitGroups.forEach(function (group) {
+    const courseElement = document.createElement("div");
+    courseElement.className = "learned-course";
+
+    const headerElement = document.createElement("div");
+    headerElement.className = "learned-course-header";
+
+    const toggleButton = document.createElement("button");
+    toggleButton.type = "button";
+    toggleButton.className = "learned-course-toggle";
+    toggleButton.textContent = "▽";
+    toggleButton.setAttribute("aria-label", group.name + "の単元一覧を開閉する");
+
+    const courseLabel = document.createElement("label");
+    courseLabel.className = "learned-course-label";
+
+    const courseCheckbox = document.createElement("input");
+    courseCheckbox.type = "checkbox";
+
+    const groupUnitIds = group.units.map(function (unit) {
+      return unit.id;
+    });
+
+    const checkedCount = groupUnitIds.filter(function (unitId) {
+      return learnedUnitIds.includes(unitId);
+    }).length;
+
+    courseCheckbox.checked = checkedCount === groupUnitIds.length;
+    courseCheckbox.indeterminate = checkedCount > 0 && checkedCount < groupUnitIds.length;
+
+    const courseName = document.createElement("span");
+    courseName.textContent = group.name;
+
+    courseLabel.appendChild(courseCheckbox);
+    courseLabel.appendChild(courseName);
+
+    headerElement.appendChild(toggleButton);
+    headerElement.appendChild(courseLabel);
+
+    const unitListElement = document.createElement("div");
+    unitListElement.className = "learned-unit-list";
+
+    group.units.forEach(function (unit) {
+      const unitLabel = document.createElement("label");
+      unitLabel.className = "learned-unit-label";
+
+      const unitCheckbox = document.createElement("input");
+      unitCheckbox.type = "checkbox";
+      unitCheckbox.value = unit.id;
+      unitCheckbox.checked = learnedUnitIds.includes(unit.id);
+
+      const unitName = document.createElement("span");
+      unitName.textContent = unit.name;
+
+      unitLabel.appendChild(unitCheckbox);
+      unitLabel.appendChild(unitName);
+      unitListElement.appendChild(unitLabel);
+
+      unitCheckbox.addEventListener("change", function () {
+        updateLearnedUnitsFromCheckboxes();
+      });
+    });
+
+    courseCheckbox.addEventListener("change", function () {
+      const unitCheckboxes = unitListElement.querySelectorAll("input[type='checkbox']");
+
+      unitCheckboxes.forEach(function (unitCheckbox) {
+        unitCheckbox.checked = courseCheckbox.checked;
+      });
+
+      updateLearnedUnitsFromCheckboxes();
+    });
+
+    toggleButton.addEventListener("click", function () {
+      unitListElement.classList.toggle("is-open");
+      toggleButton.classList.toggle("is-open");
+    });
+
+    courseElement.appendChild(headerElement);
+    courseElement.appendChild(unitListElement);
+    container.appendChild(courseElement);
+  });
+}
+
+function updateLearnedUnitsFromCheckboxes() {
+  const container = document.getElementById("learnedRangeSetting");
+
+  if (!container) {
+    return;
+  }
+
+  const checkedUnitIds = Array.from(
+    container.querySelectorAll(".learned-unit-list input[type='checkbox']:checked")
+  ).map(function (checkbox) {
+    return checkbox.value;
+  });
+
+  if (checkedUnitIds.length === 0) {
+    saveLearnedUnitIds(defaultLearnedUnitIds);
+  } else {
+    saveLearnedUnitIds(checkedUnitIds);
+  }
+
+  renderLearnedRangeSetting();
+  showDailyProblem();
+}
+
+function isProblemInLearnedRange(problem) {
+  const learnedUnitIds = loadLearnedUnitIds();
+
+  if (!problem.unitIds || !Array.isArray(problem.unitIds) || problem.unitIds.length === 0) {
+    return false;
+  }
+
+  return problem.unitIds.every(function (unitId) {
+    return learnedUnitIds.includes(unitId);
+  });
+}
+
+function filterProblemsByLearnedRange(problems) {
+  return problems.filter(function (problem) {
+    return isProblemInLearnedRange(problem);
+  });
+}
+
+renderLearnedRangeSetting();
 
 /* 今日の1問 */
 
 const practiceProblems = [
   {
     title: "数学I_数と式_分母の有理化_001",
-    grades: ["高校1年", "高校2年", "高校3年文系", "高校3年理系"],
+    unitIds: ["math1_numbers_and_expressions"],
     problemText: "次の数の分母を有理化せよ．",
     formula: "\\frac{1}{1+\\sqrt{2}+\\sqrt{3}}",
     url: "practice/rationalize-001.html"
@@ -89,17 +304,13 @@ function showDailyProblem() {
     return;
   }
 
-  const selectedGrade = getSelectedGrade();
-
-  const filteredProblems = practiceProblems.filter(function (problem) {
-    return problem.grades.includes(selectedGrade);
-  });
+  const filteredProblems = filterProblemsByLearnedRange(practiceProblems);
 
   if (filteredProblems.length === 0) {
     dailyProblemArea.innerHTML = `
       <div class="problem-box">
         <p class="problem-label">問題</p>
-        <p>現在，${selectedGrade}向けの問題は準備中です．</p>
+        <p>現在，既習範囲内の問題は準備中です．</p>
       </div>
     `;
     return;
@@ -134,28 +345,28 @@ showDailyProblem();
 
 const entranceProblems = [
   {
-    grades: ["高校1年", "高校2年", "高校3年文系", "高校3年理系"],
+    unitIds: ["math1_numbers_and_expressions"],
     questionHtml: "\\(\\sqrt{9}\\) の値はどれか．",
     choices: ["\\(3\\)", "\\(-3\\)", "\\(\\pm 3\\)", "\\(9\\)"],
     correctIndex: 0,
     explanationHtml: "\\(\\sqrt{9}\\) は，2乗して9になる正の数なので，\\(3\\) である．"
   },
   {
-    grades: ["高校1年", "高校2年", "高校3年文系", "高校3年理系"],
+    unitIds: ["math1_numbers_and_expressions"],
     questionHtml: "\\(2^3\\) の値はどれか．",
     choices: ["\\(5\\)", "\\(6\\)", "\\(8\\)", "\\(9\\)"],
     correctIndex: 2,
     explanationHtml: "\\(2^3=2\\times2\\times2=8\\) である．"
   },
   {
-    grades: ["高校2年", "高校3年文系", "高校3年理系"],
+    unitIds: ["math2_trigonometric_functions"],
     questionHtml: "\\(\\sin 0\\) の値はどれか．",
     choices: ["\\(0\\)", "\\(1\\)", "\\(-1\\)", "\\(\\frac{1}{2}\\)"],
     correctIndex: 0,
     explanationHtml: "\\(\\sin 0=0\\) である．"
   },
   {
-    grades: ["高校3年理系"],
+    unitIds: ["math3_limits"],
     questionHtml: "\\(\\lim_{x\\to 0}x\\) の値はどれか．",
     choices: ["\\(0\\)", "\\(1\\)", "\\(\\infty\\)", "存在しない"],
     correctIndex: 0,
@@ -163,12 +374,8 @@ const entranceProblems = [
   }
 ];
 
-function getEntranceProblemForGrade() {
-  const selectedGrade = getSelectedGrade();
-
-  const filteredProblems = entranceProblems.filter(function (problem) {
-    return problem.grades.includes(selectedGrade);
-  });
+function getEntranceProblem() {
+  const filteredProblems = filterProblemsByLearnedRange(entranceProblems);
 
   if (filteredProblems.length === 0) {
     return null;
@@ -178,49 +385,6 @@ function getEntranceProblemForGrade() {
   return filteredProblems[randomIndex];
 }
 
-function createGradeModal() {
-  let modal = document.getElementById("gradeModal");
-
-  if (!modal) {
-    modal = document.createElement("div");
-    modal.className = "grade-modal";
-    modal.id = "gradeModal";
-
-    modal.innerHTML = `
-      <div class="grade-modal-content">
-        <h2 class="grade-modal-title">あなたの学習段階に最も近いものを選んでください．</h2>
-
-        <div class="grade-button-area">
-          <button class="grade-button" data-grade="高校1年">高校1年</button>
-          <button class="grade-button" data-grade="高校2年">高校2年</button>
-          <button class="grade-button" data-grade="高校3年文系">高校3年文系</button>
-          <button class="grade-button" data-grade="高校3年理系">高校3年理系</button>
-        </div>
-      </div>
-    `;
-
-    document.body.appendChild(modal);
-  } else {
-    modal.classList.remove("is-hidden");
-  }
-
-  const gradeButtons = modal.querySelectorAll(".grade-button");
-
-  gradeButtons.forEach(function (button) {
-    button.addEventListener("click", function () {
-      const selectedGrade = button.dataset.grade;
-
-      saveSelectedGrade(selectedGrade);
-      applyGradeToSidebar(selectedGrade);
-      showDailyProblem();
-
-      modal.classList.add("is-hidden");
-
-      createEntranceProblemModal();
-    });
-  });
-}
-
 function createEntranceProblemModal() {
   const oldModal = document.getElementById("entranceModal");
 
@@ -228,7 +392,7 @@ function createEntranceProblemModal() {
     oldModal.remove();
   }
 
-  const problem = getEntranceProblemForGrade();
+  const problem = getEntranceProblem();
 
   if (!problem) {
     return;
@@ -313,7 +477,7 @@ function createEntranceProblemModal() {
 }
 
 if (document.body.dataset.page === "home") {
-  createGradeModal();
+  createEntranceProblemModal();
 }
 
 /* 個別問題ページの解答開閉 */
