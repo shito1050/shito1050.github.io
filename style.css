@@ -615,3 +615,28 @@ body {
     padding: 24px 18px;
   }
 }
+
+.answer-link-button,
+.answer-open-button,
+.answer-close-button {
+  display: inline-block;
+  margin-top: 18px;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 999px;
+  background: var(--deep-pink);
+  color: var(--white);
+  text-decoration: none;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.answer-link-button:hover,
+.answer-open-button:hover,
+.answer-close-button:hover {
+  transform: translateY(-2px);
+  opacity: 0.88;
+}
