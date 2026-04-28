@@ -186,16 +186,18 @@ function createGradeModal() {
     modal.className = "grade-modal";
     modal.id = "gradeModal";
 
-    modal.innerHTML = `
-      <div class="grade-modal-content">
-        <div class="grade-button-area">
-          <button class="grade-button" data-grade="高校1年">高校1年</button>
-          <button class="grade-button" data-grade="高校2年">高校2年</button>
-          <button class="grade-button" data-grade="高校3年文系">高校3年文系</button>
-          <button class="grade-button" data-grade="高校3年理系">高校3年理系</button>
-        </div>
-      </div>
-    `;
+modal.innerHTML = `
+  <div class="grade-modal-content">
+    <h2 class="grade-modal-title">あなたの学習段階に最も近いものを選んでください．</h2>
+
+    <div class="grade-button-area">
+      <button class="grade-button" data-grade="高校1年">高校1年</button>
+      <button class="grade-button" data-grade="高校2年">高校2年</button>
+      <button class="grade-button" data-grade="高校3年文系">高校3年文系</button>
+      <button class="grade-button" data-grade="高校3年理系">高校3年理系</button>
+    </div>
+  </div>
+`;
 
     document.body.appendChild(modal);
   } else {
