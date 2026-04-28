@@ -1,1 +1,228 @@
+:root {
+  --main-pink: #f6a6c8;
+  --light-pink: #fff1f7;
+  --deep-pink: #d95f98;
+  --text-color: #333333;
+  --white: #ffffff;
+  --shadow: 0 8px 24px rgba(217, 95, 152, 0.18);
+  --sidebar-width: 260px;
+}
 
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Yu Gothic", "YuGothic", "Hiragino Kaku Gothic ProN", sans-serif;
+  color: var(--text-color);
+  background: var(--light-pink);
+}
+
+/* サイドバー */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--sidebar-width);
+  height: 100vh;
+  padding: 28px 20px;
+  background: var(--white);
+  border-right: 1px solid rgba(217, 95, 152, 0.25);
+  box-shadow: var(--shadow);
+  z-index: 1000;
+}
+
+.site-title {
+  margin-bottom: 32px;
+  padding: 18px 14px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--main-pink), #ffd6e8);
+  color: var(--white);
+}
+
+.site-title-main {
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: 0.08em;
+}
+
+.site-title-sub {
+  margin-top: 4px;
+  font-size: 14px;
+}
+
+.side-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.side-nav a {
+  display: block;
+  padding: 13px 14px;
+  border-radius: 14px;
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+.side-nav a:hover {
+  background: var(--light-pink);
+  color: var(--deep-pink);
+  transform: translateX(4px);
+}
+
+/* メイン */
+.main-content {
+  margin-left: var(--sidebar-width);
+  padding: 40px;
+}
+
+.hero {
+  padding: 48px;
+  margin-bottom: 32px;
+  border-radius: 28px;
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.hero h1 {
+  margin: 0 0 16px;
+  font-size: 34px;
+  line-height: 1.5;
+  color: var(--deep-pink);
+}
+
+.hero p {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.9;
+}
+
+.content-section {
+  padding: 32px;
+  margin-bottom: 24px;
+  border-radius: 24px;
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.content-section h2 {
+  margin: 0 0 14px;
+  padding-left: 14px;
+  border-left: 6px solid var(--main-pink);
+  font-size: 24px;
+  color: var(--deep-pink);
+}
+
+.content-section p {
+  margin: 0;
+  line-height: 1.9;
+}
+
+/* スマホ用メニューボタン */
+.menu-button {
+  display: none;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  width: 46px;
+  height: 46px;
+  border: none;
+  border-radius: 14px;
+  background: var(--deep-pink);
+  box-shadow: var(--shadow);
+  z-index: 1200;
+  cursor: pointer;
+}
+
+.menu-button span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  margin: 5px auto;
+  background: var(--white);
+  border-radius: 999px;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.menu-button.is-open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.menu-button.is-open span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-button.is-open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* スマホ用の背景オーバーレイ */
+.overlay {
+  display: none;
+}
+
+/* スマホ対応 */
+@media (max-width: 768px) {
+  .menu-button {
+    display: block;
+  }
+
+  .sidebar {
+    transform: translateX(-105%);
+    transition: transform 0.25s ease;
+  }
+
+  .sidebar.is-open {
+    transform: translateX(0);
+  }
+
+  .overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.28);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 900;
+  }
+
+  .overlay.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding: 84px 18px 28px;
+  }
+
+  .hero {
+    padding: 30px 22px;
+    border-radius: 24px;
+  }
+
+  .hero h1 {
+    font-size: 25px;
+  }
+
+  .hero p {
+    font-size: 15px;
+  }
+
+  .content-section {
+    padding: 24px 20px;
+  }
+
+  .content-section h2 {
+    font-size: 21px;
+  }
+}
