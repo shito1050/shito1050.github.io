@@ -156,6 +156,20 @@ function completeInitialLearnedRangeSetting() {
   localStorage.setItem(initialLearnedRangeSettingKey, "true");
 }
 
+function updateCourseCheckboxState(courseElement) {
+  const courseCheckbox = courseElement.querySelector(".learned-course-label input[type='checkbox']");
+  const unitCheckboxes = Array.from(
+    courseElement.querySelectorAll(".learned-unit-list input[type='checkbox']")
+  );
+
+  const checkedCount = unitCheckboxes.filter(function (checkbox) {
+    return checkbox.checked;
+  }).length;
+
+  courseCheckbox.checked = checkedCount === unitCheckboxes.length;
+  courseCheckbox.indeterminate = checkedCount > 0 && checkedCount < unitCheckboxes.length;
+}
+
 function createLearnedRangeSelector(container, options) {
   const settings = options || {};
   const shouldOpenAll = settings.openAll === true;
@@ -229,9 +243,9 @@ function createLearnedRangeSelector(container, options) {
 
       unitCheckbox.addEventListener("change", function () {
         updateLearnedUnitsFromContainer(container);
+        updateCourseCheckboxState(courseElement);
 
         if (!settings.skipAfterChange) {
-          renderLearnedRangeSetting();
           showDailyProblem();
         }
       });
@@ -244,10 +258,11 @@ function createLearnedRangeSelector(container, options) {
         unitCheckbox.checked = courseCheckbox.checked;
       });
 
+      courseCheckbox.indeterminate = false;
+
       updateLearnedUnitsFromContainer(container);
 
       if (!settings.skipAfterChange) {
-        renderLearnedRangeSetting();
         showDailyProblem();
       }
     });
