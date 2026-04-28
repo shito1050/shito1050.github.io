@@ -1,1 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>分母の有理化001｜しぃとのホームページ</title>
+  <link rel="stylesheet" href="../style.css">
 
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']]
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body>
+  <button class="menu-button" id="menuButton" aria-label="メニューを開く">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <div class="overlay" id="overlay"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="site-title">
+      <div class="site-title-main">しぃとの</div>
+      <div class="site-title-sub">ホームページ</div>
+    </div>
+
+    <nav class="side-nav">
+      <a href="../index.html">このサイトについて</a>
+      <a href="../definitions.html">定義・用語・公式集</a>
+      <a href="../lessons.html">授業</a>
+      <a href="../practice.html" class="active">問題演習</a>
+      <a href="../daily.html">今日の1問</a>
+      <a href="../blog.html">ブログ</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <section class="hero">
+      <h1>分母の有理化001</h1>
+      <p>
+        根号を含む分母の有理化を練習します．
+      </p>
+    </section>
+
+    <section class="content-section">
+      <div class="problem-box">
+        <p class="problem-label">問題</p>
+        <p>
+          次の数の分母を有理化せよ．
+        </p>
+
+        <div class="math-block">
+          \[
+          \frac{1}{1+\sqrt{2}+\sqrt{3}}
+          \]
+        </div>
+      </div>
+
+      <div class="answer-box">
+        <p class="problem-label">解答</p>
+
+        <p>
+          分母のうち，まず \(1+\sqrt{2}\) を1つのかたまりと見て，
+          \(1+\sqrt{2}-\sqrt{3}\) をかける．
+        </p>
+
+        <div class="math-block">
+          \[
+          \begin{aligned}
+          &(1+\sqrt{2}+\sqrt{3})(1+\sqrt{2}-\sqrt{3})\\
+          &=(1+\sqrt{2})^2-3\\
+          &=1+2\sqrt{2}+2-3\\
+          &=2\sqrt{2}
+          \end{aligned}
+          \]
+        </div>
+
+        <p>
+          よって，
+        </p>
+
+        <div class="math-block">
+          \[
+          \begin{aligned}
+          \frac{1}{1+\sqrt{2}+\sqrt{3}}
+          &=\frac{1+\sqrt{2}-\sqrt{3}}{2\sqrt{2}}\\
+          &=\frac{(1+\sqrt{2}-\sqrt{3})\sqrt{2}}{2\sqrt{2}\cdot\sqrt{2}}\\
+          &=\frac{\sqrt{2}+2-\sqrt{6}}{4}
+          \end{aligned}
+          \]
+        </div>
+
+        <p>
+          したがって，答えは
+        </p>
+
+        <div class="math-block answer">
+          \[
+          \frac{2+\sqrt{2}-\sqrt{6}}{4}
+          \]
+        </div>
+      </div>
+
+      <p class="back-link-area">
+        <a class="answer-link-button" href="../practice.html">問題一覧にもどる</a>
+      </p>
+    </section>
+  </main>
+
+  <script src="../script.js"></script>
+</body>
+</html>
