@@ -310,4 +310,6 @@ function createEntranceProblemModal() {
   });
 }
 
-createGradeModal();
+if (document.body.dataset.page === "home") {
+  createGradeModal();
+}
