@@ -35,6 +35,8 @@ body {
   border-right: 1px solid rgba(217, 95, 152, 0.25);
   box-shadow: var(--shadow);
   z-index: 1000;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .site-title {
