@@ -3,134 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>しぃとのホームページ</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: sans-serif;
-      background-color: #fffafc;
-      color: #333333;
-    }
-
-    .container {
-      display: flex;
-      min-height: 100vh;
-    }
-
-    .sidebar {
-      width: 220px;
-      background-color: #ffd9ec;
-      padding: 24px 16px;
-      box-sizing: border-box;
-    }
-
-    .sidebar h2 {
-      margin-top: 0;
-      font-size: 24px;
-      color: #cc3366;
-    }
-
-    .sidebar a {
-      display: block;
-      margin: 12px 0;
-      padding: 10px 12px;
-      text-decoration: none;
-      color: #333333;
-      background-color: #fff5fa;
-      border-radius: 10px;
-      transition: background-color 0.2s ease, transform 0.2s ease;
-    }
-
-    .sidebar a:hover {
-      background-color: #ffffff;
-      transform: translateX(4px);
-    }
-
-    .main-content {
-      flex: 1;
-      padding: 40px;
-      box-sizing: border-box;
-    }
-
-    .main-content h1 {
-      font-family: "HGP創英角ﾎﾟｯﾌﾟ体", "HG創英角ポップ体", sans-serif;
-      color: #ff6699;
-      border-bottom: 3px solid #ffb6d9;
-      padding-bottom: 8px;
-      margin-top: 0;
-    }
-
-    .menu-button {
-      display: none;
-    }
-
-    .overlay {
-      display: none;
-    }
-
-    @media (max-width: 700px) {
-      .container {
-        display: block;
-        min-height: auto;
-      }
-
-      .menu-button {
-        display: block;
-        position: fixed;
-        top: 12px;
-        left: 12px;
-        z-index: 1001;
-        width: 48px;
-        height: 48px;
-        border: none;
-        border-radius: 12px;
-        background-color: #ffd9ec;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
-        cursor: pointer;
-        padding: 0;
-      }
-
-      .menu-button span {
-        display: block;
-        width: 24px;
-        height: 3px;
-        background-color: #cc3366;
-        margin: 5px auto;
-        border-radius: 2px;
-      }
-
-      .sidebar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 240px;
-        height: 100vh;
-        z-index: 1002;
-        transform: translateX(-100%);
-        transition: transform 0.3s ease;
-        box-shadow: 4px 0 12px rgba(0, 0, 0, 0.18);
-      }
-
-      .sidebar.open {
-        transform: translateX(0);
-      }
-
-      .overlay {
-        position: fixed;
-        inset: 0;
-        background-color: rgba(0, 0, 0, 0.35);
-        z-index: 1000;
-      }
-
-      .overlay.show {
-        display: block;
-      }
-
-      .main-content {
-        padding: 72px 16px 24px 16px;
-      }
-    }
-  </style>
+  <title>高校数学の教材サイト</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <button class="menu-button" id="menuButton" aria-label="メニューを開く">
@@ -141,34 +15,73 @@
 
   <div class="overlay" id="overlay"></div>
 
-  <div class="container">
-    <div class="sidebar" id="sidebar">
-      <h2>メニュー</h2>
-      <a href="materials.html">教材</a>
-      <a href="article-test.html">ブログ</a>
+  <aside class="sidebar" id="sidebar">
+    <div class="site-title">
+      <div class="site-title-main">高校数学</div>
+      <div class="site-title-sub">教材サイト</div>
     </div>
 
-    <div class="main-content">
-      <h1>しぃとのホームページ</h1>
-      <p>こんにちは．これは私のホームページです．</p>
-      <p>メニューから，教材やブログに進めます．</p>
-    </div>
-  </div>
+    <nav class="side-nav">
+      <a href="#about">このサイトについて</a>
+      <a href="#definitions">定義・用語・公式集</a>
+      <a href="#lessons">授業</a>
+      <a href="#practice">問題演習</a>
+      <a href="#daily">今日の1問</a>
+      <a href="#blog">ブログ</a>
+    </nav>
+  </aside>
 
-  <script>
-    const menuButton = document.getElementById('menuButton');
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('overlay');
+  <main class="main-content">
+    <section class="hero">
+      <h1>高校数学を，定義からていねいに学ぶ</h1>
+      <p>
+        このサイトでは，高校数学の定義・用語・公式，授業資料，問題演習などを整理して公開していきます．
+      </p>
+    </section>
 
-    menuButton.addEventListener('click', function() {
-      sidebar.classList.add('open');
-      overlay.classList.add('show');
-    });
+    <section id="about" class="content-section">
+      <h2>このサイトについて</h2>
+      <p>
+        高校数学を学ぶ人のために，定義や考え方を大切にしながら教材をまとめていくサイトです．
+      </p>
+    </section>
 
-    overlay.addEventListener('click', function() {
-      sidebar.classList.remove('open');
-      overlay.classList.remove('show');
-    });
-  </script>
+    <section id="definitions" class="content-section">
+      <h2>定義・用語・公式集</h2>
+      <p>
+        数学で使う用語，定義，公式を分野ごとに整理していきます．
+      </p>
+    </section>
+
+    <section id="lessons" class="content-section">
+      <h2>授業</h2>
+      <p>
+        授業で扱う内容を，単元ごとにまとめていきます．
+      </p>
+    </section>
+
+    <section id="practice" class="content-section">
+      <h2>問題演習</h2>
+      <p>
+        基本問題から発展問題まで，解説付きで整理していきます．
+      </p>
+    </section>
+
+    <section id="daily" class="content-section">
+      <h2>今日の1問</h2>
+      <p>
+        毎日少しずつ数学に触れられるような問題を掲載していきます．
+      </p>
+    </section>
+
+    <section id="blog" class="content-section">
+      <h2>ブログ</h2>
+      <p>
+        数学の学び方，教材作成，授業づくりなどについて書いていきます．
+      </p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
