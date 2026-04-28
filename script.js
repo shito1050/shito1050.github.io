@@ -52,22 +52,20 @@ if (dailyProblemArea) {
   const randomIndex = Math.floor(Math.random() * practiceProblems.length);
   const problem = practiceProblems[randomIndex];
 
-  dailyProblemArea.innerHTML = `
-    <div class="problem-box">
-      <p class="problem-label">問題</p>
-      <p class="problem-category">${problem.category}</p>
-      <h3 class="daily-problem-title">${problem.title}</h3>
-      <p>${problem.problemText}</p>
-      <div class="math-block">
-        \\[
-        ${problem.formula}
-        \\]
-      </div>
-      <a class="answer-link-button" href="${problem.url}">
-        解答を見る
-      </a>
+ dailyProblemArea.innerHTML = `
+  <div class="problem-box">
+    <p class="problem-label">問題</p>
+    <p>${problem.problemText}</p>
+    <div class="math-block">
+      \\[
+      ${problem.formula}
+      \\]
     </div>
-  `;
+    <a class="answer-link-button" href="${problem.url}">
+      解答を見る
+    </a>
+  </div>
+`;
 
   if (window.MathJax) {
     MathJax.typesetPromise();
