@@ -36,13 +36,10 @@ if (menuButton && sidebar && overlay) {
   });
 }
 
-/* =========================
-   学年設定
-========================= */
+/* 学年設定 */
 
 const gradeStorageKey = "selectedGrade";
 const defaultGrade = "高校1年";
-
 const sidebarGradeRadios = document.querySelectorAll('input[name="sidebarGrade"]');
 
 function getSelectedGrade() {
@@ -60,8 +57,7 @@ function applyGradeToSidebar(grade) {
 }
 
 function setupSidebarGradeSetting() {
-  const selectedGrade = getSelectedGrade();
-  applyGradeToSidebar(selectedGrade);
+  applyGradeToSidebar(getSelectedGrade());
 
   sidebarGradeRadios.forEach(function (radio) {
     radio.addEventListener("change", function () {
@@ -74,9 +70,7 @@ function setupSidebarGradeSetting() {
 
 setupSidebarGradeSetting();
 
-/* =========================
-   今日の1問用データ
-========================= */
+/* 今日の1問 */
 
 const practiceProblems = [
   {
@@ -136,9 +130,7 @@ function showDailyProblem() {
 
 showDailyProblem();
 
-/* =========================
-   入場問題用データ
-========================= */
+/* 入場問題 */
 
 const entranceProblems = [
   {
@@ -187,26 +179,28 @@ function getEntranceProblemForGrade() {
 }
 
 function createGradeModal() {
-  if (document.getElementById("gradeModal")) {
-    return;
-  }
+  let modal = document.getElementById("gradeModal");
 
-  const modal = document.createElement("div");
-  modal.className = "grade-modal";
-  modal.id = "gradeModal";
+  if (!modal) {
+    modal = document.createElement("div");
+    modal.className = "grade-modal";
+    modal.id = "gradeModal";
 
-  modal.innerHTML = `
-    <div class="grade-modal-content">
-      <div class="grade-button-area">
-        <button class="grade-button" data-grade="高校1年">高校1年</button>
-        <button class="grade-button" data-grade="高校2年">高校2年</button>
-        <button class="grade-button" data-grade="高校3年文系">高校3年文系</button>
-        <button class="grade-button" data-grade="高校3年理系">高校3年理系</button>
+    modal.innerHTML = `
+      <div class="grade-modal-content">
+        <div class="grade-button-area">
+          <button class="grade-button" data-grade="高校1年">高校1年</button>
+          <button class="grade-button" data-grade="高校2年">高校2年</button>
+          <button class="grade-button" data-grade="高校3年文系">高校3年文系</button>
+          <button class="grade-button" data-grade="高校3年理系">高校3年理系</button>
+        </div>
       </div>
-    </div>
-  `;
+    `;
 
-  document.body.appendChild(modal);
+    document.body.appendChild(modal);
+  } else {
+    modal.classList.remove("is-hidden");
+  }
 
   const gradeButtons = modal.querySelectorAll(".grade-button");
 
@@ -218,15 +212,18 @@ function createGradeModal() {
       applyGradeToSidebar(selectedGrade);
       showDailyProblem();
 
-      modal.remove();
+      modal.classList.add("is-hidden");
+
       createEntranceProblemModal();
     });
   });
 }
 
 function createEntranceProblemModal() {
-  if (document.getElementById("entranceModal")) {
-    return;
+  const oldModal = document.getElementById("entranceModal");
+
+  if (oldModal) {
+    oldModal.remove();
   }
 
   const problem = getEntranceProblemForGrade();
