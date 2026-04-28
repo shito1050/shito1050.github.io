@@ -39,6 +39,7 @@ if (menuButton && sidebar && overlay) {
 /* 既習範囲設定 */
 
 const learnedUnitsStorageKey = "learnedUnitIds";
+const initialLearnedRangeSettingKey = "hasCompletedInitialLearnedRangeSetting";
 
 const mathUnitGroups = [
   {
@@ -147,12 +148,17 @@ function loadLearnedUnitIds() {
   }
 }
 
-function renderLearnedRangeSetting() {
-  const container = document.getElementById("learnedRangeSetting");
+function hasCompletedInitialLearnedRangeSetting() {
+  return localStorage.getItem(initialLearnedRangeSettingKey) === "true";
+}
 
-  if (!container) {
-    return;
-  }
+function completeInitialLearnedRangeSetting() {
+  localStorage.setItem(initialLearnedRangeSettingKey, "true");
+}
+
+function createLearnedRangeSelector(container, options) {
+  const settings = options || {};
+  const shouldOpenAll = settings.openAll === true;
 
   const learnedUnitIds = loadLearnedUnitIds();
 
@@ -200,6 +206,11 @@ function renderLearnedRangeSetting() {
     const unitListElement = document.createElement("div");
     unitListElement.className = "learned-unit-list";
 
+    if (shouldOpenAll) {
+      unitListElement.classList.add("is-open");
+      toggleButton.classList.add("is-open");
+    }
+
     group.units.forEach(function (unit) {
       const unitLabel = document.createElement("label");
       unitLabel.className = "learned-unit-label";
@@ -217,7 +228,12 @@ function renderLearnedRangeSetting() {
       unitListElement.appendChild(unitLabel);
 
       unitCheckbox.addEventListener("change", function () {
-        updateLearnedUnitsFromCheckboxes();
+        updateLearnedUnitsFromContainer(container);
+
+        if (!settings.skipAfterChange) {
+          renderLearnedRangeSetting();
+          showDailyProblem();
+        }
       });
     });
 
@@ -228,7 +244,12 @@ function renderLearnedRangeSetting() {
         unitCheckbox.checked = courseCheckbox.checked;
       });
 
-      updateLearnedUnitsFromCheckboxes();
+      updateLearnedUnitsFromContainer(container);
+
+      if (!settings.skipAfterChange) {
+        renderLearnedRangeSetting();
+        showDailyProblem();
+      }
     });
 
     toggleButton.addEventListener("click", function () {
@@ -242,13 +263,17 @@ function renderLearnedRangeSetting() {
   });
 }
 
-function updateLearnedUnitsFromCheckboxes() {
+function renderLearnedRangeSetting() {
   const container = document.getElementById("learnedRangeSetting");
 
   if (!container) {
     return;
   }
 
+  createLearnedRangeSelector(container);
+}
+
+function updateLearnedUnitsFromContainer(container) {
   const checkedUnitIds = Array.from(
     container.querySelectorAll(".learned-unit-list input[type='checkbox']:checked")
   ).map(function (checkbox) {
@@ -260,9 +285,6 @@ function updateLearnedUnitsFromCheckboxes() {
   } else {
     saveLearnedUnitIds(checkedUnitIds);
   }
-
-  renderLearnedRangeSetting();
-  showDailyProblem();
 }
 
 function isProblemInLearnedRange(problem) {
@@ -280,6 +302,51 @@ function isProblemInLearnedRange(problem) {
 function filterProblemsByLearnedRange(problems) {
   return problems.filter(function (problem) {
     return isProblemInLearnedRange(problem);
+  });
+}
+
+function createInitialLearnedRangeModal() {
+  const oldModal = document.getElementById("initialLearnedRangeModal");
+
+  if (oldModal) {
+    oldModal.remove();
+  }
+
+  const modal = document.createElement("div");
+  modal.className = "learned-range-modal";
+  modal.id = "initialLearnedRangeModal";
+
+  modal.innerHTML = `
+    <div class="learned-range-modal-content">
+      <h2 class="learned-range-modal-title">
+        既に習った分野にチェックを入れてください（この質問は初回にしかされません）．
+      </h2>
+
+      <div id="initialLearnedRangeSetting" class="learned-range-setting learned-range-setting-modal"></div>
+
+      <button class="learned-range-start-button" id="learnedRangeStartButton">
+        この範囲で始める
+      </button>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  const initialContainer = document.getElementById("initialLearnedRangeSetting");
+  const startButton = document.getElementById("learnedRangeStartButton");
+
+  createLearnedRangeSelector(initialContainer, {
+    openAll: true,
+    skipAfterChange: true
+  });
+
+  startButton.addEventListener("click", function () {
+    updateLearnedUnitsFromContainer(initialContainer);
+    completeInitialLearnedRangeSetting();
+    modal.remove();
+    renderLearnedRangeSetting();
+    showDailyProblem();
+    createEntranceProblemModal();
   });
 }
 
@@ -477,7 +544,11 @@ function createEntranceProblemModal() {
 }
 
 if (document.body.dataset.page === "home") {
-  createEntranceProblemModal();
+  if (hasCompletedInitialLearnedRangeSetting()) {
+    createEntranceProblemModal();
+  } else {
+    createInitialLearnedRangeModal();
+  }
 }
 
 /* 個別問題ページの解答開閉 */
