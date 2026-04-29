@@ -36,6 +36,189 @@ if (menuButton && sidebar && overlay) {
   });
 }
 
+/* 右上検索box */
+
+function getPageDepthPrefix() {
+  const path = window.location.pathname;
+
+  if (path.includes("/dictionary/") || path.includes("/practice/")) {
+    return "../";
+  }
+
+  return "";
+}
+
+function createDictionarySearchBox() {
+  const dictionaryData = window.dictionaryData || [];
+
+  if (!Array.isArray(dictionaryData) || dictionaryData.length === 0) {
+    return;
+  }
+
+  const oldSearchBox = document.getElementById("dictionarySearchFloating");
+
+  if (oldSearchBox) {
+    oldSearchBox.remove();
+  }
+
+  const searchFloating = document.createElement("div");
+  searchFloating.className = "dictionary-search-floating";
+  searchFloating.id = "dictionarySearchFloating";
+
+  searchFloating.innerHTML = `
+    <div class="dictionary-search-box">
+      <span class="dictionary-search-label">Def.</span>
+      <span class="dictionary-search-icon">🔍</span>
+      <input
+        type="search"
+        class="dictionary-search-input"
+        id="dictionarySearchInput"
+        placeholder="用語を検索"
+        autocomplete="off"
+      >
+    </div>
+    <div class="dictionary-search-panel" id="dictionarySearchPanel"></div>
+  `;
+
+  document.body.appendChild(searchFloating);
+
+  const input = document.getElementById("dictionarySearchInput");
+  const panel = document.getElementById("dictionarySearchPanel");
+
+  function closePanel() {
+    panel.classList.remove("is-open");
+    panel.innerHTML = "";
+  }
+
+  function openPanel() {
+    panel.classList.add("is-open");
+  }
+
+  function getMatchedTerm(inputText) {
+    return dictionaryData.find(function (item) {
+      return item.term === inputText;
+    });
+  }
+
+  function getSuggestions(inputText) {
+    if (!inputText) {
+      return [];
+    }
+
+    return dictionaryData.filter(function (item) {
+      const term = item.term || "";
+      const kana = item.kana || "";
+      const yomi = item.yomi || "";
+
+      return (
+        term.includes(inputText) ||
+        kana.includes(inputText) ||
+        yomi.includes(inputText)
+      );
+    });
+  }
+
+  function getDictionaryUrl(url) {
+    return getPageDepthPrefix() + url;
+  }
+
+  function showPreview(item) {
+    const detailUrl = getDictionaryUrl(item.url);
+
+    panel.innerHTML = `
+      <h2 class="dictionary-search-preview-title">${item.term}</h2>
+      <p class="dictionary-search-preview-text">${item.description}</p>
+      <a class="dictionary-search-preview-link" href="${detailUrl}">
+        詳しく見る
+      </a>
+    `;
+
+    openPanel();
+  }
+
+  function showSuggestions(suggestions) {
+    if (suggestions.length === 0) {
+      panel.innerHTML = `
+        <p class="dictionary-search-empty">一致する候補はありません．</p>
+      `;
+      openPanel();
+      return;
+    }
+
+    const suggestionButtonsHtml = suggestions.map(function (item) {
+      return `
+        <button
+          type="button"
+          class="dictionary-search-suggestion-button"
+          data-term="${item.term}"
+        >
+          ${item.term}
+        </button>
+      `;
+    }).join("");
+
+    panel.innerHTML = `
+      <div class="dictionary-search-suggestion-title">候補</div>
+      <div class="dictionary-search-suggestion-list">
+        ${suggestionButtonsHtml}
+      </div>
+    `;
+
+    const suggestionButtons = panel.querySelectorAll(".dictionary-search-suggestion-button");
+
+    suggestionButtons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        const selectedTerm = button.dataset.term;
+        input.value = selectedTerm;
+
+        const selectedItem = getMatchedTerm(selectedTerm);
+
+        if (selectedItem) {
+          showPreview(selectedItem);
+        }
+      });
+    });
+
+    openPanel();
+  }
+
+  function updateSearchResult() {
+    const inputText = input.value.trim();
+
+    if (!inputText) {
+      closePanel();
+      return;
+    }
+
+    const matchedTerm = getMatchedTerm(inputText);
+
+    if (matchedTerm) {
+      showPreview(matchedTerm);
+      return;
+    }
+
+    const suggestions = getSuggestions(inputText);
+    showSuggestions(suggestions);
+  }
+
+  input.addEventListener("input", updateSearchResult);
+
+  input.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+      input.value = "";
+      closePanel();
+    }
+  });
+
+  document.addEventListener("click", function (event) {
+    if (!searchFloating.contains(event.target)) {
+      closePanel();
+    }
+  });
+}
+
+createDictionarySearchBox();
+
 /* 既習範囲設定 */
 
 const learnedUnitsStorageKey = "learnedUnitIds";
