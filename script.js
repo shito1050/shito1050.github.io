@@ -267,7 +267,12 @@ function createDictionarySearchBox() {
     panel.innerHTML = `
       <h2 class="dictionary-search-preview-title">${item.term}</h2>
       <p class="dictionary-search-preview-text">${previewText}</p>
-      <a class="dictionary-search-preview-link" href="${getDictionaryTermUrl(item)}">
+      <a
+        class="dictionary-search-preview-link"
+        href="${getDictionaryTermUrl(item)}"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         詳しく見る
       </a>
     `;
