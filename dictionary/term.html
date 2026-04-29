@@ -1,1 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>定義・用語・公式集｜しぃとのホームページ</title>
+  <link rel="stylesheet" href="../style.css">
 
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']]
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-page="dictionary-term">
+  <button class="menu-button" id="menuButton" aria-label="メニューを開く">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <div class="overlay" id="overlay"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <a class="site-title site-title-link" href="../index.html">
+      <div class="site-title-main">しぃとの</div>
+      <div class="site-title-sub">ホームページ</div>
+    </a>
+
+    <nav class="side-nav">
+      <a href="../about.html">このサイトについて</a>
+      <a href="index.html">定義・用語・公式集</a>
+      <a href="../lessons.html">授業</a>
+      <a href="../practice.html">問題演習</a>
+      <a href="../daily.html">今日の1問</a>
+      <a href="../blog.html">ブログ</a>
+    </nav>
+
+    <div class="learned-range-box">
+      <div class="learned-range-title">既習範囲設定</div>
+      <div id="learnedRangeSetting" class="learned-range-setting"></div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <section class="content-section">
+      <div class="definition-card" id="dictionaryTermDetail">
+      </div>
+
+      <div class="back-link-area">
+        <a href="index.html">定義・用語・公式集へ戻る</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="../data/dictionary-data.js"></script>
+  <script src="../script.js"></script>
+</body>
+</html>
