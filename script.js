@@ -36,7 +36,9 @@ if (menuButton && sidebar && overlay) {
   });
 }
 
-/* 右上検索box */
+/* =========================
+   パス管理
+========================= */
 
 function getPageDepthPrefix() {
   const path = window.location.pathname;
@@ -48,10 +50,40 @@ function getPageDepthPrefix() {
   return "";
 }
 
-function createDictionarySearchBox() {
+function getDictionaryTermUrl(item) {
+  return getPageDepthPrefix() + "dictionary/term.html?id=" + encodeURIComponent(item.id);
+}
+
+function getDictionaryTermUrlFromDictionaryFolder(item) {
+  return "term.html?id=" + encodeURIComponent(item.id);
+}
+
+/* =========================
+   定義・用語・公式集
+========================= */
+
+function getDictionaryData() {
   const dictionaryData = window.dictionaryData || [];
 
-  if (!Array.isArray(dictionaryData) || dictionaryData.length === 0) {
+  if (!Array.isArray(dictionaryData)) {
+    return [];
+  }
+
+  return dictionaryData;
+}
+
+function findDictionaryItemById(id) {
+  const dictionaryData = getDictionaryData();
+
+  return dictionaryData.find(function (item) {
+    return item.id === id;
+  });
+}
+
+function createDictionarySearchBox() {
+  const dictionaryData = getDictionaryData();
+
+  if (dictionaryData.length === 0) {
     return;
   }
 
@@ -118,17 +150,13 @@ function createDictionarySearchBox() {
     });
   }
 
-  function getDictionaryUrl(url) {
-    return getPageDepthPrefix() + url;
-  }
-
   function showPreview(item) {
-    const detailUrl = getDictionaryUrl(item.url);
+    const previewText = item.shortDescription || item.description || "";
 
     panel.innerHTML = `
       <h2 class="dictionary-search-preview-title">${item.term}</h2>
-      <p class="dictionary-search-preview-text">${item.description}</p>
-      <a class="dictionary-search-preview-link" href="${detailUrl}">
+      <p class="dictionary-search-preview-text">${previewText}</p>
+      <a class="dictionary-search-preview-link" href="${getDictionaryTermUrl(item)}">
         詳しく見る
       </a>
     `;
@@ -217,7 +245,98 @@ function createDictionarySearchBox() {
   });
 }
 
+function renderDictionaryIndex() {
+  const dictionaryIndexArea = document.getElementById("dictionaryIndexArea");
+
+  if (!dictionaryIndexArea) {
+    return;
+  }
+
+  const dictionaryData = getDictionaryData();
+
+  if (dictionaryData.length === 0) {
+    dictionaryIndexArea.innerHTML = `
+      <p>現在，用語は準備中です．</p>
+    `;
+    return;
+  }
+
+  const groupedItems = {};
+
+  dictionaryData.forEach(function (item) {
+    const group = item.group || "その他";
+
+    if (!groupedItems[group]) {
+      groupedItems[group] = [];
+    }
+
+    groupedItems[group].push(item);
+  });
+
+  const groupKeys = Object.keys(groupedItems).sort(function (a, b) {
+    return a.localeCompare(b, "ja");
+  });
+
+  const indexHtml = groupKeys.map(function (group) {
+    const items = groupedItems[group].sort(function (a, b) {
+      return (a.kana || a.term).localeCompare(b.kana || b.term, "ja");
+    });
+
+    const itemLinksHtml = items.map(function (item) {
+      return `
+        <li>
+          <a href="${getDictionaryTermUrlFromDictionaryFolder(item)}">${item.term}</a>
+        </li>
+      `;
+    }).join("");
+
+    return `
+      <div class="dictionary-group">
+        <h2 class="dictionary-kana-heading">【${group}】</h2>
+        <ul class="dictionary-term-list">
+          ${itemLinksHtml}
+        </ul>
+      </div>
+    `;
+  }).join("");
+
+  dictionaryIndexArea.innerHTML = indexHtml;
+}
+
+function renderDictionaryTermDetail() {
+  const detailArea = document.getElementById("dictionaryTermDetail");
+
+  if (!detailArea) {
+    return;
+  }
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const termId = urlParams.get("id");
+  const item = findDictionaryItemById(termId);
+
+  if (!item) {
+    detailArea.innerHTML = `
+      <h1 class="definition-title">用語が見つかりません</h1>
+      <p>指定された用語は見つかりませんでした．</p>
+    `;
+    return;
+  }
+
+  document.title = item.term + "｜定義・用語・公式集｜しぃとのホームページ";
+
+  detailArea.innerHTML = `
+    <h1 class="definition-title">${item.term}</h1>
+    <p>${item.description}</p>
+  `;
+
+  if (window.MathJax) {
+    MathJax.typesetPromise();
+  }
+}
+
 createDictionarySearchBox();
+renderDictionaryIndex();
+renderDictionaryTermDetail();
 
 /* 既習範囲設定 */
 
