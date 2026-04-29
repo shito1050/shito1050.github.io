@@ -688,42 +688,52 @@ body {
    定義・用語・公式集
 ========================= */
 
-.dictionary-list {
-  display: grid;
-  gap: 12px;
+.dictionary-group {
+  padding: 4px 0;
 }
 
-.dictionary-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 14px 16px;
-  border-radius: 16px;
-  background: var(--light-pink);
-  border: 1px solid rgba(217, 95, 152, 0.25);
-}
-
-.dictionary-kana {
+.dictionary-kana-heading {
+  margin: 0 0 10px;
+  padding-left: 0;
+  border-left: none;
   color: var(--deep-pink);
-  font-weight: bold;
+  font-size: 1.35rem;
+  line-height: 1.5;
 }
 
-.dictionary-row a {
+.dictionary-term-list {
+  margin: 0;
+  padding-left: 1.5em;
+  list-style: none;
+}
+
+.dictionary-term-list li {
+  margin: 6px 0;
+}
+
+.dictionary-term-list a {
   color: var(--text-color);
   font-weight: bold;
   text-decoration: none;
 }
 
-.dictionary-row a:hover {
+.dictionary-term-list a:hover {
   color: var(--deep-pink);
   text-decoration: underline;
 }
 
 .definition-card {
-  padding: 24px;
-  border-radius: 20px;
+  padding: 28px 30px;
+  border-radius: 24px;
   background: var(--light-pink);
   border: 1px solid rgba(217, 95, 152, 0.25);
+}
+
+.definition-title {
+  margin: 0 0 16px;
+  color: var(--deep-pink);
+  font-size: 2rem;
+  line-height: 1.4;
 }
 
 .definition-card p {
@@ -740,4 +750,14 @@ body {
 
 .back-link-area a:hover {
   text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .definition-card {
+    padding: 24px 20px;
+  }
+
+  .definition-title {
+    font-size: 1.7rem;
+  }
 }
