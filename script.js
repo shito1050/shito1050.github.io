@@ -262,7 +262,7 @@ function createDictionarySearchBox() {
   }
 
   function showPreview(item) {
-    const previewText = item.shortDescription || item.description || "";
+    const previewText = item.description || item.shortDescription || "";
 
     panel.innerHTML = `
       <h2 class="dictionary-search-preview-title">${item.term}</h2>
@@ -305,18 +305,27 @@ function createDictionarySearchBox() {
 
     const suggestionButtons = panel.querySelectorAll(".dictionary-search-suggestion-button");
 
+    function selectSuggestion(event, button) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      const selectedTerm = button.dataset.term;
+      input.value = selectedTerm;
+
+      const selectedItem = getMatchedTerm(selectedTerm);
+
+      if (selectedItem) {
+        showPreview(selectedItem);
+      }
+    }
+
     suggestionButtons.forEach(function (button) {
+      button.addEventListener("pointerdown", function (event) {
+        selectSuggestion(event, button);
+      });
+
       button.addEventListener("click", function (event) {
-        event.stopPropagation();
-
-        const selectedTerm = button.dataset.term;
-        input.value = selectedTerm;
-
-        const selectedItem = getMatchedTerm(selectedTerm);
-
-        if (selectedItem) {
-          showPreview(selectedItem);
-        }
+        selectSuggestion(event, button);
       });
     });
 
