@@ -928,3 +928,11 @@ body {
     font-size: 1.7rem;
   }
 }
+
+/* =========================
+   検索box調整
+========================= */
+
+.dictionary-search-label {
+  display: none;
+}
