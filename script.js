@@ -306,7 +306,9 @@ function createDictionarySearchBox() {
     const suggestionButtons = panel.querySelectorAll(".dictionary-search-suggestion-button");
 
     suggestionButtons.forEach(function (button) {
-      button.addEventListener("click", function () {
+      button.addEventListener("click", function (event) {
+        event.stopPropagation();
+
         const selectedTerm = button.dataset.term;
         input.value = selectedTerm;
 
