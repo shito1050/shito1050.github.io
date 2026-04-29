@@ -1,9 +1,126 @@
+/* =========================
+   共通パス管理
+========================= */
+
+function getPageDepth() {
+  if (document.body && document.body.dataset.depth) {
+    return document.body.dataset.depth;
+  }
+
+  const path = window.location.pathname;
+
+  if (path.includes("/dictionary/") || path.includes("/practice/")) {
+    return "child";
+  }
+
+  return "root";
+}
+
+function getPageDepthPrefix() {
+  return getPageDepth() === "child" ? "../" : "";
+}
+
+function getPageName() {
+  if (document.body && document.body.dataset.page) {
+    return document.body.dataset.page;
+  }
+
+  return "";
+}
+
+function makePath(pathFromRoot) {
+  return getPageDepthPrefix() + pathFromRoot;
+}
+
+/* =========================
+   共通サイドバー
+========================= */
+
+function createCommonSidebar() {
+  const commonSidebarArea = document.getElementById("commonSidebar");
+
+  if (!commonSidebarArea) {
+    return;
+  }
+
+  const currentPage = getPageName();
+
+  const navItems = [
+    {
+      page: "about",
+      text: "このサイトについて",
+      href: "about.html"
+    },
+    {
+      page: "dictionary",
+      text: "定義・用語・公式集",
+      href: "dictionary/index.html"
+    },
+    {
+      page: "lessons",
+      text: "授業",
+      href: "lessons.html"
+    },
+    {
+      page: "practice",
+      text: "問題演習",
+      href: "practice.html"
+    },
+    {
+      page: "daily",
+      text: "今日の1問",
+      href: "daily.html"
+    },
+    {
+      page: "blog",
+      text: "ブログ",
+      href: "blog.html"
+    }
+  ];
+
+  const navHtml = navItems.map(function (item) {
+    const activeClass = currentPage === item.page ? " class=\"active\"" : "";
+
+    return `
+      <a href="${makePath(item.href)}"${activeClass}>${item.text}</a>
+    `;
+  }).join("");
+
+  commonSidebarArea.innerHTML = `
+    <aside class="sidebar" id="sidebar">
+      <a class="site-title site-title-link" href="${makePath("index.html")}">
+        <div class="site-title-main">しぃとの</div>
+        <div class="site-title-sub">ホームページ</div>
+      </a>
+
+      <nav class="side-nav">
+        ${navHtml}
+      </nav>
+
+      <div class="learned-range-box">
+        <div class="learned-range-title">既習範囲設定</div>
+        <div id="learnedRangeSetting" class="learned-range-setting"></div>
+      </div>
+    </aside>
+  `;
+}
+
+createCommonSidebar();
+
+/* =========================
+   スマホ用メニュー
+========================= */
+
 const menuButton = document.getElementById("menuButton");
 const sidebar = document.getElementById("sidebar");
 const overlay = document.getElementById("overlay");
 const navLinks = document.querySelectorAll(".side-nav a");
 
 function openMenu() {
+  if (!menuButton || !sidebar || !overlay) {
+    return;
+  }
+
   menuButton.classList.add("is-open");
   sidebar.classList.add("is-open");
   overlay.classList.add("is-open");
@@ -11,6 +128,10 @@ function openMenu() {
 }
 
 function closeMenu() {
+  if (!menuButton || !sidebar || !overlay) {
+    return;
+  }
+
   menuButton.classList.remove("is-open");
   sidebar.classList.remove("is-open");
   overlay.classList.remove("is-open");
@@ -18,6 +139,10 @@ function closeMenu() {
 }
 
 function toggleMenu() {
+  if (!sidebar) {
+    return;
+  }
+
   if (sidebar.classList.contains("is-open")) {
     closeMenu();
   } else {
@@ -37,30 +162,16 @@ if (menuButton && sidebar && overlay) {
 }
 
 /* =========================
-   パス管理
+   定義・用語・公式集
 ========================= */
 
-function getPageDepthPrefix() {
-  const path = window.location.pathname;
-
-  if (path.includes("/dictionary/") || path.includes("/practice/")) {
-    return "../";
-  }
-
-  return "";
-}
-
 function getDictionaryTermUrl(item) {
-  return getPageDepthPrefix() + "dictionary/term.html?id=" + encodeURIComponent(item.id);
+  return makePath("dictionary/term.html?id=" + encodeURIComponent(item.id));
 }
 
 function getDictionaryTermUrlFromDictionaryFolder(item) {
   return "term.html?id=" + encodeURIComponent(item.id);
 }
-
-/* =========================
-   定義・用語・公式集
-========================= */
 
 function getDictionaryData() {
   const dictionaryData = window.dictionaryData || [];
@@ -338,7 +449,9 @@ createDictionarySearchBox();
 renderDictionaryIndex();
 renderDictionaryTermDetail();
 
-/* 既習範囲設定 */
+/* =========================
+   既習範囲設定
+========================= */
 
 const learnedUnitsStorageKey = "learnedUnitIds";
 const initialLearnedRangeSettingKey = "hasCompletedInitialLearnedRangeSetting";
@@ -669,7 +782,9 @@ function createInitialLearnedRangeModal() {
 
 renderLearnedRangeSetting();
 
-/* 今日の1問 */
+/* =========================
+   今日の1問
+========================= */
 
 const practiceProblems = [
   {
@@ -712,7 +827,7 @@ function showDailyProblem() {
         ${problem.formula}
         \\]
       </div>
-      <a class="answer-link-button" href="${problem.url}?answer=open">
+      <a class="answer-link-button" href="${makePath(problem.url)}?answer=open">
         解答を見る
       </a>
     </div>
@@ -725,7 +840,9 @@ function showDailyProblem() {
 
 showDailyProblem();
 
-/* 入場問題 */
+/* =========================
+   入場問題
+========================= */
 
 const entranceProblems = [
   {
@@ -868,7 +985,9 @@ if (document.body.dataset.page === "home") {
   }
 }
 
-/* 個別問題ページの解答開閉 */
+/* =========================
+   個別問題ページの解答開閉
+========================= */
 
 const answerBox = document.getElementById("answerBox");
 const answerCloseButton = document.getElementById("answerCloseButton");
