@@ -9,7 +9,11 @@ function getPageDepth() {
 
   const path = window.location.pathname;
 
-  if (path.includes("/dictionary/") || path.includes("/practice/")) {
+  if (
+    path.includes("/dictionary/") ||
+    path.includes("/practice/") ||
+    path.includes("/lessons/")
+  ) {
     return "child";
   }
 
@@ -59,7 +63,7 @@ function createCommonSidebar() {
     {
       page: "lessons",
       text: "授業",
-      href: "lessons.html"
+      href: "lessons/index.html"
     },
     {
       page: "practice",
