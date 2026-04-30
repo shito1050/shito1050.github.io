@@ -1,0 +1,414 @@
+/* =========================
+   授業本文ページ
+========================= */
+
+.lesson-page {
+  display: grid;
+  gap: 20px;
+}
+
+.lesson-breadcrumb {
+  margin: 0 0 10px;
+  color: rgba(51, 51, 51, 0.62);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.lesson-title-area {
+  margin-bottom: 18px;
+}
+
+.lesson-kou-number {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--light-pink);
+  color: var(--deep-pink);
+  font-size: 0.9rem;
+  font-weight: bold;
+  line-height: 1.5;
+}
+
+.lesson-main-title {
+  margin: 0;
+  color: var(--deep-pink);
+  font-size: 2rem;
+  line-height: 1.45;
+}
+
+.lesson-lead {
+  margin: 12px 0 0;
+  line-height: 2;
+  font-size: 1.02rem;
+}
+
+/* =========================
+   授業ブロック共通
+========================= */
+
+.lesson-block {
+  position: relative;
+  margin: 18px 0;
+  padding: 20px 22px;
+  border-radius: 20px;
+  background: var(--white);
+  border: 1px solid rgba(217, 95, 152, 0.18);
+  box-shadow: 0 6px 18px rgba(217, 95, 152, 0.08);
+  overflow: hidden;
+}
+
+.lesson-block::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 6px;
+  background: var(--main-pink);
+}
+
+.lesson-block-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 12px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--light-pink);
+  color: var(--deep-pink);
+  font-size: 0.92rem;
+  font-weight: bold;
+  line-height: 1.4;
+}
+
+.lesson-block p {
+  margin: 0;
+  line-height: 2;
+}
+
+.lesson-block p + p {
+  margin-top: 10px;
+}
+
+.lesson-block ul,
+.lesson-block ol {
+  margin: 10px 0 0;
+  padding-left: 1.4em;
+  line-height: 2;
+}
+
+.lesson-block li + li {
+  margin-top: 4px;
+}
+
+/* =========================
+   ブロック種類
+========================= */
+
+.lesson-terms {
+  background: #fffafd;
+}
+
+.lesson-definition {
+  background: var(--light-pink);
+}
+
+.lesson-definition::before {
+  background: var(--deep-pink);
+}
+
+.lesson-point {
+  background: linear-gradient(135deg, #fff1f7, #ffffff);
+}
+
+.lesson-point::before {
+  background: var(--deep-pink);
+}
+
+.lesson-question {
+  background: #ffffff;
+}
+
+.lesson-question::before {
+  background: #ef8db9;
+}
+
+.lesson-practice {
+  background: #fff8fb;
+}
+
+.lesson-practice::before {
+  background: #f59ac2;
+}
+
+.lesson-example {
+  background: #ffffff;
+}
+
+.lesson-comment {
+  background: #fbf7fa;
+}
+
+.lesson-comment::before {
+  background: #c98aac;
+}
+
+.lesson-note {
+  background: #fbf7fa;
+}
+
+.lesson-note::before {
+  background: #d7a9c0;
+}
+
+.lesson-warning {
+  background: #fff5f5;
+}
+
+.lesson-warning::before {
+  background: #e36b7f;
+}
+
+/* =========================
+   用語リスト
+========================= */
+
+.lesson-term-list {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+}
+
+.lesson-term-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px 12px;
+  align-items: baseline;
+  line-height: 2;
+}
+
+.lesson-term-name {
+  color: var(--deep-pink);
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.lesson-term-description {
+  min-width: 0;
+}
+
+.lesson-term-note {
+  color: var(--deep-pink);
+  font-weight: bold;
+}
+
+/* =========================
+   本文中の強調
+========================= */
+
+.lesson-emphasis {
+  color: var(--deep-pink);
+  font-weight: bold;
+}
+
+.lesson-marker {
+  background: linear-gradient(transparent 62%, rgba(246, 166, 200, 0.42) 62%);
+  font-weight: bold;
+}
+
+.lesson-small-note {
+  color: rgba(51, 51, 51, 0.68);
+  font-size: 0.92rem;
+}
+
+.lesson-teacher-talk {
+  margin: 14px 0 0;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: var(--light-pink);
+  line-height: 2;
+}
+
+.lesson-teacher-talk p {
+  margin: 0;
+}
+
+/* =========================
+   問題・小問
+========================= */
+
+.lesson-problem-title {
+  margin: 0 0 12px;
+  color: var(--text-color);
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+.lesson-problem-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.lesson-problem-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px;
+  align-items: baseline;
+  line-height: 2;
+}
+
+.lesson-problem-number {
+  color: var(--deep-pink);
+  font-weight: bold;
+}
+
+.lesson-problem-expression {
+  min-width: 0;
+}
+
+.lesson-inline-comment {
+  color: var(--deep-pink);
+  font-size: 0.92rem;
+  line-height: 1.8;
+}
+
+/* =========================
+   解答開閉
+========================= */
+
+.lesson-answer-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 16px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 999px;
+  background: var(--deep-pink);
+  color: var(--white);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.lesson-answer-toggle:hover {
+  transform: translateY(-2px);
+  opacity: 0.88;
+}
+
+.lesson-answer-box {
+  margin-top: 14px;
+  padding: 16px 18px;
+  border-radius: 18px;
+  background: var(--white);
+  border: 1px solid rgba(217, 95, 152, 0.24);
+  line-height: 2;
+}
+
+.lesson-answer-box.is-hidden {
+  display: none;
+}
+
+.lesson-answer-title {
+  margin: 0 0 8px;
+  color: var(--deep-pink);
+  font-weight: bold;
+}
+
+.lesson-answer-box p {
+  margin: 0;
+}
+
+.lesson-answer-box p + p {
+  margin-top: 8px;
+}
+
+/* =========================
+   授業ナビ
+========================= */
+
+.lesson-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.lesson-nav a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--white);
+  border: 1px solid rgba(217, 95, 152, 0.24);
+  color: var(--deep-pink);
+  font-weight: bold;
+  text-decoration: none;
+  line-height: 1.5;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.lesson-nav a:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+/* =========================
+   MathJax調整
+========================= */
+
+.lesson-page mjx-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
+
+.lesson-page .math-block,
+.lesson-page .math-display {
+  text-align: left;
+}
+
+/* =========================
+   スマホ対応：授業本文
+========================= */
+
+@media (max-width: 768px) {
+  .lesson-main-title {
+    font-size: 1.65rem;
+  }
+
+  .lesson-block {
+    margin: 16px 0;
+    padding: 18px 16px 18px 18px;
+    border-radius: 18px;
+  }
+
+  .lesson-block::before {
+    width: 5px;
+  }
+
+  .lesson-term-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .lesson-term-name {
+    white-space: normal;
+  }
+
+  .lesson-problem-item {
+    grid-template-columns: auto 1fr;
+  }
+
+  .lesson-nav {
+    flex-direction: column;
+  }
+
+  .lesson-nav a {
+    width: 100%;
+  }
+}
