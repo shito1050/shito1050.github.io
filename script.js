@@ -891,6 +891,11 @@ const entranceProblems = [
   }
 ];
 
+const entranceActivityStorageKey = "lastEntranceActivityAt";
+const entranceIntervalMilliseconds = 60 * 60 * 1000;
+
+let lastEntranceActivitySaveTime = 0;
+
 function getEntranceProblem() {
   const filteredProblems = filterProblemsByLearnedRange(entranceProblems);
 
@@ -900,6 +905,71 @@ function getEntranceProblem() {
 
   const randomIndex = Math.floor(Math.random() * filteredProblems.length);
   return filteredProblems[randomIndex];
+}
+
+function getLastEntranceActivityTime() {
+  const savedValue = localStorage.getItem(entranceActivityStorageKey);
+  const savedTime = Number(savedValue);
+
+  if (!savedValue || Number.isNaN(savedTime)) {
+    return 0;
+  }
+
+  return savedTime;
+}
+
+function saveEntranceActivityTime() {
+  const now = Date.now();
+  localStorage.setItem(entranceActivityStorageKey, String(now));
+  lastEntranceActivitySaveTime = now;
+}
+
+function isEntranceProblemModalOpen() {
+  return Boolean(document.getElementById("entranceModal"));
+}
+
+function isInitialLearnedRangeModalOpen() {
+  return Boolean(document.getElementById("initialLearnedRangeModal"));
+}
+
+function shouldShowEntranceProblemModal() {
+  const lastActivityTime = getLastEntranceActivityTime();
+
+  if (lastActivityTime === 0) {
+    return true;
+  }
+
+  return Date.now() - lastActivityTime >= entranceIntervalMilliseconds;
+}
+
+function recordEntranceActivityIfAllowed() {
+  if (isEntranceProblemModalOpen() || isInitialLearnedRangeModalOpen()) {
+    return;
+  }
+
+  const now = Date.now();
+
+  if (now - lastEntranceActivitySaveTime < 10000) {
+    return;
+  }
+
+  saveEntranceActivityTime();
+}
+
+function startEntranceActivityTracking() {
+  const activityEvents = ["click", "keydown", "scroll", "touchstart", "mousemove"];
+
+  activityEvents.forEach(function (eventName) {
+    window.addEventListener(eventName, recordEntranceActivityIfAllowed, {
+      passive: true
+    });
+  });
+
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "visible") {
+      recordEntranceActivityIfAllowed();
+    }
+  });
 }
 
 function createEntranceProblemModal() {
@@ -912,6 +982,7 @@ function createEntranceProblemModal() {
   const problem = getEntranceProblem();
 
   if (!problem) {
+    saveEntranceActivityTime();
     return;
   }
 
@@ -989,17 +1060,28 @@ function createEntranceProblemModal() {
   });
 
   closeButton.addEventListener("click", function () {
+    saveEntranceActivityTime();
     modal.remove();
   });
 }
 
-if (document.body.dataset.page === "home") {
-  if (hasCompletedInitialLearnedRangeSetting()) {
+function initializeEntranceProblemSystem() {
+  if (!hasCompletedInitialLearnedRangeSetting()) {
+    createInitialLearnedRangeModal();
+    startEntranceActivityTracking();
+    return;
+  }
+
+  if (shouldShowEntranceProblemModal()) {
     createEntranceProblemModal();
   } else {
-    createInitialLearnedRangeModal();
+    saveEntranceActivityTime();
   }
+
+  startEntranceActivityTracking();
 }
+
+initializeEntranceProblemSystem();
 
 /* =========================
    個別問題ページの解答開閉
