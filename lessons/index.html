@@ -5,10 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>授業｜しぃとのホームページ</title>
   <link rel="stylesheet" href="../style.css">
-  <script src="../data/lessons-data.js"></script>
-  <script src="../script.js" defer></script>
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']]
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 </head>
-<body>
+<body data-page="lessons" data-depth="child">
   <button class="menu-button" id="menuButton" aria-label="メニューを開く">
     <span></span>
     <span></span>
@@ -17,26 +25,7 @@
 
   <div class="overlay" id="overlay"></div>
 
-  <aside class="sidebar" id="sidebar">
-    <a class="site-title site-title-link" href="../index.html">
-      <div class="site-title-main">しぃと</div>
-      <div class="site-title-sub">高校数学の教材置き場</div>
-    </a>
-
-    <nav class="side-nav">
-      <a href="../about.html">このサイトについて</a>
-      <a href="../dictionary/index.html">定義・用語・公式集</a>
-      <a href="./index.html" class="active">授業</a>
-      <a href="../practice.html">問題演習</a>
-      <a href="../daily.html">今日の1問</a>
-      <a href="../index.html">ブログ</a>
-    </nav>
-
-    <div class="learned-range-box">
-      <div class="learned-range-title">既習範囲設定</div>
-      <div class="learned-range-setting" id="learnedRangeSetting"></div>
-    </div>
-  </aside>
+  <div id="commonSidebar"></div>
 
   <main class="main-content">
     <section class="hero">
@@ -49,6 +38,10 @@
     </section>
   </main>
 
+  <script src="../data/dictionary-data.js"></script>
+  <script src="../data/lessons-data.js"></script>
+  <script src="../script.js"></script>
+
   <script>
     function createLessonIndex() {
       const lessonIndex = document.getElementById("lessonIndex");
@@ -59,7 +52,7 @@
 
       lessonIndex.innerHTML = "";
 
-      LESSONS_DATA.forEach((subject) => {
+      LESSONS_DATA.forEach(function (subject) {
         const subjectBlock = document.createElement("section");
         subjectBlock.className = "lesson-subject-block";
 
@@ -71,7 +64,7 @@
         const unitList = document.createElement("div");
         unitList.className = "lesson-unit-list";
 
-        subject.units.forEach((unit) => {
+        subject.units.forEach(function (unit) {
           const unitBlock = document.createElement("section");
           unitBlock.className = "lesson-unit-block";
 
@@ -89,7 +82,7 @@
             emptyText.textContent = "準備中";
             unitBlock.appendChild(emptyText);
           } else {
-            unit.lessons.forEach((lesson, index) => {
+            unit.lessons.forEach(function (lesson, index) {
               const lessonItem = document.createElement("li");
               lessonItem.className = "lesson-item";
 
@@ -122,7 +115,7 @@
       });
     }
 
-    document.addEventListener("DOMContentLoaded", createLessonIndex);
+    createLessonIndex();
   </script>
 </body>
 </html>
