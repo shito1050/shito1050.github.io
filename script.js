@@ -262,7 +262,7 @@ function createDictionarySearchBox() {
   }
 
   function showPreview(item) {
-    const previewText = item.description || item.shortDescription || "";
+    const previewText = item.shortDescription || item.description || "";
 
     panel.innerHTML = `
       <h2 class="dictionary-search-preview-title">${item.term}</h2>
