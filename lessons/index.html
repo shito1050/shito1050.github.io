@@ -1,1 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>授業｜しぃとのホームページ</title>
+  <link rel="stylesheet" href="../style.css">
+  <script src="../data/lessons-data.js"></script>
+  <script src="../script.js" defer></script>
+</head>
+<body>
+  <button class="menu-button" id="menuButton" aria-label="メニューを開く">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 
+  <div class="overlay" id="overlay"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <a class="site-title site-title-link" href="../index.html">
+      <div class="site-title-main">しぃと</div>
+      <div class="site-title-sub">高校数学の教材置き場</div>
+    </a>
+
+    <nav class="side-nav">
+      <a href="../about.html">このサイトについて</a>
+      <a href="../dictionary/index.html">定義・用語・公式集</a>
+      <a href="./index.html" class="active">授業</a>
+      <a href="../practice.html">問題演習</a>
+      <a href="../daily.html">今日の1問</a>
+      <a href="../index.html">ブログ</a>
+    </nav>
+
+    <div class="learned-range-box">
+      <div class="learned-range-title">既習範囲設定</div>
+      <div class="learned-range-setting" id="learnedRangeSetting"></div>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <section class="hero">
+      <h1>授業</h1>
+    </section>
+
+    <section class="content-section">
+      <h2>授業一覧</h2>
+      <div class="lesson-index" id="lessonIndex"></div>
+    </section>
+  </main>
+
+  <script>
+    function createLessonIndex() {
+      const lessonIndex = document.getElementById("lessonIndex");
+
+      if (!lessonIndex || typeof LESSONS_DATA === "undefined") {
+        return;
+      }
+
+      lessonIndex.innerHTML = "";
+
+      LESSONS_DATA.forEach((subject) => {
+        const subjectBlock = document.createElement("section");
+        subjectBlock.className = "lesson-subject-block";
+
+        const subjectTitle = document.createElement("h3");
+        subjectTitle.className = "lesson-subject-title";
+        subjectTitle.textContent = subject.title;
+        subjectBlock.appendChild(subjectTitle);
+
+        const unitList = document.createElement("div");
+        unitList.className = "lesson-unit-list";
+
+        subject.units.forEach((unit) => {
+          const unitBlock = document.createElement("section");
+          unitBlock.className = "lesson-unit-block";
+
+          const unitTitle = document.createElement("h4");
+          unitTitle.className = "lesson-unit-title";
+          unitTitle.textContent = unit.title;
+          unitBlock.appendChild(unitTitle);
+
+          const lessonList = document.createElement("ol");
+          lessonList.className = "lesson-list";
+
+          if (unit.lessons.length === 0) {
+            const emptyText = document.createElement("p");
+            emptyText.className = "lesson-empty-text";
+            emptyText.textContent = "準備中";
+            unitBlock.appendChild(emptyText);
+          } else {
+            unit.lessons.forEach((lesson, index) => {
+              const lessonItem = document.createElement("li");
+              lessonItem.className = "lesson-item";
+
+              const lessonLink = document.createElement("a");
+              lessonLink.className = "lesson-link";
+              lessonLink.href = "../" + lesson.path;
+
+              const lessonNumber = document.createElement("span");
+              lessonNumber.className = "lesson-number";
+              lessonNumber.textContent = "第" + (index + 1) + "講";
+
+              const lessonTitle = document.createElement("span");
+              lessonTitle.className = "lesson-title";
+              lessonTitle.textContent = lesson.title;
+
+              lessonLink.appendChild(lessonNumber);
+              lessonLink.appendChild(lessonTitle);
+              lessonItem.appendChild(lessonLink);
+              lessonList.appendChild(lessonItem);
+            });
+
+            unitBlock.appendChild(lessonList);
+          }
+
+          unitList.appendChild(unitBlock);
+        });
+
+        subjectBlock.appendChild(unitList);
+        lessonIndex.appendChild(subjectBlock);
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", createLessonIndex);
+  </script>
+</body>
+</html>
