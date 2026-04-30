@@ -2,26 +2,50 @@
    共通パス管理
 ========================= */
 
+function inferDepthPrefixFromPath() {
+  const path = window.location.pathname;
+
+  const folderNames = ["/dictionary/", "/practice/", "/lessons/"];
+
+  for (let i = 0; i < folderNames.length; i++) {
+    const folderName = folderNames[i];
+
+    if (path.includes(folderName)) {
+      const afterFolderPath = path.split(folderName)[1] || "";
+      const slashCount = (afterFolderPath.match(/\//g) || []).length;
+      return "../".repeat(slashCount + 1);
+    }
+  }
+
+  return "";
+}
+
 function getPageDepth() {
   if (document.body && document.body.dataset.depth) {
     return document.body.dataset.depth;
   }
 
-  const path = window.location.pathname;
+  const inferredPrefix = inferDepthPrefixFromPath();
 
-  if (
-    path.includes("/dictionary/") ||
-    path.includes("/practice/") ||
-    path.includes("/lessons/")
-  ) {
-    return "child";
+  if (!inferredPrefix) {
+    return "root";
   }
 
-  return "root";
+  return inferredPrefix;
 }
 
 function getPageDepthPrefix() {
-  return getPageDepth() === "child" ? "../" : "";
+  const pageDepth = getPageDepth();
+
+  if (pageDepth === "root") {
+    return "";
+  }
+
+  if (pageDepth === "child") {
+    return "../";
+  }
+
+  return pageDepth;
 }
 
 function getPageName() {
