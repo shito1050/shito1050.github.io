@@ -919,6 +919,15 @@ body {
   text-decoration: underline;
 }
 
+/* 問題ページの「問題一覧にもどる」ボタンは，濃いピンク背景なので白文字にする */
+.back-link-area .answer-link-button {
+  color: var(--white);
+}
+
+.back-link-area .answer-link-button:hover {
+  text-decoration: none;
+}
+
 @media (max-width: 768px) {
   .definition-card {
     padding: 24px 20px;
