@@ -5,7 +5,7 @@
 function inferDepthPrefixFromPath() {
   const path = window.location.pathname;
 
-  const folderNames = ["/dictionary/", "/practice/", "/lessons/"];
+  const folderNames = ["/dictionary/", "/practice/", "/lessons/", "/blog/"];
 
   for (let i = 0; i < folderNames.length; i++) {
     const folderName = folderNames[i];
@@ -830,16 +830,7 @@ renderLearnedRangeSetting();
    今日の1問
 ========================= */
 
-const practiceProblems = [
-  {
-    title: "数学I_数と式_分母の有理化_001",
-    unitIds: ["math1_numbers_and_expressions"],
-    problemText: "次の数の分母を有理化せよ．",
-    formula: "\\frac{1}{1+\\sqrt{2}+\\sqrt{3}}",
-    url: "practice/rationalize-001.html"
-  }
-];
-
+const practiceProblems = Array.isArray(window.practiceProblems) ? window.practiceProblems : [];
 const dailyProblemArea = document.getElementById("dailyProblemArea");
 
 function showDailyProblem() {
@@ -885,10 +876,62 @@ function showDailyProblem() {
 showDailyProblem();
 
 /* =========================
+   ブログ
+========================= */
+
+function getBlogPosts() {
+  const blogPosts = window.blogPosts || [];
+
+  if (!Array.isArray(blogPosts)) {
+    return [];
+  }
+
+  return blogPosts;
+}
+
+function renderBlogPostList() {
+  const blogPostListArea = document.getElementById("blogPostListArea");
+
+  if (!blogPostListArea) {
+    return;
+  }
+
+  const blogPosts = getBlogPosts();
+
+  if (blogPosts.length === 0) {
+    blogPostListArea.innerHTML = `
+      <p>現在，記事は準備中です．</p>
+    `;
+    return;
+  }
+
+  const sortedPosts = [...blogPosts].sort(function (a, b) {
+    return String(b.date || "").localeCompare(String(a.date || ""));
+  });
+
+  const postListHtml = sortedPosts.map(function (post) {
+    const dateHtml = post.date ? `<span class="blog-post-date">${post.date}</span>` : "";
+    const descriptionHtml = post.description ? `<p class="blog-post-description">${post.description}</p>` : "";
+
+    return `
+      <a class="problem-card simple-problem-card blog-post-card" href="${makePath(post.url)}">
+        <span class="problem-title">${post.title}</span>
+        ${dateHtml}
+        ${descriptionHtml}
+      </a>
+    `;
+  }).join("");
+
+  blogPostListArea.innerHTML = postListHtml;
+}
+
+renderBlogPostList();
+
+/* =========================
    入場問題
 ========================= */
 
-const entranceProblems = window.entranceProblems || [];
+const entranceProblems = Array.isArray(window.entranceProblems) ? window.entranceProblems : [];
 
 const entranceActivityStorageKey = "lastEntranceActivityAt";
 const entranceIntervalMilliseconds = 60 * 60 * 1000;
