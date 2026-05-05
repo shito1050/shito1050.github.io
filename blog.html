@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ブログ｜しぃとのホームページ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="blog" data-depth="root">
+  <button class="menu-button" id="menuButton" aria-label="メニューを開く">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <div class="overlay" id="overlay"></div>
+
+  <div id="commonSidebar"></div>
+
+  <main class="main-content">
+    <section class="hero">
+      <h1>ブログ</h1>
+    </section>
+
+    <section class="content-section">
+      <h2>記事一覧</h2>
+
+      <div class="problem-list">
+        <a class="problem-card simple-problem-card" href="blog/test-post-001.html">
+          <span class="problem-title">テスト投稿</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <script src="data/dictionary-data.js"></script>
+  <script src="data/entrance-problems-data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
