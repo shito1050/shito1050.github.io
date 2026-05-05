@@ -33,5 +33,7 @@
   loadScript("data/dictionary-data.js");
   loadScript("data/lessons-data.js");
   loadScript("data/entrance-problems-data.js");
+  loadScript("data/practice-problems-data.js");
+  loadScript("data/blog-posts-data.js");
   loadScript("script.js");
 })();
