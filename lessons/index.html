@@ -5,16 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>授業｜しぃとのホームページ</title>
   <link rel="stylesheet" href="../style.css">
-
-  <script>
-    window.MathJax = {
-      tex: {
-        inlineMath: [['\\(', '\\)']],
-        displayMath: [['\\[', '\\]']]
-      }
-    };
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 </head>
 <body data-page="lessons" data-depth="child">
   <button class="menu-button" id="menuButton" aria-label="メニューを開く">
@@ -38,84 +28,6 @@
     </section>
   </main>
 
-  <script src="../data/dictionary-data.js"></script>
-  <script src="../data/lessons-data.js"></script>
-  <script src="../script.js"></script>
-
-  <script>
-    function createLessonIndex() {
-      const lessonIndex = document.getElementById("lessonIndex");
-
-      if (!lessonIndex || typeof LESSONS_DATA === "undefined") {
-        return;
-      }
-
-      lessonIndex.innerHTML = "";
-
-      LESSONS_DATA.forEach(function (subject) {
-        const subjectBlock = document.createElement("section");
-        subjectBlock.className = "lesson-subject-block";
-
-        const subjectTitle = document.createElement("h3");
-        subjectTitle.className = "lesson-subject-title";
-        subjectTitle.textContent = subject.title;
-        subjectBlock.appendChild(subjectTitle);
-
-        const unitList = document.createElement("div");
-        unitList.className = "lesson-unit-list";
-
-        subject.units.forEach(function (unit) {
-          const unitBlock = document.createElement("section");
-          unitBlock.className = "lesson-unit-block";
-
-          const unitTitle = document.createElement("h4");
-          unitTitle.className = "lesson-unit-title";
-          unitTitle.textContent = unit.title;
-          unitBlock.appendChild(unitTitle);
-
-          const lessonList = document.createElement("ol");
-          lessonList.className = "lesson-list";
-
-          if (unit.lessons.length === 0) {
-            const emptyText = document.createElement("p");
-            emptyText.className = "lesson-empty-text";
-            emptyText.textContent = "準備中";
-            unitBlock.appendChild(emptyText);
-          } else {
-            unit.lessons.forEach(function (lesson, index) {
-              const lessonItem = document.createElement("li");
-              lessonItem.className = "lesson-item";
-
-              const lessonLink = document.createElement("a");
-              lessonLink.className = "lesson-link";
-              lessonLink.href = "../" + lesson.path;
-
-              const lessonNumber = document.createElement("span");
-              lessonNumber.className = "lesson-number";
-              lessonNumber.textContent = "第" + (index + 1) + "講";
-
-              const lessonTitle = document.createElement("span");
-              lessonTitle.className = "lesson-title";
-              lessonTitle.textContent = lesson.title;
-
-              lessonLink.appendChild(lessonNumber);
-              lessonLink.appendChild(lessonTitle);
-              lessonItem.appendChild(lessonLink);
-              lessonList.appendChild(lessonItem);
-            });
-
-            unitBlock.appendChild(lessonList);
-          }
-
-          unitList.appendChild(unitBlock);
-        });
-
-        subjectBlock.appendChild(unitList);
-        lessonIndex.appendChild(subjectBlock);
-      });
-    }
-
-    createLessonIndex();
-  </script>
+  <script src="../common-loader.js"></script>
 </body>
 </html>
