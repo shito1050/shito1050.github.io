@@ -47,6 +47,11 @@
   color: rgba(51, 51, 51, 0.45);
 }
 
+.dictionary-search-input::-webkit-search-cancel-button {
+  appearance: none;
+  -webkit-appearance: none;
+}
+
 .dictionary-search-clear-button {
   display: none;
   flex: 0 0 auto;
