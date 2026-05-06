@@ -6,7 +6,7 @@
   const currentScript = document.currentScript;
   const scriptSrc = currentScript ? currentScript.getAttribute("src") : "common-loader.js";
   const prefix = scriptSrc.replace(/common-loader\.js$/, "");
-  const version = "20260506-08";
+  const version = "20260506-09";
 
   function addVersion(path) {
     if (path.includes("?")) {
@@ -40,11 +40,38 @@
 
   loadExternalScript("https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js");
 
+  /*
+     辞書データ
+  */
   loadScript("data/dictionary/math1/numbers-and-expressions.js");
   loadScript("data/dictionary/math3/differentiation.js");
+
+  /*
+     授業データ
+  */
   loadScript("data/lessons-data.js");
-  loadScript("data/entrance-problems-data.js");
+
+  /*
+     入場問題データ
+     各単元ファイル → entrance-problems-index.js の順に読み込む
+  */
+  loadScript("data/entrance-problems/math1-numbers-and-expressions.js");
+  loadScript("data/entrance-problems/math2-trigonometric-functions.js");
+  loadScript("data/entrance-problems/math3-limits.js");
+  loadScript("data/entrance-problems/entrance-problems-index.js");
+
+  /*
+     問題演習データ
+  */
   loadScript("data/practice/math1-suutoshiki.js");
+
+  /*
+     ブログデータ
+  */
   loadScript("data/blog-posts-data.js");
+
+  /*
+     共通処理
+  */
   loadScript("script.js");
 })();
