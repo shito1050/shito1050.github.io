@@ -123,15 +123,16 @@ window.practiceProblems.push(
       <div class="answer-step">
         <p class="answer-step-number">(2)</p>
         <div class="math-block">
-          \\[
-          \\begin{aligned}
-          \\sqrt{2-\\sqrt{3}}
-          &=\\sqrt{\\frac{4-2\\sqrt{3}}{2}}\\\\
-          &=\\frac{\\sqrt{4-2\\sqrt{3}}}{\\sqrt{2}}\\\\
-          &=\\frac{\\sqrt{3}-\\sqrt{1}}{\\sqrt{2}}\\\\
-          &=\\frac{\\sqrt{6}-\\sqrt{2}}{2}
-          \\end{aligned}
-          \\]
+\\[
+\\begin{aligned}
+\\sqrt{2-\\sqrt{3}}
+&=\\sqrt{\\frac{4-2\\sqrt{3}}{2}}\\\\
+&=\\frac{\\sqrt{4-2\\sqrt{3}}}{\\sqrt{2}}\\\\
+&=\\frac{\\sqrt{3}-\\sqrt{1}}{\\sqrt{2}}
+\\quad \\text{ここでやめてもOK}\\\\
+&=\\frac{\\sqrt{6}-\\sqrt{2}}{2}
+\\end{aligned}
+\\]
         </div>
       </div>
 
