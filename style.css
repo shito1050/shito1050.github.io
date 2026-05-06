@@ -1333,3 +1333,20 @@ body {
     font-size: 0.8rem;
   }
 }
+
+/* =========================
+   問題内の図
+========================= */
+
+.problem-figure {
+  width: min(430px, 100%);
+  margin: 24px auto;
+  text-align: center;
+}
+
+.problem-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
