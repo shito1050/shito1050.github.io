@@ -511,6 +511,27 @@ body {
   color: var(--deep-pink);
 }
 
+.answer-step {
+  margin: 18px 0 28px;
+}
+
+.answer-step-number {
+  margin: 0 0 6px;
+  color: var(--text-color);
+  font-size: 1rem;
+  font-weight: bold;
+  line-height: 1.6;
+}
+
+.answer-step .math-block {
+  margin-top: 0;
+}
+
+.answer-note {
+  font-family: "Yu Gothic", "YuGothic", "Hiragino Kaku Gothic ProN", sans-serif;
+  font-weight: bold;
+}
+
 .answer-link-button,
 .answer-open-button,
 .answer-close-button {
@@ -832,6 +853,14 @@ body {
   .math-display,
   .math-block {
     font-size: 1rem;
+  }
+
+  .answer-step {
+    margin: 16px 0 24px;
+  }
+
+  .answer-step-number {
+    font-size: 0.98rem;
   }
 
   .learned-range-modal-content {
