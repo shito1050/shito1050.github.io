@@ -44,7 +44,7 @@ window.practiceProblems.push(
       <p>
         \\(s\\)を\\(0\\leq s\\leq 1\\)で固定し，\\(t\\)を動かす．
         このとき，\\((x,y)\\)の動きを追う．
-        \\(x\\)は
+        \\(x=s+t\\)より，
       </p>
 
       <div class="math-block">
@@ -54,26 +54,24 @@ window.practiceProblems.push(
       </div>
 
       <p>
-        を動き，\\(y\\)は\\(s^2\\)で高さ一定である．
-        したがって，\\(x\\)軸に平行な長さ1の線分を，
-        \\(s\\leq x\\leq s+1\\)の部分に描くことになる．
+        であり，\\(y=s^2\\)である．
+        したがって，高さ\\(s^2\\)のところに，\\(x\\)軸に平行な長さ1の線分を描くことになる．
       </p>
 
       <p>
-        線分の左端は\\((s,s^2)\\)であるから，\\(s\\)を自由にしてやれば，
-        この点は\\(y=x^2\\)の\\(0\\leq x\\leq 1\\)の部分を動く．
+        線分の左端は\\((s,s^2)\\)であるから，\\(s\\)を\\(0\\leq s\\leq 1\\)の範囲で動かすと，
+        左端は\\(y=x^2\\)の\\(0\\leq x\\leq 1\\)の部分を動く．
       </p>
 
       <p>
-        また，線分の右端は\\((s+1,s^2)\\)であるから，
-        この点は\\(y=(x-1)^2\\)の\\(1\\leq x\\leq 2\\)の部分を動く．
+        また，線分の右端は\\((s+1,s^2)\\)であるから，右端は
+        \\(y=(x-1)^2\\)の\\(1\\leq x\\leq 2\\)の部分を動く．
       </p>
 
-      <figure class="problem-figure" style="max-width: 430px; margin: 24px auto;">
+      <figure class="problem-figure">
         <img
           src="../assets/images/practice/math2/geometry-and-equations/moving-range-001.png"
           alt="点の存在範囲を表す図"
-          style="display: block; width: 100%; height: auto;"
         >
       </figure>
 
