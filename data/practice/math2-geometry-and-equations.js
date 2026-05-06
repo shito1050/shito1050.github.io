@@ -34,8 +34,9 @@ window.practiceProblems.push(
       <div class="thinking-box">
         <p class="problem-label">考え方</p>
         <p>
-          2文字動くので，1文字固定で線分を描いてから，その線分を動かします．
-          線分の動きを追うには，端点の動きを追うのがよいです．
+          2文字動くので，1文字固定で線分を描いてから，線分を動かします．
+          線分の動きを追うには端点の動きを追うのがよいでしょう．
+          もしくは，今回は\\(s=\\cdots，t=\\cdots\\)にできるので，存在条件を考えてもさほど難しくはありません．
         </p>
       </div>
 
@@ -43,29 +44,10 @@ window.practiceProblems.push(
 
       <p>
         \\(s\\)を\\(0\\leq s\\leq 1\\)で固定し，\\(t\\)を動かす．
-        このとき，\\((x,y)\\)の動きを追う．
-        \\(x=s+t\\)より，
-      </p>
-
-      <div class="math-block">
-        \\[
-        s\\leq x\\leq s+1
-        \\]
-      </div>
-
-      <p>
-        であり，\\(y=s^2\\)である．
-        したがって，高さ\\(s^2\\)のところに，\\(x\\)軸に平行な長さ1の線分を描くことになる．
-      </p>
-
-      <p>
-        線分の左端は\\((s,s^2)\\)であるから，\\(s\\)を\\(0\\leq s\\leq 1\\)の範囲で動かすと，
-        左端は\\(y=x^2\\)の\\(0\\leq x\\leq 1\\)の部分を動く．
-      </p>
-
-      <p>
-        また，線分の右端は\\((s+1,s^2)\\)であるから，右端は
-        \\(y=(x-1)^2\\)の\\(1\\leq x\\leq 2\\)の部分を動く．
+        \\((x,y)\\)の動きを追う．
+        \\(x\\)は\\(s\\leq x\\leq s+1\\)を動き，\\(y\\)は\\(s^2\\)で高さ一定であるから，\\(x\\)軸に平行な長さ1の線分を\\(s\\leq x\\leq s+1\\)の部分に描くことになる．
+        線分の左端の点は\\((s,s^2)\\)だから，\\(s\\)を自由にしてやればこの点は\\(y=x^2\\)の\\(0\\leq x\\leq 1\\)の部分を描く．
+        線分はそれに沿って平面を掃過することになるので，求める範囲は次の図のようになる．
       </p>
 
       <figure class="problem-figure">
@@ -74,10 +56,6 @@ window.practiceProblems.push(
           alt="点の存在範囲を表す図"
         >
       </figure>
-
-      <p>
-        よって，求める範囲は図の灰色部分である．
-      </p>
 
       <div class="thinking-box">
         <p class="problem-label">別解</p>
@@ -90,43 +68,17 @@ window.practiceProblems.push(
           \\[
           \\begin{aligned}
           (x,y)\\in W
-          &\\Longleftrightarrow
-          0\\leq s\\leq 1,\ 0\\leq t\\leq 1,\ x=s+t,\ y=s^2
-          \\text{を満たす }s,t\\text{ が存在する}\\\\
-          &\\Longleftrightarrow
-          0\\leq \\sqrt{y}\\leq 1,\ 0\\leq x-\\sqrt{y}\\leq 1\\\\
-          &\\Longleftrightarrow
-          0\\leq y\\leq 1,\ \\sqrt{y}\\leq x\\leq \\sqrt{y}+1
+          &\\Longleftrightarrow 0\\leq s\\leq 1,\ 0\\leq t\\leq 1,\ x=s+t,\ y=s^2\\text{を満たす }s,t\\text{ が存在する．}\\\\
+          &\\Longleftrightarrow 0\\leq s\\leq 1,\ 0\\leq t\\leq 1,\ s=\\sqrt{y},\ t=x-\\sqrt{y}\\text{を満たす }s,t\\text{ が存在する（}s\\geq 0\\text{）．}\\\\
+          &\\Longleftrightarrow 0\\leq \\sqrt{y}\\leq 1,\ 0\\leq x-\\sqrt{y}\\leq 1\\\\
+          &\\Longleftrightarrow 0\\leq y\\leq 1,\ \\sqrt{y}\\leq x\\leq \\sqrt{y}+1
           \\end{aligned}
           \\]
         </div>
 
         <p>
-          したがって，求める範囲は
+          だから，\\(W\\)は\\((x-1)^2\\leq y\\leq x^2\\)の\\(0\\leq y\\leq 1\\)の部分で，図示すると上図のようになる．
         </p>
-
-        <div class="math-block answer">
-          \\[
-          0\\leq y\\leq 1,\quad \\sqrt{y}\\leq x\\leq \\sqrt{y}+1
-          \\]
-        </div>
-
-        <p>
-          である．
-        </p>
-      </div>
-
-      <p>
-        なお，\\(x\\)の範囲で分けて表すと，
-      </p>
-
-      <div class="math-block answer">
-        \\[
-        \\begin{cases}
-        0\\leq x\\leq 1 \\text{ のとき } 0\\leq y\\leq x^2,\\\\
-        1\\leq x\\leq 2 \\text{ のとき } (x-1)^2\\leq y\\leq 1
-        \\end{cases}
-        \\]
       </div>
     `
   }
