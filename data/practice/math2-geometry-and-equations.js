@@ -8,7 +8,7 @@ window.practiceProblems.push(
     subject: "数学II",
     unit: "図形と方程式",
     topic: "点の存在範囲",
-    unitIds: ["math2_geometry_and_equations"],
+    unitIds: ["math2_figures_and_equations"],
     difficulty: 3,
     problemText: "点の存在範囲を求め，図示せよ．",
     questionHtml: `
@@ -90,23 +90,10 @@ window.practiceProblems.push(
         0\\leq s\\leq 1,\ 0\\leq t\\leq 1,\ x=s+t,\ y=s^2
         \\text{を満たす }s,t\\text{ が存在する}\\\\
         &\\Longleftrightarrow
-        0\\leq s\\leq 1,\ 0\\leq t\\leq 1,\ s=\\sqrt{y},\ t=x-\\sqrt{y}
-        \\text{を満たす }s,t\\text{ が存在する}\\\\
-        &\\Longleftrightarrow
         0\\leq \\sqrt{y}\\leq 1,\ 0\\leq x-\\sqrt{y}\\leq 1\\\\
         &\\Longleftrightarrow
         0\\leq y\\leq 1,\ \\sqrt{y}\\leq x\\leq \\sqrt{y}+1
-        \\end{aligned}
-        \\]
-      </div>
-
-      <p>
-        \\(\\sqrt{y}\\leq x\\leq \\sqrt{y}+1\\)より，
-      </p>
-
-      <div class="math-block">
-        \\[
-        (x-1)^2\\leq y\\leq x^2
+        \end{aligned}
         \\]
       </div>
 
@@ -116,13 +103,26 @@ window.practiceProblems.push(
 
       <div class="math-block answer">
         \\[
-        (x-1)^2\\leq y\\leq x^2,\quad 0\\leq y\\leq 1
+        0\\leq y\\leq 1,\quad \\sqrt{y}\\leq x\\leq \\sqrt{y}+1
         \\]
       </div>
 
       <p>
         である．
       </p>
+
+      <p>
+        なお，\\(x\\)の範囲で分けて表すと，
+      </p>
+
+      <div class="math-block answer">
+        \\[
+        \\begin{cases}
+        0\\leq x\\leq 1 \\text{ のとき } 0\\leq y\\leq x^2,\\\\
+        1\\leq x\\leq 2 \\text{ のとき } (x-1)^2\\leq y\\leq 1
+        \\end{cases}
+        \\]
+      </div>
     `
   }
 );
