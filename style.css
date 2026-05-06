@@ -543,7 +543,7 @@ body {
   overflow-x: auto;
   overflow-y: hidden;
   padding: 10px 0;
-  font-size: 1.18rem;
+  font-size: 1.3rem;
 }
 
 .answer-equation-left {
@@ -901,7 +901,7 @@ body {
 
   .answer-equation-grid {
     justify-content: start;
-    font-size: 1rem;
+    font-size: 1.08rem;
   }
 
   .learned-range-modal-content {
