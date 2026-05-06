@@ -6,7 +6,7 @@
   const currentScript = document.currentScript;
   const scriptSrc = currentScript ? currentScript.getAttribute("src") : "common-loader.js";
   const prefix = scriptSrc.replace(/common-loader\.js$/, "");
-  const version = "20260506-16";
+  const version = "20260506-17";
 
   function addVersion(path) {
     if (path.includes("?")) {
@@ -39,6 +39,11 @@
   `);
 
   loadExternalScript("https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js");
+
+  /*
+     サイト共通設定
+  */
+  loadScript("data/site-config.js");
 
   /*
      辞書データ
