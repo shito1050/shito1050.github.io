@@ -1,1 +1,28 @@
+/* =========================
+   ブログ
+========================= */
 
+.blog-post-card {
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.blog-post-date {
+  color: var(--deep-pink);
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.blog-post-description {
+  margin: 0;
+  line-height: 1.8;
+  color: rgba(51, 51, 51, 0.75);
+}
+
+.blog-article-body {
+  line-height: 2;
+}
+
+.blog-article-body p {
+  margin: 0 0 14px;
+}
