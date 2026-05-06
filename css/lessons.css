@@ -1,1 +1,100 @@
+/* =========================
+   授業一覧
+========================= */
 
+.lesson-index {
+  display: grid;
+  gap: 22px;
+}
+
+.lesson-subject-block {
+  padding: 24px;
+  border-radius: 22px;
+  background: var(--light-pink);
+  border: 1px solid rgba(217, 95, 152, 0.22);
+}
+
+.lesson-subject-title {
+  margin: 0 0 18px;
+  color: var(--deep-pink);
+  font-size: 1.45rem;
+  line-height: 1.5;
+}
+
+.lesson-unit-list {
+  display: grid;
+  gap: 16px;
+}
+
+.lesson-unit-block {
+  padding: 18px;
+  border-radius: 18px;
+  background: var(--white);
+  border: 1px solid rgba(217, 95, 152, 0.2);
+}
+
+.lesson-unit-title {
+  margin: 0 0 12px;
+  padding-left: 12px;
+  border-left: 5px solid var(--main-pink);
+  color: var(--deep-pink);
+  font-size: 1.12rem;
+  line-height: 1.5;
+}
+
+.lesson-list {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lesson-item {
+  margin: 0;
+}
+
+.lesson-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 13px;
+  border-radius: 14px;
+  background: var(--light-pink);
+  color: var(--text-color);
+  text-decoration: none;
+  line-height: 1.6;
+  transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.lesson-link:hover {
+  transform: translateY(-2px);
+  background: #ffe4f0;
+  box-shadow: 0 6px 16px rgba(217, 95, 152, 0.14);
+}
+
+.lesson-number {
+  flex: 0 0 auto;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--deep-pink);
+  color: var(--white);
+  font-size: 0.86rem;
+  font-weight: bold;
+  line-height: 1.4;
+}
+
+.lesson-title {
+  min-width: 0;
+  font-weight: bold;
+}
+
+.lesson-empty-text {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: var(--light-pink);
+  color: rgba(51, 51, 51, 0.6);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
