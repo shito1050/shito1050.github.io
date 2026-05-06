@@ -238,7 +238,6 @@ function createDictionarySearchBox() {
 
   searchFloating.innerHTML = `
     <div class="dictionary-search-box">
-      <span class="dictionary-search-label">Def.</span>
       <span class="dictionary-search-icon">🔍</span>
       <input
         type="search"
@@ -956,6 +955,21 @@ function getPracticeProblemAnswerUrl(problem) {
   return getPracticeProblemUrl(problem) + "&answer=open";
 }
 
+function getCurrentPracticeProblemId() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const rawProblemId = urlParams.get("id") || "";
+  return rawProblemId.split("?")[0];
+}
+
+function shouldOpenAnswerFromUrl() {
+  const urlParams = new URLSearchParams(window.location.search);
+
+  return (
+    urlParams.get("answer") === "open" ||
+    window.location.search.includes("answer=open")
+  );
+}
+
 function renderPracticeProblemList() {
   const practiceProblemListArea = document.getElementById("practiceProblemListArea");
 
@@ -998,8 +1012,7 @@ function renderPracticeProblemDetail() {
     return;
   }
 
-  const urlParams = new URLSearchParams(window.location.search);
-  const problemId = urlParams.get("id");
+  const problemId = getCurrentPracticeProblemId();
   const problem = findPracticeProblemById(problemId);
 
   if (!problem) {
@@ -1402,9 +1415,7 @@ function initializeAnswerToggle() {
     closeAnswer();
   });
 
-  const urlParams = new URLSearchParams(window.location.search);
-
-  if (urlParams.get("answer") === "open") {
+  if (shouldOpenAnswerFromUrl()) {
     openAnswer();
   } else {
     closeAnswer();
