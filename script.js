@@ -846,6 +846,7 @@ function createLearnedRangeSelector(container, options) {
 
         if (!settings.skipAfterChange) {
           showDailyProblem();
+          renderPracticeProblemList();
         }
       });
     });
@@ -863,6 +864,7 @@ function createLearnedRangeSelector(container, options) {
 
       if (!settings.skipAfterChange) {
         showDailyProblem();
+        renderPracticeProblemList();
       }
     });
 
@@ -960,6 +962,7 @@ function createInitialLearnedRangeModal() {
     modal.remove();
     renderLearnedRangeSetting();
     showDailyProblem();
+    renderPracticeProblemList();
     createEntranceProblemModal();
   });
 }
@@ -1081,6 +1084,75 @@ function shouldOpenAnswerFromUrl() {
   );
 }
 
+function getSubjectOrderFromProblem(problem) {
+  return parsePracticeProblemOrder(problem.order).subjectOrder;
+}
+
+function getUnitOrderFromProblem(problem) {
+  return parsePracticeProblemOrder(problem.order).unitOrder;
+}
+
+function groupPracticeProblemsBySubjectAndUnit(problems) {
+  const subjectMap = new Map();
+
+  problems.forEach(function (problem) {
+    const subjectName = problem.subject || "その他";
+    const unitName = problem.unit || "その他";
+
+    if (!subjectMap.has(subjectName)) {
+      subjectMap.set(subjectName, {
+        name: subjectName,
+        order: getSubjectOrderFromProblem(problem),
+        units: new Map()
+      });
+    }
+
+    const subjectGroup = subjectMap.get(subjectName);
+
+    if (!subjectGroup.units.has(unitName)) {
+      subjectGroup.units.set(unitName, {
+        name: unitName,
+        order: getUnitOrderFromProblem(problem),
+        problems: []
+      });
+    }
+
+    subjectGroup.units.get(unitName).problems.push(problem);
+  });
+
+  return Array.from(subjectMap.values())
+    .sort(function (a, b) {
+      if (a.order !== b.order) {
+        return a.order - b.order;
+      }
+
+      return a.name.localeCompare(b.name, "ja");
+    })
+    .map(function (subjectGroup) {
+      const units = Array.from(subjectGroup.units.values())
+        .sort(function (a, b) {
+          if (a.order !== b.order) {
+            return a.order - b.order;
+          }
+
+          return a.name.localeCompare(b.name, "ja");
+        })
+        .map(function (unitGroup) {
+          return {
+            name: unitGroup.name,
+            order: unitGroup.order,
+            problems: sortPracticeProblemsByOrder(unitGroup.problems)
+          };
+        });
+
+      return {
+        name: subjectGroup.name,
+        order: subjectGroup.order,
+        units: units
+      };
+    });
+}
+
 function renderPracticeProblemList() {
   const practiceProblemListArea = document.getElementById("practiceProblemListArea");
 
@@ -1099,17 +1171,91 @@ function renderPracticeProblemList() {
     return;
   }
 
-  const listHtml = filteredProblems.map(function (problem) {
-    const displayTitle = getPracticeProblemDisplayTitle(problem);
+  const groupedSubjects = groupPracticeProblemsBySubjectAndUnit(filteredProblems);
+
+  const listHtml = groupedSubjects.map(function (subjectGroup, subjectIndex) {
+    const subjectId = "practiceSubject-" + subjectIndex;
+
+    const unitHtml = subjectGroup.units.map(function (unitGroup, unitIndex) {
+      const unitId = subjectId + "-unit-" + unitIndex;
+
+      const problemHtml = unitGroup.problems.map(function (problem) {
+        const displayTitle = getPracticeProblemDisplayTitle(problem);
+
+        return `
+          <a class="problem-card simple-problem-card practice-problem-link" href="${getPracticeProblemUrl(problem)}">
+            <span class="problem-title">${displayTitle}</span>
+          </a>
+        `;
+      }).join("");
+
+      return `
+        <section class="practice-unit-group">
+          <button
+            type="button"
+            class="practice-unit-toggle"
+            aria-expanded="false"
+            aria-controls="${unitId}"
+          >
+            <span class="practice-toggle-mark">▽</span>
+            <span class="practice-unit-title">${unitGroup.name}</span>
+            <span class="practice-count">${unitGroup.problems.length}問</span>
+          </button>
+
+          <div class="practice-unit-body" id="${unitId}">
+            ${problemHtml}
+          </div>
+        </section>
+      `;
+    }).join("");
 
     return `
-      <a class="problem-card simple-problem-card" href="${getPracticeProblemUrl(problem)}">
-        <span class="problem-title">${displayTitle}</span>
-      </a>
+      <section class="practice-subject-group">
+        <button
+          type="button"
+          class="practice-subject-toggle"
+          aria-expanded="false"
+          aria-controls="${subjectId}"
+        >
+          <span class="practice-toggle-mark">▽</span>
+          <span class="practice-subject-title">${subjectGroup.name}</span>
+          <span class="practice-count">${subjectGroup.units.length}単元</span>
+        </button>
+
+        <div class="practice-subject-body" id="${subjectId}">
+          ${unitHtml}
+        </div>
+      </section>
     `;
   }).join("");
 
-  practiceProblemListArea.innerHTML = listHtml;
+  practiceProblemListArea.innerHTML = `
+    <div class="practice-accordion-list">
+      ${listHtml}
+    </div>
+  `;
+
+  initializePracticeAccordion();
+}
+
+function initializePracticeAccordion() {
+  const toggleButtons = document.querySelectorAll(".practice-subject-toggle, .practice-unit-toggle");
+
+  toggleButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      const targetId = button.getAttribute("aria-controls");
+      const target = document.getElementById(targetId);
+
+      if (!target) {
+        return;
+      }
+
+      const isOpen = target.classList.toggle("is-open");
+
+      button.setAttribute("aria-expanded", String(isOpen));
+      button.classList.toggle("is-open", isOpen);
+    });
+  });
 }
 
 function renderPracticeProblemDetail() {
