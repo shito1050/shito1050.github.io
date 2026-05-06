@@ -941,6 +941,20 @@ function getDifficultyLabel(difficulty) {
   return difficultyLabels[difficulty] || "";
 }
 
+function getPracticeProblemDisplayTitle(problem) {
+  const difficultyLabel = getDifficultyLabel(problem.difficulty);
+
+  const titleBase = [
+    problem.subject,
+    problem.unit,
+    problem.topic
+  ].filter(Boolean).join("_");
+
+  const difficultyText = difficultyLabel ? `（${difficultyLabel}）` : "";
+
+  return titleBase + difficultyText;
+}
+
 function findPracticeProblemById(problemId) {
   return practiceProblems.find(function (problem) {
     return problem.id === problemId;
@@ -987,19 +1001,11 @@ function renderPracticeProblemList() {
   }
 
   const listHtml = filteredProblems.map(function (problem) {
-    const difficultyLabel = getDifficultyLabel(problem.difficulty);
-
-    const displayTitle = [
-      problem.subject,
-      problem.unit,
-      problem.topic
-    ].filter(Boolean).join("_");
-
-    const difficultyText = difficultyLabel ? `（${difficultyLabel}）` : "";
+    const displayTitle = getPracticeProblemDisplayTitle(problem);
 
     return `
       <a class="problem-card simple-problem-card" href="${getPracticeProblemUrl(problem)}">
-        <span class="problem-title">${displayTitle}${difficultyText}</span>
+        <span class="problem-title">${displayTitle}</span>
       </a>
     `;
   }).join("");
@@ -1029,18 +1035,12 @@ function renderPracticeProblemDetail() {
     return;
   }
 
-  document.title = problem.title + "｜問題演習｜しぃとのホームページ";
-  titleArea.textContent = problem.title;
+  const displayTitle = getPracticeProblemDisplayTitle(problem);
 
-  const difficultyLabel = getDifficultyLabel(problem.difficulty);
-  const metaItems = [problem.subject, problem.unit, problem.topic, difficultyLabel].filter(Boolean);
-  const metaHtml = metaItems.length > 0
-    ? `<p class="problem-meta">${metaItems.join(" / ")}</p>`
-    : "";
+  document.title = displayTitle + "｜問題演習｜しぃとのホームページ";
+  titleArea.textContent = displayTitle;
 
   detailArea.innerHTML = `
-    ${metaHtml}
-
     <div class="problem-box">
       <p class="problem-label">問題</p>
       <p>${problem.problemText || ""}</p>
