@@ -396,7 +396,6 @@ function renderPracticeProblemDetail() {
     </button>
 
     <div class="answer-box is-hidden" id="answerBox">
-      <p class="problem-label">解答</p>
       ${problem.answerHtml || ""}
 
       <button class="answer-close-button" id="answerCloseButton">
