@@ -680,21 +680,21 @@ const mathUnitGroups = [
     ]
   },
   {
-    id: "mathC",
-    name: "数学C",
-    units: [
-      { id: "mathC_vectors", name: "ベクトル" },
-      { id: "mathC_plane_curves", name: "平面上の曲線" },
-      { id: "mathC_complex_plane", name: "複素数平面" }
-    ]
-  },
-  {
     id: "math3",
     name: "数学III",
     units: [
       { id: "math3_limits", name: "極限" },
       { id: "math3_differentiation", name: "微分法" },
       { id: "math3_integration", name: "積分法" }
+    ]
+  },
+  {
+    id: "mathC",
+    name: "数学C",
+    units: [
+      { id: "mathC_vectors", name: "ベクトル" },
+      { id: "mathC_plane_curves", name: "平面上の曲線" },
+      { id: "mathC_complex_plane", name: "複素数平面" }
     ]
   }
 ];
