@@ -219,6 +219,39 @@ function findDictionaryItemById(id) {
   });
 }
 
+function getDictionaryGroup(item) {
+  const kana = String(item.kana || item.term || "").trim();
+
+  if (!kana) {
+    return "その他";
+  }
+
+  return kana.charAt(0);
+}
+
+function getDictionaryGroupOrder(group) {
+  const order = [
+    "あ", "い", "う", "え", "お",
+    "か", "き", "く", "け", "こ",
+    "さ", "し", "す", "せ", "そ",
+    "た", "ち", "つ", "て", "と",
+    "な", "に", "ぬ", "ね", "の",
+    "は", "ひ", "ふ", "へ", "ほ",
+    "ま", "み", "む", "め", "も",
+    "や", "ゆ", "よ",
+    "ら", "り", "る", "れ", "ろ",
+    "わ", "を", "ん"
+  ];
+
+  const index = order.indexOf(group);
+
+  if (index === -1) {
+    return 999;
+  }
+
+  return index;
+}
+
 function createDictionarySearchBox() {
   const dictionaryData = getDictionaryData();
 
@@ -418,7 +451,7 @@ function renderDictionaryIndex() {
   const groupedItems = {};
 
   dictionaryData.forEach(function (item) {
-    const group = item.group || "その他";
+    const group = getDictionaryGroup(item);
 
     if (!groupedItems[group]) {
       groupedItems[group] = [];
@@ -428,6 +461,13 @@ function renderDictionaryIndex() {
   });
 
   const groupKeys = Object.keys(groupedItems).sort(function (a, b) {
+    const orderA = getDictionaryGroupOrder(a);
+    const orderB = getDictionaryGroupOrder(b);
+
+    if (orderA !== orderB) {
+      return orderA - orderB;
+    }
+
     return a.localeCompare(b, "ja");
   });
 
@@ -480,7 +520,9 @@ function renderDictionaryTermDetail() {
 
   detailArea.innerHTML = `
     <h1 class="definition-title">${item.term}</h1>
-    <p>${item.description}</p>
+    <div class="dictionary-term-body">
+      ${item.bodyHtml || `<p>${item.description || ""}</p>`}
+    </div>
   `;
 
   if (window.MathJax) {
