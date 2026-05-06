@@ -4,6 +4,9 @@ window.blogPosts = [
     title: "テスト投稿",
     date: "2026-05-06",
     description: "ブログ機能のテスト投稿です．",
-    url: "blog/test-post-001.html"
+    bodyHtml: `
+      <p>これはブログ機能のテスト投稿です．</p>
+      <p>今後，ブログ記事はHTMLファイルを記事ごとに作るのではなく，データを追加して表示する形にします．</p>
+    `
   }
 ];
