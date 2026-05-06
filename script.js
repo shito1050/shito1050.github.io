@@ -5,7 +5,7 @@
 function inferDepthPrefixFromPath() {
   const path = window.location.pathname;
 
-  const folderNames = ["/dictionary/", "/practice/", "/lessons/", "/blog/"];
+  const folderNames = ["/about/", "/dictionary/", "/practice/", "/daily/", "/lessons/", "/blog/"];
 
   for (let i = 0; i < folderNames.length; i++) {
     const folderName = folderNames[i];
@@ -77,7 +77,7 @@ function createCommonSidebar() {
     {
       page: "about",
       text: "このサイトについて",
-      href: "about.html"
+      href: "about/"
     },
     {
       page: "dictionary",
@@ -97,7 +97,7 @@ function createCommonSidebar() {
     {
       page: "daily",
       text: "今日の1問",
-      href: "daily.html"
+      href: "daily/"
     },
     {
       page: "blog",
