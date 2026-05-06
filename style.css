@@ -1350,3 +1350,36 @@ body {
   height: auto;
   margin: 0 auto;
 }
+
+/* =========================
+   検索boxのクリアボタン
+========================= */
+
+.dictionary-search-clear-button {
+  display: none;
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: rgba(217, 95, 152, 0.10);
+  color: rgba(217, 95, 152, 0.55);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 22px;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+.dictionary-search-clear-button.is-visible {
+  display: inline-block;
+}
+
+.dictionary-search-clear-button:hover {
+  background: rgba(217, 95, 152, 0.18);
+  color: var(--deep-pink);
+  transform: scale(1.05);
+}
