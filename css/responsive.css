@@ -1,1 +1,213 @@
+/* =========================
+   スマホ対応
+========================= */
 
+@media (max-width: 768px) {
+  .menu-button {
+    display: block;
+  }
+
+  .dictionary-search-floating {
+    top: 16px;
+    right: 14px;
+    width: min(260px, calc(100vw - 86px));
+  }
+
+  .dictionary-search-box {
+    padding: 7px 9px;
+  }
+
+  .dictionary-search-label {
+    padding: 4px 7px;
+    font-size: 0.78rem;
+  }
+
+  .dictionary-search-icon {
+    font-size: 0.92rem;
+  }
+
+  .dictionary-search-input {
+    font-size: 0.88rem;
+  }
+
+  .dictionary-search-panel {
+    max-height: calc(100vh - 90px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .sidebar {
+    transform: translateX(-105%);
+    transition: transform 0.25s ease;
+  }
+
+  .sidebar.is-open {
+    transform: translateX(0);
+  }
+
+  .overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.28);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 900;
+  }
+
+  .overlay.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding: 76px 18px 28px;
+  }
+
+  .daily-main {
+    padding-top: 72px;
+  }
+
+  .hero {
+    padding: 24px 20px;
+    margin-bottom: 16px;
+    border-radius: 24px;
+  }
+
+  .hero h1 {
+    font-size: 25px;
+  }
+
+  .hero p {
+    font-size: 15px;
+  }
+
+  .content-section {
+    padding: 24px 20px;
+  }
+
+  .content-section h2 {
+    font-size: 21px;
+  }
+
+  .problem-box,
+  .answer-box {
+    padding: 18px 14px;
+  }
+
+  .math-display,
+  .math-block {
+    font-size: 1rem;
+  }
+
+  .answer-step {
+    margin: 16px 0 24px;
+  }
+
+  .answer-step-number {
+    font-size: 0.98rem;
+  }
+
+  .answer-equation-grid {
+    justify-content: start;
+    font-size: 1.08rem;
+  }
+
+  .learned-range-modal-content {
+    padding: 24px 18px;
+  }
+
+  .learned-range-modal-title {
+    font-size: 1.05rem;
+  }
+
+  .learned-range-setting-modal {
+    padding: 14px 12px;
+  }
+
+  .entrance-modal-content {
+    padding: 24px 18px;
+  }
+
+  .practice-accordion-list {
+    gap: 14px;
+  }
+
+  .practice-subject-toggle {
+    gap: 9px;
+    padding: 15px 13px;
+  }
+
+  .practice-subject-body {
+    padding: 0 12px 14px;
+  }
+
+  .practice-unit-toggle {
+    gap: 8px;
+    padding: 13px 11px;
+  }
+
+  .practice-unit-body {
+    padding: 0 10px 12px;
+  }
+
+  .practice-toggle-mark {
+    width: 25px;
+    height: 25px;
+    font-size: 0.75rem;
+  }
+
+  .practice-subject-title {
+    font-size: 1.08rem;
+  }
+
+  .practice-unit-title {
+    font-size: 0.98rem;
+  }
+
+  .practice-count {
+    padding: 3px 8px;
+    font-size: 0.78rem;
+  }
+
+  .problem-card {
+    padding: 16px 14px;
+  }
+
+  .definition-card {
+    padding: 24px 20px;
+  }
+
+  .definition-title {
+    font-size: 1.7rem;
+  }
+
+  .lesson-subject-block {
+    padding: 18px 14px;
+  }
+
+  .lesson-subject-title {
+    font-size: 1.3rem;
+  }
+
+  .lesson-unit-block {
+    padding: 16px 12px;
+  }
+
+  .lesson-unit-title {
+    font-size: 1.05rem;
+  }
+
+  .lesson-link {
+    align-items: flex-start;
+    gap: 8px;
+    padding: 11px 10px;
+  }
+
+  .lesson-number {
+    padding: 4px 8px;
+    font-size: 0.8rem;
+  }
+}
