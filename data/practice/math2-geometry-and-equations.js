@@ -13,7 +13,7 @@ window.practiceProblems.push(
     problemText: "点の存在範囲を求め，図示せよ．",
     questionHtml: `
       <p>
-        \\(s,t\\)が\\(0\\leq s\\leq 1,\\ 0\\leq t\\leq 1\\)の範囲を動くとする．
+        \\(s,t\\)が\\(0\\leqq s\\leqq 1,\\ 0\\leqq t\\leqq 1\\)の範囲を動くとする．
         このとき，
       </p>
 
@@ -43,10 +43,10 @@ window.practiceProblems.push(
       <p class="problem-label">解答</p>
 
       <p>
-        \\(s\\)を\\(0\\leq s\\leq 1\\)で固定し，\\(t\\)を動かす．
+        \\(s\\)を\\(0\\leqq s\\leqq 1\\)で固定し，\\(t\\)を動かす．
         \\((x,y)\\)の動きを追う．
-        \\(x\\)は\\(s\\leq x\\leq s+1\\)を動き，\\(y\\)は\\(s^2\\)で高さ一定であるから，\\(x\\)軸に平行な長さ1の線分を\\(s\\leq x\\leq s+1\\)の部分に描くことになる．
-        線分の左端の点は\\((s,s^2)\\)だから，\\(s\\)を自由にしてやればこの点は\\(y=x^2\\)の\\(0\\leq x\\leq 1\\)の部分を描く．
+        \\(x\\)は\\(s\\leqq x\\leqq s+1\\)を動き，\\(y\\)は\\(s^2\\)で高さ一定であるから，\\(x\\)軸に平行な長さ1の線分を\\(s\\leqq x\\leqq s+1\\)の部分に描くことになる．
+        線分の左端の点は\\((s,s^2)\\)だから，\\(s\\)を自由にしてやればこの点は\\(y=x^2\\)の\\(0\\leqq x\\leqq 1\\)の部分を描く．
         線分はそれに沿って平面を掃過することになるので，求める範囲は次の図のようになる．
       </p>
 
@@ -68,16 +68,16 @@ window.practiceProblems.push(
           \\[
           \\begin{aligned}
           (x,y)\\in W
-          &\\Longleftrightarrow 0\\leq s\\leq 1,\ 0\\leq t\\leq 1,\ x=s+t,\ y=s^2\\text{を満たす }s,t\\text{ が存在する．}\\\\
-          &\\Longleftrightarrow 0\\leq s\\leq 1,\ 0\\leq t\\leq 1,\ s=\\sqrt{y},\ t=x-\\sqrt{y}\\text{を満たす }s,t\\text{ が存在する（}s\\geq 0\\text{）．}\\\\
-          &\\Longleftrightarrow 0\\leq \\sqrt{y}\\leq 1,\ 0\\leq x-\\sqrt{y}\\leq 1\\\\
-          &\\Longleftrightarrow 0\\leq y\\leq 1,\ \\sqrt{y}\\leq x\\leq \\sqrt{y}+1
+          &\\Longleftrightarrow 0\\leqq s\\leqq 1,\ 0\\leqq t\\leqq 1,\ x=s+t,\ y=s^2\\text{を満たす }s,t\\text{ が存在する．}\\\\
+          &\\Longleftrightarrow 0\\leqq s\\leqq 1,\ 0\\leqq t\\leqq 1,\ s=\\sqrt{y},\ t=x-\\sqrt{y}\\text{を満たす }s,t\\text{ が存在する（}s\\geqq 0\\text{）．}\\\\
+          &\\Longleftrightarrow 0\\leqq \\sqrt{y}\\leqq 1,\ 0\\leqq x-\\sqrt{y}\\leqq 1\\\\
+          &\\Longleftrightarrow 0\\leqq y\\leqq 1,\ \\sqrt{y}\\leqq x\\leqq \\sqrt{y}+1
           \\end{aligned}
           \\]
         </div>
 
         <p>
-          だから，\\(W\\)は\\((x-1)^2\\leq y\\leq x^2\\)の\\(0\\leq y\\leq 1\\)の部分で，図示すると上図のようになる．
+          だから，\\(W\\)は\\((x-1)^2\\leqq y\\leqq x^2\\)の\\(0\\leqq y\\leqq 1\\)の部分で，図示すると上図のようになる．
         </p>
       </div>
     `
