@@ -988,15 +988,18 @@ function renderPracticeProblemList() {
 
   const listHtml = filteredProblems.map(function (problem) {
     const difficultyLabel = getDifficultyLabel(problem.difficulty);
-    const metaItems = [problem.subject, problem.unit, problem.topic, difficultyLabel].filter(Boolean);
-    const metaHtml = metaItems.length > 0
-      ? `<span class="problem-meta">${metaItems.join(" / ")}</span>`
-      : "";
+
+    const displayTitle = [
+      problem.subject,
+      problem.unit,
+      problem.topic
+    ].filter(Boolean).join("_");
+
+    const difficultyText = difficultyLabel ? `（${difficultyLabel}）` : "";
 
     return `
       <a class="problem-card simple-problem-card" href="${getPracticeProblemUrl(problem)}">
-        <span class="problem-title">${problem.title}</span>
-        ${metaHtml}
+        <span class="problem-title">${displayTitle}${difficultyText}</span>
       </a>
     `;
   }).join("");
