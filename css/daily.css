@@ -1,1 +1,16 @@
+/* =========================
+   今日の1問
+========================= */
 
+.daily-main {
+  padding-top: 24px;
+}
+
+.daily-main .hero {
+  margin-bottom: 18px;
+  padding: 28px 36px;
+}
+
+.daily-main .content-section {
+  margin-top: 0;
+}
