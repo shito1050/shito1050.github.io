@@ -102,7 +102,7 @@ function createCommonSidebar() {
     {
       page: "blog",
       text: "ブログ",
-      href: "blog.html"
+      href: "blog/"
     }
   ];
 
@@ -1133,6 +1133,18 @@ function getBlogPosts() {
   return blogPosts;
 }
 
+function getBlogPostUrl(post) {
+  if (post.id) {
+    return makePath("blog/article.html?id=" + encodeURIComponent(post.id));
+  }
+
+  if (post.url) {
+    return makePath(post.url);
+  }
+
+  return makePath("blog/");
+}
+
 function renderBlogPostList() {
   const blogPostListArea = document.getElementById("blogPostListArea");
 
@@ -1158,7 +1170,7 @@ function renderBlogPostList() {
     const descriptionHtml = post.description ? `<p class="blog-post-description">${post.description}</p>` : "";
 
     return `
-      <a class="problem-card simple-problem-card blog-post-card" href="${makePath(post.url)}">
+      <a class="problem-card simple-problem-card blog-post-card" href="${getBlogPostUrl(post)}">
         <span class="problem-title">${post.title}</span>
         ${dateHtml}
         ${descriptionHtml}
