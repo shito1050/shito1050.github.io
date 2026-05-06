@@ -55,8 +55,8 @@ function createCommonSidebar() {
   commonSidebarArea.innerHTML = `
     <aside class="sidebar" id="sidebar">
       <a class="site-title site-title-link" href="${makePath("index.html")}">
-        <div class="site-title-main">しぃとの</div>
-        <div class="site-title-sub">ホームページ</div>
+        <div class="site-title-main">すうがく</div>
+        <div class="site-title-sub">がかり</div>
       </a>
 
       <nav class="side-nav">
