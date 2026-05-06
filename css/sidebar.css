@@ -119,26 +119,3 @@
 .overlay {
   display: none;
 }
-
-/* =========================
-   スマホ表示
-========================= */
-
-@media (max-width: 768px) {
-  .site-title {
-    display: block;
-    white-space: normal;
-  }
-
-  .site-title-main {
-    font-size: 24px;
-    letter-spacing: 0.08em;
-  }
-
-  .site-title-sub {
-    margin-top: 4px;
-    font-size: 14px;
-    font-weight: normal;
-    letter-spacing: 0;
-  }
-}
