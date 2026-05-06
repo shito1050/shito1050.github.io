@@ -107,44 +107,71 @@ window.practiceProblems.push(
 
       <p class="problem-label">解答</p>
 
-      <div class="answer-step">
-        <p class="answer-step-number">(1)</p>
+      <div style="margin-bottom: 1.5rem;">
+        <p style="font-weight: 700; margin-bottom: 0.4rem;">(1)</p>
+
         <div class="math-block">
           \\[
           \\begin{aligned}
           \\sqrt{5+2\\sqrt{6}}
-          &=\\sqrt{(\\sqrt{2}+\\sqrt{3})^2}\\\\
-          &=\\sqrt{2}+\\sqrt{3}
+          &=\\sqrt{(\\sqrt{2}+\\sqrt{3})^2}
           \\end{aligned}
+          \\]
+        </div>
+
+        <div class="math-block answer">
+          \\[
+          \\sqrt{2}+\\sqrt{3}
           \\]
         </div>
       </div>
 
-      <div class="answer-step">
-        <p class="answer-step-number">(2)</p>
+      <div style="margin-bottom: 1.5rem;">
+        <p style="font-weight: 700; margin-bottom: 0.4rem;">(2)</p>
+
         <div class="math-block">
-\\[
-\\begin{aligned}
-\\sqrt{2-\\sqrt{3}}
-&=\\sqrt{\\frac{4-2\\sqrt{3}}{2}}\\\\
-&=\\frac{\\sqrt{4-2\\sqrt{3}}}{\\sqrt{2}}\\\\
-&=\\frac{\\sqrt{3}-\\sqrt{1}}{\\sqrt{2}}
-\\quad \\text{ここでやめてもOK}\\\\
-&=\\frac{\\sqrt{6}-\\sqrt{2}}{2}
-\\end{aligned}
-\\]
+          \\[
+          \\begin{aligned}
+          \\sqrt{2-\\sqrt{3}}
+          &=\\sqrt{\\frac{4-2\\sqrt{3}}{2}}\\\\
+          &=\\frac{\\sqrt{4-2\\sqrt{3}}}{\\sqrt{2}}
+          \\end{aligned}
+          \\]
+        </div>
+
+        <div style="display: flex; justify-content: center; align-items: center; gap: 0.8rem; flex-wrap: wrap; margin: 0.3rem 0;">
+          <div class="math-block" style="margin: 0;">
+            \\[
+            \\frac{\\sqrt{3}-\\sqrt{1}}{\\sqrt{2}}
+            \\]
+          </div>
+          <p style="margin: 0; font-family: sans-serif; font-weight: 700;">
+            ここでやめてもOK
+          </p>
+        </div>
+
+        <div class="math-block answer">
+          \\[
+          \\frac{\\sqrt{6}-\\sqrt{2}}{2}
+          \\]
         </div>
       </div>
 
-      <div class="answer-step">
-        <p class="answer-step-number">(3)</p>
+      <div style="margin-bottom: 1.5rem;">
+        <p style="font-weight: 700; margin-bottom: 0.4rem;">(3)</p>
+
         <div class="math-block">
           \\[
           \\begin{aligned}
           \\sqrt{x-\\sqrt{x^2-1}}
-          &=\\frac{\\sqrt{2x-2\\sqrt{(x+1)(x-1)}}}{\\sqrt{2}}\\\\
-          &=\\frac{\\sqrt{x+1}-\\sqrt{x-1}}{\\sqrt{2}}
+          &=\\frac{\\sqrt{2x-2\\sqrt{(x+1)(x-1)}}}{\\sqrt{2}}
           \\end{aligned}
+          \\]
+        </div>
+
+        <div class="math-block answer">
+          \\[
+          \\frac{\\sqrt{x+1}-\\sqrt{x-1}}{\\sqrt{2}}
           \\]
         </div>
       </div>
