@@ -532,6 +532,42 @@ body {
   font-weight: bold;
 }
 
+.answer-equation-grid {
+  display: grid;
+  grid-template-columns: max-content max-content max-content max-content;
+  justify-content: center;
+  align-items: center;
+  column-gap: 0.45em;
+  row-gap: 0.35em;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 10px 0;
+  font-size: 1.18rem;
+}
+
+.answer-equation-left {
+  text-align: right;
+}
+
+.answer-equation-equal {
+  text-align: center;
+}
+
+.answer-equation-right {
+  text-align: left;
+}
+
+.answer-equation-final {
+  color: var(--deep-pink);
+  font-weight: 700;
+}
+
+.answer-equation-note {
+  text-align: left;
+  white-space: nowrap;
+}
+
 .answer-link-button,
 .answer-open-button,
 .answer-close-button {
@@ -861,6 +897,11 @@ body {
 
   .answer-step-number {
     font-size: 0.98rem;
+  }
+
+  .answer-equation-grid {
+    justify-content: start;
+    font-size: 1rem;
   }
 
   .learned-range-modal-content {
