@@ -6,7 +6,7 @@
   const currentScript = document.currentScript;
   const scriptSrc = currentScript ? currentScript.getAttribute("src") : "common-loader.js";
   const prefix = scriptSrc.replace(/common-loader\.js$/, "");
-  const version = "20260506-12";
+  const version = "20260506-13";
 
   function addVersion(path) {
     if (path.includes("?")) {
@@ -64,6 +64,7 @@
      問題演習データ
   */
   loadScript("data/practice/math1-suutoshiki.js");
+  loadScript("data/practice/math2-geometry-and-equations.js");
 
   /*
      ブログデータ
