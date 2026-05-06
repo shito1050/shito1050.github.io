@@ -5,7 +5,7 @@ window.entranceProblemsMath3Limits = [
     questionHtml: "\\(\\displaystyle \\lim_{x\\to 0}\\frac{\\sin x}{x}\\) を求めよ．",
     choices: ["\\(0\\)", "\\(1\\)", "\\(-1\\)", "\\(\\infty\\)"],
     correctIndex: 1,
-    explanationHtml: "基本的な極限公式より，\\(\\displaystyle \\lim_{x\\to 0}\\frac{\\sin x}{x}=1\\) である．"
+    explanationHtml: "基本的な極限の公式より，\\(\\displaystyle \\lim_{x\\to 0}\\frac{\\sin x}{x}=1\\) である．"
   },
   {
     id: "entrance-math3-limits-002",
@@ -13,7 +13,7 @@ window.entranceProblemsMath3Limits = [
     questionHtml: "\\(\\displaystyle \\lim_{x\\to 0}\\frac{e^x-1}{x}\\) を求めよ．",
     choices: ["\\(0\\)", "\\(1\\)", "\\(e\\)", "\\(\\infty\\)"],
     correctIndex: 1,
-    explanationHtml: "基本的な極限公式より，\\(\\displaystyle \\lim_{x\\to 0}\\frac{e^x-1}{x}=1\\) である．"
+    explanationHtml: "基本的な極限の公式より，\\(\\displaystyle \\lim_{x\\to 0}\\frac{e^x-1}{x}=1\\) である．"
   },
   {
     id: "entrance-math3-limits-003",
@@ -21,6 +21,6 @@ window.entranceProblemsMath3Limits = [
     questionHtml: "\\(\\displaystyle \\lim_{x\\to 0}\\frac{\\log(1+x)}{x}\\) を求めよ．",
     choices: ["\\(0\\)", "\\(1\\)", "\\(-1\\)", "\\(\\infty\\)"],
     correctIndex: 1,
-    explanationHtml: "基本的な極限公式より，\\(\\displaystyle \\lim_{x\\to 0}\\frac{\\log(1+x)}{x}=1\\) である．"
+    explanationHtml: "基本的な極限の公式より，\\(\\displaystyle \\lim_{x\\to 0}\\frac{\\log(1+x)}{x}=1\\) である．"
   }
 ];
