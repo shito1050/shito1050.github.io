@@ -60,6 +60,16 @@ function makePath(pathFromRoot) {
   return getPageDepthPrefix() + pathFromRoot;
 }
 
+function typesetMathInElement(element) {
+  if (!element || !window.MathJax || !window.MathJax.typesetPromise) {
+    return;
+  }
+
+  window.MathJax.typesetPromise([element]).catch(function (error) {
+    console.error(error);
+  });
+}
+
 /* =========================
    共通サイドバー
 ========================= */
@@ -338,6 +348,7 @@ function createDictionarySearchBox() {
     `;
 
     openPanel();
+    typesetMathInElement(panel);
   }
 
   function showSuggestions(suggestions) {
@@ -525,9 +536,7 @@ function renderDictionaryTermDetail() {
     </div>
   `;
 
-  if (window.MathJax) {
-    MathJax.typesetPromise();
-  }
+  typesetMathInElement(detailArea);
 }
 
 createDictionarySearchBox();
@@ -1310,10 +1319,7 @@ function renderPracticeProblemDetail() {
   `;
 
   initializeAnswerToggle();
-
-  if (window.MathJax) {
-    MathJax.typesetPromise();
-  }
+  typesetMathInElement(detailArea);
 }
 
 renderPracticeProblemList();
@@ -1397,9 +1403,7 @@ function showDailyProblem() {
     </div>
   `;
 
-  if (window.MathJax) {
-    MathJax.typesetPromise();
-  }
+  typesetMathInElement(dailyProblemArea);
 }
 
 showDailyProblem();
@@ -1511,9 +1515,7 @@ function renderBlogArticle() {
     </div>
   `;
 
-  if (window.MathJax) {
-    MathJax.typesetPromise();
-  }
+  typesetMathInElement(articleArea);
 }
 
 renderBlogPostList();
@@ -1656,9 +1658,7 @@ function createEntranceProblemModal() {
 
   document.body.appendChild(modal);
 
-  if (window.MathJax) {
-    MathJax.typesetPromise();
-  }
+  typesetMathInElement(modal);
 
   const choiceButtons = modal.querySelectorAll(".entrance-choice-button");
   const resultArea = modal.querySelector("#entranceResult");
@@ -1687,9 +1687,7 @@ function createEntranceProblemModal() {
       explanationArea.classList.remove("is-hidden");
       closeButton.classList.remove("is-hidden");
 
-      if (window.MathJax) {
-        MathJax.typesetPromise();
-      }
+      typesetMathInElement(explanationArea);
     });
   });
 
@@ -1732,9 +1730,7 @@ function openAnswer() {
   answerBox.classList.remove("is-hidden");
   answerOpenButton.classList.add("is-hidden");
 
-  if (window.MathJax) {
-    MathJax.typesetPromise();
-  }
+  typesetMathInElement(answerBox);
 }
 
 function closeAnswer() {
