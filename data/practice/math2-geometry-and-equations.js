@@ -10,7 +10,6 @@ window.practiceProblems.push(
     topic: "点の存在範囲",
     unitIds: ["math2_figures_and_equations"],
     difficulty: 3,
-    problemText: "",
     questionHtml: `
       <p>
         \\(s,t\\)が\\(0\\leqq s\\leqq 1,\\ 0\\leqq t\\leqq 1\\)の範囲を動くとする．
