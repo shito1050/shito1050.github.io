@@ -6,7 +6,7 @@
   const currentScript = document.currentScript;
   const scriptSrc = currentScript ? currentScript.getAttribute("src") : "common-loader.js";
   const prefix = scriptSrc.replace(/common-loader\.js$/, "");
-  const version = "20260506-06";
+  const version = "20260506-07";
 
   function addVersion(path) {
     if (path.includes("?")) {
@@ -40,6 +40,7 @@
   loadExternalScript("https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js");
 
   loadScript("data/dictionary/math1/numbers-and-expressions.js");
+  loadScript("data/dictionary/math3/differentiation.js");
   loadScript("data/lessons-data.js");
   loadScript("data/entrance-problems-data.js");
   loadScript("data/practice/math1-suutoshiki.js");
