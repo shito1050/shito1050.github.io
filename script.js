@@ -952,6 +952,10 @@ function getPracticeProblemUrl(problem) {
   return makePath("practice/problem.html?id=" + encodeURIComponent(problem.id));
 }
 
+function getPracticeProblemAnswerUrl(problem) {
+  return getPracticeProblemUrl(problem) + "&answer=open";
+}
+
 function renderPracticeProblemList() {
   const practiceProblemListArea = document.getElementById("practiceProblemListArea");
 
@@ -1086,7 +1090,7 @@ function showDailyProblem() {
       <p class="problem-label">問題</p>
       <p>${problem.problemText || ""}</p>
       ${problem.questionHtml || ""}
-      <a class="answer-link-button" href="${getPracticeProblemUrl(problem)}?answer=open">
+      <a class="answer-link-button" href="${getPracticeProblemAnswerUrl(problem)}">
         解答を見る
       </a>
     </div>
