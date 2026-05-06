@@ -10,8 +10,11 @@ window.practiceProblems.push(
     topic: "分母の有理化",
     unitIds: ["math1_numbers_and_expressions"],
     difficulty: 1,
-    problemText: "次の数の分母を有理化せよ．",
     questionHtml: `
+      <p>
+        次の数の分母を有理化せよ．
+      </p>
+
       <div class="math-block">
         \\[
         \\frac{1}{1+\\sqrt{2}+\\sqrt{3}}
@@ -73,8 +76,11 @@ window.practiceProblems.push(
     topic: "2重根号の外し方",
     unitIds: ["math1_numbers_and_expressions"],
     difficulty: 1,
-    problemText: "次の2重根号を外せ．",
     questionHtml: `
+      <p>
+        次の2重根号を外せ．
+      </p>
+
       <div class="math-block">
         \\[
         \\begin{array}{ll}
