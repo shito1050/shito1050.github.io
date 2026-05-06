@@ -110,60 +110,67 @@ window.practiceProblems.push(
       <div class="answer-step">
         <p class="answer-step-number">(1)</p>
 
-        <div class="math-block">
-          \\[
-          \\begin{aligned}
-          \\sqrt{5+2\\sqrt{6}}
-          &=\\sqrt{(\\sqrt{2}+\\sqrt{3})^2}
-          \\end{aligned}
-          \\]
-        </div>
+        <div
+          class="answer-equation"
+          style="display: grid; grid-template-columns: max-content max-content max-content max-content; justify-content: center; align-items: center; column-gap: 0.45em; row-gap: 0.35em; overflow-x: auto; padding: 10px 0; font-size: 1.18rem;"
+        >
+          <div style="text-align: right;">\\(\\sqrt{5+2\\sqrt{6}}\\)</div>
+          <div>\\(=\\)</div>
+          <div>\\(\\sqrt{(\\sqrt{2}+\\sqrt{3})^2}\\)</div>
+          <div></div>
 
-        <div class="math-block answer">
-          \\[
-          =\\sqrt{2}+\\sqrt{3}
-          \\]
+          <div></div>
+          <div>\\(=\\)</div>
+          <div style="color: var(--deep-pink); font-weight: 700;">\\(\\sqrt{2}+\\sqrt{3}\\)</div>
+          <div></div>
         </div>
       </div>
 
       <div class="answer-step">
         <p class="answer-step-number">(2)</p>
 
-        <div class="math-block">
-          \\[
-          \\begin{aligned}
-          \\sqrt{2-\\sqrt{3}}
-          &=\\sqrt{\\frac{4-2\\sqrt{3}}{2}}\\\\
-          &=\\frac{\\sqrt{4-2\\sqrt{3}}}{\\sqrt{2}}\\\\
-          &=\\frac{\\sqrt{3}-\\sqrt{1}}{\\sqrt{2}}
-          \\quad \\text{ここでやめてもOK}
-          \\end{aligned}
-          \\]
-        </div>
+        <div
+          class="answer-equation"
+          style="display: grid; grid-template-columns: max-content max-content max-content max-content; justify-content: center; align-items: center; column-gap: 0.45em; row-gap: 0.35em; overflow-x: auto; padding: 10px 0; font-size: 1.18rem;"
+        >
+          <div style="text-align: right;">\\(\\sqrt{2-\\sqrt{3}}\\)</div>
+          <div>\\(=\\)</div>
+          <div>\\(\\sqrt{\\frac{4-2\\sqrt{3}}{2}}\\)</div>
+          <div></div>
 
-        <div class="math-block answer">
-          \\[
-          =\\frac{\\sqrt{6}-\\sqrt{2}}{2}
-          \\]
+          <div></div>
+          <div>\\(=\\)</div>
+          <div>\\(\\frac{\\sqrt{4-2\\sqrt{3}}}{\\sqrt{2}}\\)</div>
+          <div></div>
+
+          <div></div>
+          <div>\\(=\\)</div>
+          <div>\\(\\frac{\\sqrt{3}-\\sqrt{1}}{\\sqrt{2}}\\)</div>
+          <div class="answer-note">ここでやめてもOK</div>
+
+          <div></div>
+          <div>\\(=\\)</div>
+          <div style="color: var(--deep-pink); font-weight: 700;">\\(\\frac{\\sqrt{6}-\\sqrt{2}}{2}\\)</div>
+          <div></div>
         </div>
       </div>
 
       <div class="answer-step">
         <p class="answer-step-number">(3)</p>
 
-        <div class="math-block">
-          \\[
-          \\begin{aligned}
-          \\sqrt{x-\\sqrt{x^2-1}}
-          &=\\frac{\\sqrt{2x-2\\sqrt{(x+1)(x-1)}}}{\\sqrt{2}}
-          \\end{aligned}
-          \\]
-        </div>
+        <div
+          class="answer-equation"
+          style="display: grid; grid-template-columns: max-content max-content max-content max-content; justify-content: center; align-items: center; column-gap: 0.45em; row-gap: 0.35em; overflow-x: auto; padding: 10px 0; font-size: 1.18rem;"
+        >
+          <div style="text-align: right;">\\(\\sqrt{x-\\sqrt{x^2-1}}\\)</div>
+          <div>\\(=\\)</div>
+          <div>\\(\\frac{\\sqrt{2x-2\\sqrt{(x+1)(x-1)}}}{\\sqrt{2}}\\)</div>
+          <div></div>
 
-        <div class="math-block answer">
-          \\[
-          =\\frac{\\sqrt{x+1}-\\sqrt{x-1}}{\\sqrt{2}}
-          \\]
+          <div></div>
+          <div>\\(=\\)</div>
+          <div style="color: var(--deep-pink); font-weight: 700;">\\(\\frac{\\sqrt{x+1}-\\sqrt{x-1}}{\\sqrt{2}}\\)</div>
+          <div></div>
         </div>
       </div>
     `
