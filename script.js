@@ -92,7 +92,7 @@ function createCommonSidebar() {
     {
       page: "practice",
       text: "問題演習",
-      href: "practice.html"
+      href: "practice/"
     },
     {
       page: "daily",
@@ -1029,7 +1029,7 @@ function renderPracticeProblemDetail() {
     detailArea.innerHTML = `
       <p>指定された問題は見つかりませんでした．</p>
       <p class="back-link-area">
-        <a class="answer-link-button" href="${makePath("practice.html")}">問題一覧にもどる</a>
+        <a class="answer-link-button" href="${makePath("practice/")}">問題一覧にもどる</a>
       </p>
     `;
     return;
@@ -1061,7 +1061,7 @@ function renderPracticeProblemDetail() {
     </div>
 
     <p class="back-link-area">
-      <a class="answer-link-button" href="${makePath("practice.html")}">問題一覧にもどる</a>
+      <a class="answer-link-button" href="${makePath("practice/")}">問題一覧にもどる</a>
     </p>
   `;
 
