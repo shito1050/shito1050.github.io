@@ -3,6 +3,7 @@ window.practiceProblems = window.practiceProblems || [];
 window.practiceProblems.push(
   {
     id: "rationalize-001",
+    order: "1-01-0001",
     title: "数学I_数と式_分母の有理化_001",
     subject: "数学I",
     unit: "数と式",
@@ -65,6 +66,7 @@ window.practiceProblems.push(
 window.practiceProblems.push(
   {
     id: "double-radical-001",
+    order: "1-01-0002",
     title: "数学I_数と式_2重根号の外し方_001",
     subject: "数学I",
     unit: "数と式",
