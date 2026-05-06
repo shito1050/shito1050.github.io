@@ -114,9 +114,14 @@ window.practiceProblems.push(
           \\[
           \\begin{aligned}
           \\sqrt{5+2\\sqrt{6}}
-          &=\\sqrt{(\\sqrt{2}+\\sqrt{3})^2}\\\\
-          &={\\color{deeppink}{\\sqrt{2}+\\sqrt{3}}}
+          &=\\sqrt{(\\sqrt{2}+\\sqrt{3})^2}
           \\end{aligned}
+          \\]
+        </div>
+
+        <div class="math-block answer">
+          \\[
+          =\\sqrt{2}+\\sqrt{3}
           \\]
         </div>
       </div>
@@ -131,9 +136,14 @@ window.practiceProblems.push(
           &=\\sqrt{\\frac{4-2\\sqrt{3}}{2}}\\\\
           &=\\frac{\\sqrt{4-2\\sqrt{3}}}{\\sqrt{2}}\\\\
           &=\\frac{\\sqrt{3}-\\sqrt{1}}{\\sqrt{2}}
-          \\quad \\text{ここでやめてもOK}\\\\
-          &={\\color{deeppink}{\\frac{\\sqrt{6}-\\sqrt{2}}{2}}}
+          \\quad \\text{ここでやめてもOK}
           \\end{aligned}
+          \\]
+        </div>
+
+        <div class="math-block answer">
+          \\[
+          =\\frac{\\sqrt{6}-\\sqrt{2}}{2}
           \\]
         </div>
       </div>
@@ -145,9 +155,14 @@ window.practiceProblems.push(
           \\[
           \\begin{aligned}
           \\sqrt{x-\\sqrt{x^2-1}}
-          &=\\frac{\\sqrt{2x-2\\sqrt{(x+1)(x-1)}}}{\\sqrt{2}}\\\\
-          &={\\color{deeppink}{\\frac{\\sqrt{x+1}-\\sqrt{x-1}}{\\sqrt{2}}}}
+          &=\\frac{\\sqrt{2x-2\\sqrt{(x+1)(x-1)}}}{\\sqrt{2}}
           \\end{aligned}
+          \\]
+        </div>
+
+        <div class="math-block answer">
+          \\[
+          =\\frac{\\sqrt{x+1}-\\sqrt{x-1}}{\\sqrt{2}}
           \\]
         </div>
       </div>
