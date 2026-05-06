@@ -983,6 +983,7 @@ renderLearnedRangeSetting();
 ========================= */
 
 const practiceProblems = Array.isArray(window.practiceProblems) ? window.practiceProblems : [];
+const practiceAccordionStorageKey = "practiceAccordionOpenIds";
 
 function getDifficultyLabel(difficulty) {
   const difficultyLabels = {
@@ -1000,8 +1001,8 @@ const practiceSubjectOrderMap = {
   "A": 2,
   "2": 3,
   "B": 4,
-  "C": 5,
-  "3": 6
+  "3": 5,
+  "C": 6
 };
 
 function parsePracticeProblemOrder(orderText) {
@@ -1101,6 +1102,63 @@ function getUnitOrderFromProblem(problem) {
   return parsePracticeProblemOrder(problem.order).unitOrder;
 }
 
+function createPracticeAccordionId(type, name, parentName) {
+  return [
+    "practice",
+    type,
+    parentName || "",
+    name || ""
+  ].join("-")
+    .replace(/\s+/g, "")
+    .replace(/[^\w\u3040-\u30ff\u3400-\u9fff-]/g, "-");
+}
+
+function loadPracticeAccordionOpenIds() {
+  const savedValue = sessionStorage.getItem(practiceAccordionStorageKey);
+
+  if (!savedValue) {
+    return [];
+  }
+
+  try {
+    const parsedValue = JSON.parse(savedValue);
+
+    if (Array.isArray(parsedValue)) {
+      return parsedValue;
+    }
+
+    return [];
+  } catch (error) {
+    return [];
+  }
+}
+
+function savePracticeAccordionOpenIds(openIds) {
+  sessionStorage.setItem(practiceAccordionStorageKey, JSON.stringify(openIds));
+}
+
+function addPracticeAccordionOpenId(openId) {
+  const openIds = loadPracticeAccordionOpenIds();
+
+  if (!openIds.includes(openId)) {
+    openIds.push(openId);
+  }
+
+  savePracticeAccordionOpenIds(openIds);
+}
+
+function removePracticeAccordionOpenId(openId) {
+  const openIds = loadPracticeAccordionOpenIds().filter(function (savedId) {
+    return savedId !== openId;
+  });
+
+  savePracticeAccordionOpenIds(openIds);
+}
+
+function isPracticeAccordionOpen(openId) {
+  return loadPracticeAccordionOpenIds().includes(openId);
+}
+
 function groupPracticeProblemsBySubjectAndUnit(problems) {
   const subjectMap = new Map();
 
@@ -1182,11 +1240,17 @@ function renderPracticeProblemList() {
 
   const groupedSubjects = groupPracticeProblemsBySubjectAndUnit(filteredProblems);
 
-  const listHtml = groupedSubjects.map(function (subjectGroup, subjectIndex) {
-    const subjectId = "practiceSubject-" + subjectIndex;
+  const listHtml = groupedSubjects.map(function (subjectGroup) {
+    const subjectId = createPracticeAccordionId("subject", subjectGroup.name);
+    const isSubjectOpen = isPracticeAccordionOpen(subjectId);
+    const subjectOpenClass = isSubjectOpen ? " is-open" : "";
+    const subjectExpanded = isSubjectOpen ? "true" : "false";
 
-    const unitHtml = subjectGroup.units.map(function (unitGroup, unitIndex) {
-      const unitId = subjectId + "-unit-" + unitIndex;
+    const unitHtml = subjectGroup.units.map(function (unitGroup) {
+      const unitId = createPracticeAccordionId("unit", unitGroup.name, subjectGroup.name);
+      const isUnitOpen = isPracticeAccordionOpen(unitId);
+      const unitOpenClass = isUnitOpen ? " is-open" : "";
+      const unitExpanded = isUnitOpen ? "true" : "false";
 
       const problemHtml = unitGroup.problems.map(function (problem) {
         const displayTitle = getPracticeProblemDisplayTitle(problem);
@@ -1202,8 +1266,8 @@ function renderPracticeProblemList() {
         <section class="practice-unit-group">
           <button
             type="button"
-            class="practice-unit-toggle"
-            aria-expanded="false"
+            class="practice-unit-toggle${unitOpenClass}"
+            aria-expanded="${unitExpanded}"
             aria-controls="${unitId}"
           >
             <span class="practice-toggle-mark">▽</span>
@@ -1211,7 +1275,7 @@ function renderPracticeProblemList() {
             <span class="practice-count">${unitGroup.problems.length}問</span>
           </button>
 
-          <div class="practice-unit-body" id="${unitId}">
+          <div class="practice-unit-body${unitOpenClass}" id="${unitId}">
             ${problemHtml}
           </div>
         </section>
@@ -1222,8 +1286,8 @@ function renderPracticeProblemList() {
       <section class="practice-subject-group">
         <button
           type="button"
-          class="practice-subject-toggle"
-          aria-expanded="false"
+          class="practice-subject-toggle${subjectOpenClass}"
+          aria-expanded="${subjectExpanded}"
           aria-controls="${subjectId}"
         >
           <span class="practice-toggle-mark">▽</span>
@@ -1231,7 +1295,7 @@ function renderPracticeProblemList() {
           <span class="practice-count">${subjectGroup.units.length}単元</span>
         </button>
 
-        <div class="practice-subject-body" id="${subjectId}">
+        <div class="practice-subject-body${subjectOpenClass}" id="${subjectId}">
           ${unitHtml}
         </div>
       </section>
@@ -1263,6 +1327,12 @@ function initializePracticeAccordion() {
 
       button.setAttribute("aria-expanded", String(isOpen));
       button.classList.toggle("is-open", isOpen);
+
+      if (isOpen) {
+        addPracticeAccordionOpenId(targetId);
+      } else {
+        removePracticeAccordionOpenId(targetId);
+      }
     });
   });
 }
