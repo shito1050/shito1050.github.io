@@ -926,10 +926,139 @@ function createInitialLearnedRangeModal() {
 renderLearnedRangeSetting();
 
 /* =========================
-   今日の1問
+   問題演習
 ========================= */
 
 const practiceProblems = Array.isArray(window.practiceProblems) ? window.practiceProblems : [];
+
+function getDifficultyLabel(difficulty) {
+  const difficultyLabels = {
+    1: "基本",
+    2: "標準",
+    3: "応用",
+    4: "難関"
+  };
+
+  return difficultyLabels[difficulty] || "";
+}
+
+function findPracticeProblemById(problemId) {
+  return practiceProblems.find(function (problem) {
+    return problem.id === problemId;
+  });
+}
+
+function getPracticeProblemUrl(problem) {
+  return makePath("practice/problem.html?id=" + encodeURIComponent(problem.id));
+}
+
+function renderPracticeProblemList() {
+  const practiceProblemListArea = document.getElementById("practiceProblemListArea");
+
+  if (!practiceProblemListArea) {
+    return;
+  }
+
+  const filteredProblems = filterProblemsByLearnedRange(practiceProblems);
+
+  if (filteredProblems.length === 0) {
+    practiceProblemListArea.innerHTML = `
+      <p>現在，既習範囲内の問題は準備中です．</p>
+    `;
+    return;
+  }
+
+  const listHtml = filteredProblems.map(function (problem) {
+    const difficultyLabel = getDifficultyLabel(problem.difficulty);
+    const metaItems = [problem.subject, problem.unit, problem.topic, difficultyLabel].filter(Boolean);
+    const metaHtml = metaItems.length > 0
+      ? `<span class="problem-meta">${metaItems.join(" / ")}</span>`
+      : "";
+
+    return `
+      <a class="problem-card simple-problem-card" href="${getPracticeProblemUrl(problem)}">
+        <span class="problem-title">${problem.title}</span>
+        ${metaHtml}
+      </a>
+    `;
+  }).join("");
+
+  practiceProblemListArea.innerHTML = listHtml;
+}
+
+function renderPracticeProblemDetail() {
+  const detailArea = document.getElementById("practiceProblemDetail");
+  const titleArea = document.getElementById("practiceProblemTitle");
+
+  if (!detailArea || !titleArea) {
+    return;
+  }
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const problemId = urlParams.get("id");
+  const problem = findPracticeProblemById(problemId);
+
+  if (!problem) {
+    titleArea.textContent = "問題が見つかりません";
+    detailArea.innerHTML = `
+      <p>指定された問題は見つかりませんでした．</p>
+      <p class="back-link-area">
+        <a class="answer-link-button" href="${makePath("practice.html")}">問題一覧にもどる</a>
+      </p>
+    `;
+    return;
+  }
+
+  document.title = problem.title + "｜問題演習｜しぃとのホームページ";
+  titleArea.textContent = problem.title;
+
+  const difficultyLabel = getDifficultyLabel(problem.difficulty);
+  const metaItems = [problem.subject, problem.unit, problem.topic, difficultyLabel].filter(Boolean);
+  const metaHtml = metaItems.length > 0
+    ? `<p class="problem-meta">${metaItems.join(" / ")}</p>`
+    : "";
+
+  detailArea.innerHTML = `
+    ${metaHtml}
+
+    <div class="problem-box">
+      <p class="problem-label">問題</p>
+      <p>${problem.problemText || ""}</p>
+      ${problem.questionHtml || ""}
+    </div>
+
+    <button class="answer-open-button" id="answerOpenButton">
+      解答を見る
+    </button>
+
+    <div class="answer-box is-hidden" id="answerBox">
+      <p class="problem-label">解答</p>
+      ${problem.answerHtml || ""}
+
+      <button class="answer-close-button" id="answerCloseButton">
+        解答を閉じる
+      </button>
+    </div>
+
+    <p class="back-link-area">
+      <a class="answer-link-button" href="${makePath("practice.html")}">問題一覧にもどる</a>
+    </p>
+  `;
+
+  initializeAnswerToggle();
+
+  if (window.MathJax) {
+    MathJax.typesetPromise();
+  }
+}
+
+renderPracticeProblemList();
+renderPracticeProblemDetail();
+
+/* =========================
+   今日の1問
+========================= */
+
 const dailyProblemArea = document.getElementById("dailyProblemArea");
 
 function showDailyProblem() {
@@ -955,13 +1084,9 @@ function showDailyProblem() {
   dailyProblemArea.innerHTML = `
     <div class="problem-box">
       <p class="problem-label">問題</p>
-      <p>${problem.problemText}</p>
-      <div class="math-block">
-        \\[
-        ${problem.formula}
-        \\]
-      </div>
-      <a class="answer-link-button" href="${makePath(problem.url)}?answer=open">
+      <p>${problem.problemText || ""}</p>
+      ${problem.questionHtml || ""}
+      <a class="answer-link-button" href="${getPracticeProblemUrl(problem)}?answer=open">
         解答を見る
       </a>
     </div>
@@ -1225,14 +1350,13 @@ function initializeEntranceProblemSystem() {
 initializeEntranceProblemSystem();
 
 /* =========================
-   個別問題ページの解答開閉
+   解答開閉
 ========================= */
 
-const answerBox = document.getElementById("answerBox");
-const answerCloseButton = document.getElementById("answerCloseButton");
-const answerOpenButton = document.getElementById("answerOpenButton");
-
 function openAnswer() {
+  const answerBox = document.getElementById("answerBox");
+  const answerOpenButton = document.getElementById("answerOpenButton");
+
   if (!answerBox || !answerOpenButton) {
     return;
   }
@@ -1246,6 +1370,9 @@ function openAnswer() {
 }
 
 function closeAnswer() {
+  const answerBox = document.getElementById("answerBox");
+  const answerOpenButton = document.getElementById("answerOpenButton");
+
   if (!answerBox || !answerOpenButton) {
     return;
   }
@@ -1254,7 +1381,15 @@ function closeAnswer() {
   answerOpenButton.classList.remove("is-hidden");
 }
 
-if (answerBox && answerCloseButton && answerOpenButton) {
+function initializeAnswerToggle() {
+  const answerBox = document.getElementById("answerBox");
+  const answerCloseButton = document.getElementById("answerCloseButton");
+  const answerOpenButton = document.getElementById("answerOpenButton");
+
+  if (!answerBox || !answerCloseButton || !answerOpenButton) {
+    return;
+  }
+
   answerOpenButton.addEventListener("click", function () {
     openAnswer();
   });
@@ -1271,3 +1406,5 @@ if (answerBox && answerCloseButton && answerOpenButton) {
     closeAnswer();
   }
 }
+
+initializeAnswerToggle();
