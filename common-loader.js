@@ -6,7 +6,7 @@
   const currentScript = document.currentScript;
   const scriptSrc = currentScript ? currentScript.getAttribute("src") : "common-loader.js";
   const prefix = scriptSrc.replace(/common-loader\.js$/, "");
-  const version = "20260506-07";
+  const version = "20260506-08";
 
   function addVersion(path) {
     if (path.includes("?")) {
@@ -31,6 +31,7 @@
   loadInlineScript(`
     window.MathJax = {
       tex: {
+        packages: {'[+]': ['color']},
         inlineMath: [['\\\\(', '\\\\)']],
         displayMath: [['\\\\[', '\\\\]']]
       }
