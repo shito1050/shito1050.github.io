@@ -110,45 +110,58 @@ window.practiceProblems.push(
       <div class="answer-step">
         <p class="answer-step-number">(1)</p>
 
-        <div class="math-block">
-          \\[
-          \\begin{aligned}
-          \\sqrt{5+2\\sqrt{6}}
-          &=\\sqrt{(\\sqrt{2}+\\sqrt{3})^2}\\\\
-          &=\\textcolor{deeppink}{\\sqrt{2}+\\sqrt{3}}
-          \\end{aligned}
-          \\]
+        <div class="answer-equation-grid">
+          <div class="answer-equation-left">\\(\\sqrt{5+2\\sqrt{6}}\\)</div>
+          <div class="answer-equation-equal">\\(=\\)</div>
+          <div class="answer-equation-right">\\(\\sqrt{(\\sqrt{2}+\\sqrt{3})^2}\\)</div>
+          <div class="answer-equation-note"></div>
+
+          <div class="answer-equation-left"></div>
+          <div class="answer-equation-equal">\\(=\\)</div>
+          <div class="answer-equation-right answer-equation-final">\\(\\sqrt{2}+\\sqrt{3}\\)</div>
+          <div class="answer-equation-note"></div>
         </div>
       </div>
 
       <div class="answer-step">
         <p class="answer-step-number">(2)</p>
 
-        <div class="math-block">
-          \\[
-          \\begin{aligned}
-          \\sqrt{2-\\sqrt{3}}
-          &=\\sqrt{\\frac{4-2\\sqrt{3}}{2}}\\\\
-          &=\\frac{\\sqrt{4-2\\sqrt{3}}}{\\sqrt{2}}\\\\
-          &=\\frac{\\sqrt{3}-\\sqrt{1}}{\\sqrt{2}}
-          \\quad \\text{ここでやめてもOK}\\\\
-          &=\\textcolor{deeppink}{\\frac{\\sqrt{6}-\\sqrt{2}}{2}}
-          \\end{aligned}
-          \\]
+        <div class="answer-equation-grid">
+          <div class="answer-equation-left">\\(\\sqrt{2-\\sqrt{3}}\\)</div>
+          <div class="answer-equation-equal">\\(=\\)</div>
+          <div class="answer-equation-right">\\(\\sqrt{\\frac{4-2\\sqrt{3}}{2}}\\)</div>
+          <div class="answer-equation-note"></div>
+
+          <div class="answer-equation-left"></div>
+          <div class="answer-equation-equal">\\(=\\)</div>
+          <div class="answer-equation-right">\\(\\frac{\\sqrt{4-2\\sqrt{3}}}{\\sqrt{2}}\\)</div>
+          <div class="answer-equation-note"></div>
+
+          <div class="answer-equation-left"></div>
+          <div class="answer-equation-equal">\\(=\\)</div>
+          <div class="answer-equation-right">\\(\\frac{\\sqrt{3}-\\sqrt{1}}{\\sqrt{2}}\\)</div>
+          <div class="answer-equation-note answer-note">ここでやめてもOK</div>
+
+          <div class="answer-equation-left"></div>
+          <div class="answer-equation-equal">\\(=\\)</div>
+          <div class="answer-equation-right answer-equation-final">\\(\\frac{\\sqrt{6}-\\sqrt{2}}{2}\\)</div>
+          <div class="answer-equation-note"></div>
         </div>
       </div>
 
       <div class="answer-step">
         <p class="answer-step-number">(3)</p>
 
-        <div class="math-block">
-          \\[
-          \\begin{aligned}
-          \\sqrt{x-\\sqrt{x^2-1}}
-          &=\\frac{\\sqrt{2x-2\\sqrt{(x+1)(x-1)}}}{\\sqrt{2}}\\\\
-          &=\\textcolor{deeppink}{\\frac{\\sqrt{x+1}-\\sqrt{x-1}}{\\sqrt{2}}}
-          \\end{aligned}
-          \\]
+        <div class="answer-equation-grid">
+          <div class="answer-equation-left">\\(\\sqrt{x-\\sqrt{x^2-1}}\\)</div>
+          <div class="answer-equation-equal">\\(=\\)</div>
+          <div class="answer-equation-right">\\(\\frac{\\sqrt{2x-2\\sqrt{(x+1)(x-1)}}}{\\sqrt{2}}\\)</div>
+          <div class="answer-equation-note"></div>
+
+          <div class="answer-equation-left"></div>
+          <div class="answer-equation-equal">\\(=\\)</div>
+          <div class="answer-equation-right answer-equation-final">\\(\\frac{\\sqrt{x+1}-\\sqrt{x-1}}{\\sqrt{2}}\\)</div>
+          <div class="answer-equation-note"></div>
         </div>
       </div>
     `
