@@ -88,6 +88,14 @@ function createDictionarySearchBox() {
         placeholder="用語を検索"
         autocomplete="off"
       >
+      <button
+        type="button"
+        class="dictionary-search-clear-button"
+        id="dictionarySearchClearButton"
+        aria-label="検索語を消す"
+      >
+        ×
+      </button>
     </div>
     <div class="dictionary-search-panel" id="dictionarySearchPanel"></div>
   `;
@@ -95,6 +103,7 @@ function createDictionarySearchBox() {
   document.body.appendChild(searchFloating);
 
   const input = document.getElementById("dictionarySearchInput");
+  const clearButton = document.getElementById("dictionarySearchClearButton");
   const panel = document.getElementById("dictionarySearchPanel");
 
   function closePanel() {
@@ -104,6 +113,21 @@ function createDictionarySearchBox() {
 
   function openPanel() {
     panel.classList.add("is-open");
+  }
+
+  function updateClearButton() {
+    if (input.value.trim()) {
+      clearButton.classList.add("is-visible");
+    } else {
+      clearButton.classList.remove("is-visible");
+    }
+  }
+
+  function clearSearchInput() {
+    input.value = "";
+    updateClearButton();
+    closePanel();
+    input.focus();
   }
 
   function getMatchedTerm(inputText) {
@@ -186,6 +210,7 @@ function createDictionarySearchBox() {
 
       const selectedTerm = button.dataset.term;
       input.value = selectedTerm;
+      updateClearButton();
 
       const selectedItem = getMatchedTerm(selectedTerm);
 
@@ -210,6 +235,8 @@ function createDictionarySearchBox() {
   function updateSearchResult() {
     const inputText = input.value.trim();
 
+    updateClearButton();
+
     if (!inputText) {
       closePanel();
       return;
@@ -230,9 +257,20 @@ function createDictionarySearchBox() {
 
   input.addEventListener("keydown", function (event) {
     if (event.key === "Escape") {
-      input.value = "";
-      closePanel();
+      clearSearchInput();
     }
+  });
+
+  clearButton.addEventListener("pointerdown", function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    clearSearchInput();
+  });
+
+  clearButton.addEventListener("click", function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+    clearSearchInput();
   });
 
   document.addEventListener("click", function (event) {
@@ -240,6 +278,8 @@ function createDictionarySearchBox() {
       closePanel();
     }
   });
+
+  updateClearButton();
 }
 
 function renderDictionaryIndex() {
