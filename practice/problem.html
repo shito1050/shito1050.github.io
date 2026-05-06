@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>問題｜しぃとのホームページ</title>
-  <link rel="stylesheet" href="../style.css">
+  <title>問題演習｜しぃとのホームページ</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body data-page="practice" data-depth="child">
+<body data-page="practice" data-depth="root">
   <button class="menu-button" id="menuButton" aria-label="メニューを開く">
     <span></span>
     <span></span>
@@ -19,14 +19,18 @@
 
   <main class="main-content">
     <section class="hero">
-      <h1 id="practiceProblemTitle">問題</h1>
+      <h1>問題演習</h1>
     </section>
 
-    <section class="content-section" id="practiceProblemDetail">
-      読み込み中です．
+    <section class="content-section">
+      <h2>問題一覧</h2>
+
+      <div class="problem-list" id="practiceProblemListArea">
+        読み込み中です．
+      </div>
     </section>
   </main>
 
-  <script src="../common-loader.js"></script>
+  <script src="common-loader.js"></script>
 </body>
 </html>
