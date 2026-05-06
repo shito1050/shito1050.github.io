@@ -11,6 +11,10 @@ function createCommonSidebar() {
 
   const currentPage = getPageName();
 
+  const siteConfig = window.siteConfig || {};
+  const siteNameMain = siteConfig.siteNameMain || "すうがく";
+  const siteNameSub = siteConfig.siteNameSub || "がかり";
+
   const navItems = [
     {
       page: "about",
@@ -55,8 +59,8 @@ function createCommonSidebar() {
   commonSidebarArea.innerHTML = `
     <aside class="sidebar" id="sidebar">
       <a class="site-title site-title-link" href="${makePath("index.html")}">
-        <div class="site-title-main">すうがく</div>
-        <div class="site-title-sub">がかり</div>
+        <div class="site-title-main">${siteNameMain}</div>
+        <div class="site-title-sub">${siteNameSub}</div>
       </a>
 
       <nav class="side-nav">
