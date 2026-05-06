@@ -1288,7 +1288,6 @@ function renderPracticeProblemDetail() {
   detailArea.innerHTML = `
     <div class="problem-box">
       <p class="problem-label">問題</p>
-      <p>${problem.problemText || ""}</p>
       ${problem.questionHtml || ""}
     </div>
 
@@ -1391,7 +1390,6 @@ function showDailyProblem() {
   dailyProblemArea.innerHTML = `
     <div class="problem-box">
       <p class="problem-label">問題</p>
-      <p>${problem.problemText || ""}</p>
       ${problem.questionHtml || ""}
       <a class="answer-link-button" href="${getPracticeProblemAnswerUrl(problem)}">
         解答をみる
