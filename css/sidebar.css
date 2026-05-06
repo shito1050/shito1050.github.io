@@ -19,12 +19,15 @@
 }
 
 .site-title {
-  display: block;
+  display: flex;
+  align-items: baseline;
+  gap: 0;
   margin-bottom: 28px;
   padding: 18px 14px;
   border-radius: 18px;
   background: linear-gradient(135deg, var(--main-pink), #ffd6e8);
   color: var(--white);
+  white-space: nowrap;
 }
 
 .site-title-link {
@@ -38,8 +41,10 @@
 }
 
 .site-title-sub {
-  margin-top: 4px;
-  font-size: 14px;
+  margin-top: 0;
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: 0.08em;
 }
 
 .side-nav {
@@ -113,4 +118,27 @@
 
 .overlay {
   display: none;
+}
+
+/* =========================
+   スマホ表示
+========================= */
+
+@media (max-width: 768px) {
+  .site-title {
+    display: block;
+    white-space: normal;
+  }
+
+  .site-title-main {
+    font-size: 24px;
+    letter-spacing: 0.08em;
+  }
+
+  .site-title-sub {
+    margin-top: 4px;
+    font-size: 14px;
+    font-weight: normal;
+    letter-spacing: 0;
+  }
 }
