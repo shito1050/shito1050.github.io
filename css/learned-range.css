@@ -1,1 +1,156 @@
+/* =========================
+   既習範囲設定
+========================= */
 
+.learned-range-box {
+  margin-top: 24px;
+  padding: 16px 14px;
+  border-radius: 18px;
+  background: var(--light-pink);
+  border: 1px solid rgba(217, 95, 152, 0.25);
+}
+
+.learned-range-title {
+  margin-bottom: 12px;
+  color: var(--deep-pink);
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+
+.learned-range-setting {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.learned-course {
+  border-radius: 12px;
+}
+
+.learned-course-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 30px;
+}
+
+.learned-course-toggle {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--deep-pink);
+  font-size: 0.8rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.learned-course-toggle:hover {
+  background: rgba(217, 95, 152, 0.12);
+}
+
+.learned-course-toggle.is-open {
+  transform: rotate(180deg);
+}
+
+.learned-course-label,
+.learned-unit-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.learned-course-label {
+  font-weight: bold;
+  font-size: 0.94rem;
+}
+
+.learned-unit-label {
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.learned-course-label input,
+.learned-unit-label input {
+  margin: 0;
+  accent-color: var(--deep-pink);
+  cursor: pointer;
+}
+
+.learned-unit-list {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  padding: 5px 0 4px 31px;
+}
+
+.learned-unit-list.is-open {
+  display: flex;
+}
+
+/* =========================
+   初回既習範囲設定モーダル
+========================= */
+
+.learned-range-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.learned-range-modal-content {
+  width: min(560px, 100%);
+  max-height: calc(100vh - 40px);
+  padding: 28px 24px;
+  border-radius: 24px;
+  background: var(--white);
+  box-shadow: var(--shadow);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.learned-range-modal-title {
+  margin: 0 0 18px;
+  color: var(--deep-pink);
+  font-size: 1.2rem;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.learned-range-setting-modal {
+  padding: 16px 14px;
+  border-radius: 18px;
+  background: var(--light-pink);
+  border: 1px solid rgba(217, 95, 152, 0.25);
+}
+
+.learned-range-start-button {
+  display: block;
+  width: 100%;
+  margin-top: 18px;
+  padding: 13px 16px;
+  border: none;
+  border-radius: 999px;
+  background: var(--deep-pink);
+  color: var(--white);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.learned-range-start-button:hover {
+  transform: translateY(-2px);
+  opacity: 0.88;
+}
