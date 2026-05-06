@@ -983,6 +983,61 @@ function getDifficultyLabel(difficulty) {
   return difficultyLabels[difficulty] || "";
 }
 
+const practiceSubjectOrderMap = {
+  "1": 1,
+  "A": 2,
+  "2": 3,
+  "B": 4,
+  "C": 5,
+  "3": 6
+};
+
+function parsePracticeProblemOrder(orderText) {
+  const order = String(orderText || "").trim();
+  const parts = order.split("-");
+
+  if (parts.length !== 3) {
+    return {
+      subjectOrder: 999,
+      unitOrder: 999,
+      problemOrder: 999999
+    };
+  }
+
+  const subjectKey = parts[0];
+  const unitKey = parts[1];
+  const problemKey = parts[2];
+
+  return {
+    subjectOrder: practiceSubjectOrderMap[subjectKey] || 999,
+    unitOrder: Number(unitKey) || 999,
+    problemOrder: Number(problemKey) || 999999
+  };
+}
+
+function comparePracticeProblemOrder(problemA, problemB) {
+  const orderA = parsePracticeProblemOrder(problemA.order);
+  const orderB = parsePracticeProblemOrder(problemB.order);
+
+  if (orderA.subjectOrder !== orderB.subjectOrder) {
+    return orderA.subjectOrder - orderB.subjectOrder;
+  }
+
+  if (orderA.unitOrder !== orderB.unitOrder) {
+    return orderA.unitOrder - orderB.unitOrder;
+  }
+
+  if (orderA.problemOrder !== orderB.problemOrder) {
+    return orderA.problemOrder - orderB.problemOrder;
+  }
+
+  return String(problemA.id || "").localeCompare(String(problemB.id || ""));
+}
+
+function sortPracticeProblemsByOrder(problems) {
+  return [...problems].sort(comparePracticeProblemOrder);
+}
+
 function getPracticeProblemDisplayTitle(problem) {
   const difficultyLabel = getDifficultyLabel(problem.difficulty);
 
@@ -1033,7 +1088,9 @@ function renderPracticeProblemList() {
     return;
   }
 
-  const filteredProblems = filterProblemsByLearnedRange(practiceProblems);
+  const filteredProblems = sortPracticeProblemsByOrder(
+    filterProblemsByLearnedRange(practiceProblems)
+  );
 
   if (filteredProblems.length === 0) {
     practiceProblemListArea.innerHTML = `
@@ -1170,7 +1227,9 @@ function showDailyProblem() {
     return;
   }
 
-  const filteredProblems = filterProblemsByLearnedRange(practiceProblems);
+  const filteredProblems = sortPracticeProblemsByOrder(
+    filterProblemsByLearnedRange(practiceProblems)
+  );
   const problem = getDailyProblem(filteredProblems);
 
   if (!problem) {
