@@ -1,1 +1,36 @@
+/* =========================
+   基本設定
+========================= */
 
+:root {
+  --main-pink: #f6a6c8;
+  --light-pink: #fff1f7;
+  --deep-pink: #d95f98;
+  --text-color: #333333;
+  --white: #ffffff;
+  --shadow: 0 8px 24px rgba(217, 95, 152, 0.18);
+  --sidebar-width: 260px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Yu Gothic", "YuGothic", "Hiragino Kaku Gothic ProN", sans-serif;
+  color: var(--text-color);
+  background: var(--light-pink);
+}
+
+/* =========================
+   共通
+========================= */
+
+.is-hidden {
+  display: none;
+}
