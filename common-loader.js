@@ -6,7 +6,7 @@
   const currentScript = document.currentScript;
   const scriptSrc = currentScript ? currentScript.getAttribute("src") : "common-loader.js";
   const prefix = scriptSrc.replace(/common-loader\.js$/, "");
-  const version = "20260506-19";
+  const version = "20260513-01";
 
   function addVersion(path) {
     if (path.includes("?")) {
@@ -58,11 +58,14 @@
 
   /*
      入場問題データ
-     各単元ファイル → entrance-problems-index.js の順に読み込む
+     数学I・A・II・B・III・C → entrance-problems-index.js の順に読み込む
   */
-  loadScript("data/entrance-problems/math1-numbers-and-expressions.js");
-  loadScript("data/entrance-problems/math2-trigonometric-functions.js");
-  loadScript("data/entrance-problems/math3-limits.js");
+  loadScript("data/entrance-problems/math1.js");
+  loadScript("data/entrance-problems/matha.js");
+  loadScript("data/entrance-problems/math2.js");
+  loadScript("data/entrance-problems/mathb.js");
+  loadScript("data/entrance-problems/math3.js");
+  loadScript("data/entrance-problems/mathc.js");
   loadScript("data/entrance-problems/entrance-problems-index.js");
 
   /*
