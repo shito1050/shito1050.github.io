@@ -72,6 +72,10 @@ function sortPracticeProblemsByOrder(problems) {
 }
 
 function getPracticeProblemDisplayTitle(problem) {
+  if (problem.listTitle) {
+    return problem.listTitle;
+  }
+
   const difficultyLabel = getDifficultyLabel(problem.difficulty);
 
   const titleBase = [
