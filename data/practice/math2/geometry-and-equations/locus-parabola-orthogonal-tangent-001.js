@@ -4,7 +4,8 @@ window.practiceProblems.push(
   {
     id: "locus-parabola-orthogonal-tangent-001",
     order: "2-02-0002",
-    title: "数学II_図形と方程式_軌跡_放物線と直交する接線_001",
+    title: "数学II_図形と方程式_軌跡_放物線と直交する接線（応用）",
+    listTitle: "数学II_図形と方程式_軌跡_放物線と直交する接線（応用）",
     subject: "数学II",
     unit: "図形と方程式",
     topic: "軌跡",
@@ -40,7 +41,11 @@ window.practiceProblems.push(
 
       <div class="math-block">
         \\[
-        x^2=ax^2+bx+c\\quad\\therefore\\quad (a-1)x^2+bx+c=0\\quad\\cdots\\cdots\\cdots\\cdots\\cdots\\cdots\\cdots\\cdots\\tmaru{1}
+        \\begin{aligned}
+        x^2&=ax^2+bx+c\\\\
+        \\therefore\\quad (a-1)x^2+bx+c&=0
+        \\end{aligned}
+        \\tag{①}
         \\]
       </div>
 
@@ -51,42 +56,46 @@ window.practiceProblems.push(
 
       <div class="math-block">
         \\[
-        2x\\cdot(2ax+b)=-1\\quad\\therefore\\quad 4ax^2+2bx+1=0\\quad\\cdots\\cdots\\cdots\\cdots\\cdots\\cdots\\cdots\\cdots\\tmaru{2}
+        \\begin{aligned}
+        2x\\cdot(2ax+b)&=-1\\\\
+        \\therefore\\quad 4ax^2+2bx+1&=0
+        \\end{aligned}
+        \\tag{②}
         \\]
       </div>
 
       <p>
         の2解でもある．
-        したがって，\\(\\tmaru{1}\\)と\\(\\tmaru{2}\\)は，解を同じくする2次方程式である．
+        したがって，①と②は，解を同じくする2次方程式である．
       </p>
 
       <p>
         ここから\\(a,b,c\\)の条件を調べる．
-        \\(a,b,c\\)が満たすべき条件は，結局\\(\\tmaru{1}\\)と\\(\\tmaru{2}\\)の両方を同時に満たす\\(x\\)が2つ存在することである．
+        \\(a,b,c\\)が満たすべき条件は，結局①と②の両方を同時に満たす\\(x\\)が2つ存在することである．
         そのような\\(a,b,c\\)を求める．
-        そのために，\\(\\tmaru{1}\\)と\\(\\tmaru{2}\\)で係数比較のようなことをする．
+        そのために，①と②で係数比較のようなことをする．
         ただし，方程式に対しては係数比較という言葉はつかえない．
         \\(x^2-3x+2=0\\)と\\(2x^2-6x+4=0\\)は，解の集合は同じでも係数が異なっているからである．
         しかし，手がかりがないかというとそうではない．
         係数の比は同じである．
-        \\(\\tmaru{1}\\)と\\(\\tmaru{2}\\)をみれば，\\(x\\)の係数が\\(b\\)と\\(2b\\)になっているので，\\(b\\)が0でなければ係数の比は\\(1:2\\)である．
+        ①と②をみれば，\\(x\\)の係数が\\(b\\)と\\(2b\\)になっているので，\\(b\\)が0でなければ係数の比は\\(1:2\\)である．
         よって，\\(b\\)が0かそうでないかで場合分けをする．
       </p>
 
       <p>
-        (i)\\(b\\neq0\\)のとき．\\(\\tmaru{1}\\)と\\(\\tmaru{2}\\)をみて，
+        (i)\\(b\\neq0\\)のとき．①と②をみて，
       </p>
 
       <div class="math-block">
         \\[
-        2(a-1)=4a,\quad 2c=1\\quad\\therefore\\quad a=-1,\quad c=\\frac{1}{2}
+        2(a-1)=4a,\\quad 2c=1\\quad\\therefore\\quad a=-1,\\quad c=\\frac{1}{2}
         \\]
       </div>
 
       <p>
         を得る．
-        これは2つの方程式を同時に満たす\\(x\\)がある仮定の下で得たものだから，\\(\\tmaru{1}\\)か\\(\\tmaru{2}\\)の判別式をみておく．
-        \\(\\tmaru{2}\\)の方をみると\\(D/4=b^2-4a=b^2+4>0\\)であり，適する．
+        これは2つの方程式を同時に満たす\\(x\\)がある仮定の下で得たものだから，①か②の判別式をみておく．
+        ②の方をみると\\(D/4=b^2-4a=b^2+4>0\\)であり，適する．
         このとき，\\(y=ax^2+bx+c=-x^2+bx+\\frac{1}{2}\\)の頂点は\\(\\left(\\frac{b}{2},\\frac{b^2}{4}+\\frac{1}{2}\\right)\\)となるから，これは放物線
       </p>
 
@@ -101,7 +110,7 @@ window.practiceProblems.push(
       </p>
 
       <p>
-        (ii)\\(b=0\\)のとき．\\(\\tmaru{1}\\)と\\(\\tmaru{2}\\)をみて，\\(x^2=-\\frac{c}{a-1}=-\\frac{1}{4a}>0\\)であることが条件である．
+        (ii)\\(b=0\\)のとき．①と②をみて，\\(x^2=-\\frac{c}{a-1}=-\\frac{1}{4a}>0\\)であることが条件である．
         すなわち，\\(c=\\frac{1}{4}\\left(1-\\frac{1}{a}\\right)\\)かつ\\(a<0\\)である．
         このとき，放物線\\(y=ax^2+bx+c=ax^2+c\\)の頂点は\\((0,c)\\)であり，\\(c>\\frac{1}{4}\\)であるから，\\((0,c)\\)は\\(y\\)軸上の\\(y>\\frac{1}{4}\\)の部分を動く．
       </p>
