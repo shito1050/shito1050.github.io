@@ -42,10 +42,10 @@ window.practiceProblems.push(
       <div class="math-block">
         \\[
         \\begin{aligned}
-        x^2&=ax^2+bx+c\\\\
-        \\therefore\\quad (a-1)x^2+bx+c&=0
+        &x^2=ax^2+bx+c\\\\
+        &\\therefore\\quad (a-1)x^2+bx+c=0
         \\end{aligned}
-        \\tag{①}
+        \\tag*{①}
         \\]
       </div>
 
@@ -57,10 +57,10 @@ window.practiceProblems.push(
       <div class="math-block">
         \\[
         \\begin{aligned}
-        2x\\cdot(2ax+b)&=-1\\\\
-        \\therefore\\quad 4ax^2+2bx+1&=0
+        &2x\\cdot(2ax+b)=-1\\\\
+        &\\therefore\\quad 4ax^2+2bx+1=0
         \\end{aligned}
-        \\tag{②}
+        \\tag*{②}
         \\]
       </div>
 
