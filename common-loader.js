@@ -6,7 +6,7 @@
   const currentScript = document.currentScript;
   const scriptSrc = currentScript ? currentScript.getAttribute("src") : "common-loader.js";
   const prefix = scriptSrc.replace(/common-loader\.js$/, "");
-  const version = "20260513-01";
+  const version = "20260517-01";
 
   function addVersion(path) {
     if (path.includes("?")) {
@@ -27,6 +27,14 @@
   function loadExternalScript(src) {
     document.write('<script src="' + src + '"><\/script>');
   }
+
+  window.siteLoader = {
+    prefix: prefix,
+    version: version,
+    addVersion: addVersion,
+    loadScript: loadScript,
+    loadExternalScript: loadExternalScript
+  };
 
   loadInlineScript(`
     window.MathJax = {
@@ -71,8 +79,7 @@
   /*
      問題演習データ
   */
-  loadScript("data/practice/math1-suutoshiki.js");
-  loadScript("data/practice/math2-geometry-and-equations.js");
+  loadScript("data/practice/practice-index.js");
 
   /*
      ブログデータ
