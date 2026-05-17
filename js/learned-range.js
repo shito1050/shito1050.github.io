@@ -22,7 +22,8 @@ const mathUnitGroups = [
     name: "数学A",
     units: [
       { id: "mathA_properties_of_figures", name: "図形の性質" },
-      { id: "mathA_counting_and_probability", name: "場合の数と確率" }
+      { id: "mathA_counting_and_probability", name: "場合の数と確率" },
+      { id: "mathA_integer_properties", name: "整数の性質" }
     ]
   },
   {
