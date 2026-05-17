@@ -2,6 +2,16 @@
    解答開閉
 ========================= */
 
+function setAnswerOpenButtonText(isOpen) {
+  const answerOpenButton = document.getElementById("answerOpenButton");
+
+  if (!answerOpenButton) {
+    return;
+  }
+
+  answerOpenButton.textContent = isOpen ? "解答を閉じる" : "解答をみる";
+}
+
 function openAnswer() {
   const answerBox = document.getElementById("answerBox");
   const answerOpenButton = document.getElementById("answerOpenButton");
@@ -11,7 +21,8 @@ function openAnswer() {
   }
 
   answerBox.classList.remove("is-hidden");
-  answerOpenButton.classList.add("is-hidden");
+  answerOpenButton.classList.remove("is-hidden");
+  setAnswerOpenButtonText(true);
 
   typesetMathInElement(answerBox);
 }
@@ -26,6 +37,7 @@ function closeAnswer() {
 
   answerBox.classList.add("is-hidden");
   answerOpenButton.classList.remove("is-hidden");
+  setAnswerOpenButtonText(false);
 }
 
 function initializeAnswerToggle() {
@@ -38,7 +50,11 @@ function initializeAnswerToggle() {
   }
 
   answerOpenButton.addEventListener("click", function () {
-    openAnswer();
+    if (answerBox.classList.contains("is-hidden")) {
+      openAnswer();
+    } else {
+      closeAnswer();
+    }
   });
 
   answerCloseButton.addEventListener("click", function () {
