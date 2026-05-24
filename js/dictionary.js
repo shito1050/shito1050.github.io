@@ -63,6 +63,10 @@ function normalizeDictionaryGroupKana(group) {
 function getDictionaryGroup(item) {
   const explicitGroup = String(item.group || "").trim();
 
+  if (explicitGroup === "英字") {
+    return "英字";
+  }
+
   if (explicitGroup) {
     return normalizeDictionaryGroupKana(explicitGroup.charAt(0));
   }
@@ -125,7 +129,7 @@ function getDictionaryRowGroup(item) {
     return "わ行";
   }
 
-  if (/^[A-Z]$/.test(group)) {
+  if (group === "英字" || /^[A-Z]$/.test(group)) {
     return "英字";
   }
 
@@ -158,6 +162,10 @@ function getDictionaryRowGroupOrder(rowGroup) {
 }
 
 function getDictionaryKanaOrder(group) {
+  if (group === "英字") {
+    return 1000;
+  }
+
   const order = [
     "あ", "い", "う", "え", "お",
     "か", "き", "く", "け", "こ",
@@ -424,43 +432,6 @@ function getAvailableDictionaryRowGroups(dictionaryData) {
   });
 }
 
-function getDictionaryIndexColumnCount() {
-  if (window.matchMedia("(max-width: 768px)").matches) {
-    return 2;
-  }
-
-  return 3;
-}
-
-function getDictionaryColumnMajorRowGroupKeys(rowGroupKeys) {
-  const columnCount = Math.min(getDictionaryIndexColumnCount(), rowGroupKeys.length);
-
-  if (columnCount <= 1) {
-    return rowGroupKeys.slice();
-  }
-
-  const rowCount = Math.ceil(rowGroupKeys.length / columnCount);
-  const columns = [];
-
-  for (let columnIndex = 0; columnIndex < columnCount; columnIndex++) {
-    const startIndex = columnIndex * rowCount;
-    const endIndex = startIndex + rowCount;
-    columns.push(rowGroupKeys.slice(startIndex, endIndex));
-  }
-
-  const displayKeys = [];
-
-  for (let rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-    columns.forEach(function (column) {
-      if (column[rowIndex]) {
-        displayKeys.push(column[rowIndex]);
-      }
-    });
-  }
-
-  return displayKeys;
-}
-
 function createDictionaryFilterHtml(rowGroups) {
   const filterButtonsHtml = rowGroups.map(function (rowGroup) {
     return `
@@ -528,9 +499,7 @@ function createDictionaryIndexHtml(dictionaryData, selectedRowGroups) {
     return a.localeCompare(b, "ja");
   });
 
-  const displayRowGroupKeys = getDictionaryColumnMajorRowGroupKeys(rowGroupKeys);
-
-  return displayRowGroupKeys.map(function (rowGroup) {
+  return rowGroupKeys.map(function (rowGroup) {
     const items = groupedItems[rowGroup].sort(function (a, b) {
       const groupA = getDictionaryGroup(a);
       const groupB = getDictionaryGroup(b);
@@ -581,7 +550,6 @@ function renderDictionaryIndex() {
 
   const rowGroups = getAvailableDictionaryRowGroups(dictionaryData);
   let selectedRowGroups = rowGroups.slice();
-  let currentColumnCount = getDictionaryIndexColumnCount();
 
   dictionaryIndexArea.innerHTML = `
     ${createDictionaryFilterHtml(rowGroups)}
@@ -646,17 +614,6 @@ function renderDictionaryIndex() {
   clearAllButton.addEventListener("click", function () {
     selectedRowGroups = [];
     updateFilterButtonState();
-    updateIndex();
-  });
-
-  window.addEventListener("resize", function () {
-    const newColumnCount = getDictionaryIndexColumnCount();
-
-    if (newColumnCount === currentColumnCount) {
-      return;
-    }
-
-    currentColumnCount = newColumnCount;
     updateIndex();
   });
 
