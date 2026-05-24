@@ -64,6 +64,10 @@ window.practiceProblems.push(
         \\]
       </div>
 
+      <p>
+        これを展開し，\\(\\mathrm{P}\\)に関係しない部分をすべて右辺にまとめると，
+      </p>
+
       <div class="math-block">
         \\[
         |\\overrightarrow{\\mathrm{OP}}|^2
@@ -72,6 +76,10 @@ window.practiceProblems.push(
         =(定数)
         \\]
       </div>
+
+      <p>
+        となる．よって，
+      </p>
 
       <div class="math-block">
         \\[
@@ -85,11 +93,47 @@ window.practiceProblems.push(
 
       <p>
         となる．
-        \\(\\mathrm{P}\\)と点（位置ベクトル）\\(\\frac{\\overrightarrow{\\mathrm{OA}}+2\\overrightarrow{\\mathrm{OB}}+3\\overrightarrow{\\mathrm{OC}}}{6}\\)との距離が一定であるから，これが\\(\\mathrm{P}\\)が描く円の中心そのものであり，
-        \\(\\frac{\\overrightarrow{\\mathrm{OA}}+2\\overrightarrow{\\mathrm{OB}}+3\\overrightarrow{\\mathrm{OC}}}{6}=\\overrightarrow{0}\\)．
-        以上より，
-        \\(\\overrightarrow{\\mathrm{OC}}=-\\frac{1}{3}\\overrightarrow{\\mathrm{OA}}-\\frac{2}{3}\\overrightarrow{\\mathrm{OB}}\\)．
+        \\(\\mathrm{P}\\)と点（位置ベクトル）\\(\\displaystyle \\frac{\\overrightarrow{\\mathrm{OA}}+2\\overrightarrow{\\mathrm{OB}}+3\\overrightarrow{\\mathrm{OC}}}{6}\\)との距離が一定であるから，これが\\(\\mathrm{P}\\)が描く円の中心そのものである．
       </p>
+
+      <p>
+        いま，円の中心は\\(\\mathrm{O}\\)であるから，
+      </p>
+
+      <div class="math-block">
+        \\[
+        \\frac{\\overrightarrow{\\mathrm{OA}}+2\\overrightarrow{\\mathrm{OB}}+3\\overrightarrow{\\mathrm{OC}}}{6}
+        =
+        \\overrightarrow{0}
+        \\]
+      </div>
+
+      <p>
+        すなわち，
+      </p>
+
+      <div class="math-block">
+        \\[
+        \\overrightarrow{\\mathrm{OA}}
+        +2\\overrightarrow{\\mathrm{OB}}
+        +3\\overrightarrow{\\mathrm{OC}}
+        =
+        \\overrightarrow{0}
+        \\]
+      </div>
+
+      <p>
+        したがって，答えは
+      </p>
+
+      <div class="math-block answer">
+        \\[
+        \\overrightarrow{\\mathrm{OC}}
+        =
+        -\\frac{1}{3}\\overrightarrow{\\mathrm{OA}}
+        -\\frac{2}{3}\\overrightarrow{\\mathrm{OB}}
+        \\]
+      </div>
     `
   }
 );
