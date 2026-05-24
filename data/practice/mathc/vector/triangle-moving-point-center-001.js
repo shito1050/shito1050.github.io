@@ -12,7 +12,6 @@ window.practiceProblems.push(
     unitIds: ["mathC_vectors"],
     difficulty: 2,
     questionHtml: `
-      <p class="problem-title">《三角形と動点》</p>
       <p>
         平面上に三角形\\(\\mathrm{ABC}\\)と動点\\(\\mathrm{P}\\)がある．
         ある定数\\(k\\)について，
