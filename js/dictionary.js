@@ -424,14 +424,6 @@ function getAvailableDictionaryRowGroups(dictionaryData) {
   });
 }
 
-function getDictionaryIndexColumnCount() {
-  if (window.matchMedia("(max-width: 768px)").matches) {
-    return 2;
-  }
-
-  return 3;
-}
-
 function createDictionaryFilterHtml(rowGroups) {
   const filterButtonsHtml = rowGroups.map(function (rowGroup) {
     return `
@@ -463,23 +455,31 @@ function createDictionaryFilterHtml(rowGroups) {
   `;
 }
 
-function createDictionaryRowGroupSectionHtml(rowGroup, items) {
-  const itemLinksHtml = items.map(function (item) {
-    return `
-      <li>
-        <a href="${getDictionaryTermUrlFromDictionaryFolder(item)}">${item.term}</a>
-      </li>
-    `;
-  }).join("");
+function getDictionaryBalancedRowGroupKeys(rowGroupKeys, groupedItems) {
+  const orderedKeys = rowGroupKeys.slice();
 
-  return `
-    <section class="dictionary-row-group" data-row-group="${rowGroup}">
-      <h2 class="dictionary-kana-heading">【${rowGroup}】</h2>
-      <ul class="dictionary-term-list">
-        ${itemLinksHtml}
-      </ul>
-    </section>
-  `;
+  if (orderedKeys.length <= 3) {
+    return orderedKeys;
+  }
+
+  const firstKey = orderedKeys[0];
+  const restKeys = orderedKeys.slice(1);
+
+  let bestIndex = 0;
+  let bestScore = -1;
+
+  restKeys.forEach(function (rowGroup, index) {
+    const count = groupedItems[rowGroup] ? groupedItems[rowGroup].length : 0;
+
+    if (count > bestScore) {
+      bestScore = count;
+      bestIndex = index;
+    }
+  });
+
+  const pickedKey = restKeys.splice(bestIndex, 1)[0];
+
+  return [firstKey, pickedKey].concat(restKeys);
 }
 
 function createDictionaryIndexHtml(dictionaryData, selectedRowGroups) {
@@ -518,7 +518,9 @@ function createDictionaryIndexHtml(dictionaryData, selectedRowGroups) {
     return a.localeCompare(b, "ja");
   });
 
-  const rowGroupBlocks = rowGroupKeys.map(function (rowGroup) {
+  const balancedRowGroupKeys = getDictionaryBalancedRowGroupKeys(rowGroupKeys, groupedItems);
+
+  return balancedRowGroupKeys.map(function (rowGroup) {
     const items = groupedItems[rowGroup].sort(function (a, b) {
       const groupA = getDictionaryGroup(a);
       const groupB = getDictionaryGroup(b);
@@ -532,45 +534,21 @@ function createDictionaryIndexHtml(dictionaryData, selectedRowGroups) {
       return (a.kana || a.term).localeCompare(b.kana || b.term, "ja");
     });
 
-    return {
-      rowGroup: rowGroup,
-      items: items,
-      weight: Math.max(items.length, 1)
-    };
-  });
-
-  const columnCount = Math.min(getDictionaryIndexColumnCount(), rowGroupBlocks.length);
-  const columns = [];
-
-  for (let i = 0; i < columnCount; i++) {
-    columns.push({
-      weight: 0,
-      blocks: []
-    });
-  }
-
-  rowGroupBlocks.forEach(function (block) {
-    let lightestColumnIndex = 0;
-
-    columns.forEach(function (column, index) {
-      if (column.weight < columns[lightestColumnIndex].weight) {
-        lightestColumnIndex = index;
-      }
-    });
-
-    columns[lightestColumnIndex].blocks.push(block);
-    columns[lightestColumnIndex].weight += block.weight;
-  });
-
-  return columns.map(function (column) {
-    const columnHtml = column.blocks.map(function (block) {
-      return createDictionaryRowGroupSectionHtml(block.rowGroup, block.items);
+    const itemLinksHtml = items.map(function (item) {
+      return `
+        <li>
+          <a href="${getDictionaryTermUrlFromDictionaryFolder(item)}">${item.term}</a>
+        </li>
+      `;
     }).join("");
 
     return `
-      <div class="dictionary-index-column">
-        ${columnHtml}
-      </div>
+      <section class="dictionary-row-group" data-row-group="${rowGroup}">
+        <h2 class="dictionary-kana-heading">【${rowGroup}】</h2>
+        <ul class="dictionary-term-list">
+          ${itemLinksHtml}
+        </ul>
+      </section>
     `;
   }).join("");
 }
@@ -593,7 +571,6 @@ function renderDictionaryIndex() {
 
   const rowGroups = getAvailableDictionaryRowGroups(dictionaryData);
   let selectedRowGroups = rowGroups.slice();
-  let currentColumnCount = getDictionaryIndexColumnCount();
 
   dictionaryIndexArea.innerHTML = `
     ${createDictionaryFilterHtml(rowGroups)}
@@ -658,17 +635,6 @@ function renderDictionaryIndex() {
   clearAllButton.addEventListener("click", function () {
     selectedRowGroups = [];
     updateFilterButtonState();
-    updateIndex();
-  });
-
-  window.addEventListener("resize", function () {
-    const newColumnCount = getDictionaryIndexColumnCount();
-
-    if (newColumnCount === currentColumnCount) {
-      return;
-    }
-
-    currentColumnCount = newColumnCount;
     updateIndex();
   });
 
