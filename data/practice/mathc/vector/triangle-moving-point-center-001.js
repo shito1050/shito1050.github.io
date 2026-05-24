@@ -16,7 +16,7 @@ window.practiceProblems.push(
       <p>
         平面上に三角形\\(\\mathrm{ABC}\\)と動点\\(\\mathrm{P}\\)がある．
         ある定数\\(k\\)について，
-        \\(\\mathrm{PA}^2+\\mathrm{PB}^2+3\\mathrm{PC}^2=k\\)
+        \\(\\mathrm{PA}^2+2\\mathrm{PB}^2+3\\mathrm{PC}^2=k\\)
         を満たすように点\\(\\mathrm{P}\\)が動くとき，点\\(\\mathrm{P}\\)は円を描く．
         この円の中心を\\(\\mathrm{O}\\)とするとき，\\(\\overrightarrow{\\mathrm{OC}}\\)を\\(\\overrightarrow{\\mathrm{OA}}\\)と\\(\\overrightarrow{\\mathrm{OB}}\\)を用いて表せ．
       </p>
@@ -34,7 +34,7 @@ window.practiceProblems.push(
           +2|\\overrightarrow{\\mathrm{OB}}-\\overrightarrow{\\mathrm{OP}}|^2
           +3|\\overrightarrow{\\mathrm{OC}}-\\overrightarrow{\\mathrm{OP}}|^2
           =k
-          \\tag{①}
+          \\tag*{①}
           \\]
         </div>
 
@@ -69,7 +69,7 @@ window.practiceProblems.push(
         |\\overrightarrow{\\mathrm{OP}}|^2
         -\\frac{\\overrightarrow{\\mathrm{OA}}+2\\overrightarrow{\\mathrm{OB}}+3\\overrightarrow{\\mathrm{OC}}}{3}
         \\cdot\\overrightarrow{\\mathrm{OP}}
-        =\\text{（定数）}
+        =\\mathrm{const.}
         \\]
       </div>
 
@@ -79,16 +79,16 @@ window.practiceProblems.push(
         \\overrightarrow{\\mathrm{OP}}
         -\\frac{\\overrightarrow{\\mathrm{OA}}+2\\overrightarrow{\\mathrm{OB}}+3\\overrightarrow{\\mathrm{OC}}}{6}
         \\right|^2
-        =\\text{（定数）}
+        =\\mathrm{const.}
         \\]
       </div>
 
       <p>
         となる．
-        \\(\\mathrm{P}\\)と点（位置ベクトル）\\(\\dfrac{\\overrightarrow{\\mathrm{OA}}+2\\overrightarrow{\\mathrm{OB}}+3\\overrightarrow{\\mathrm{OC}}}{6}\\)との距離が一定であるから，これが\\(\\mathrm{P}\\)が描く円の中心そのものであり，
-        \\(\\dfrac{\\overrightarrow{\\mathrm{OA}}+2\\overrightarrow{\\mathrm{OB}}+3\\overrightarrow{\\mathrm{OC}}}{6}=\\overrightarrow{0}\\)．
+        \\(\\mathrm{P}\\)と点（位置ベクトル）\\(\\frac{\\overrightarrow{\\mathrm{OA}}+2\\overrightarrow{\\mathrm{OB}}+3\\overrightarrow{\\mathrm{OC}}}{6}\\)との距離が一定であるから，これが\\(\\mathrm{P}\\)が描く円の中心そのものであり，
+        \\(\\frac{\\overrightarrow{\\mathrm{OA}}+2\\overrightarrow{\\mathrm{OB}}+3\\overrightarrow{\\mathrm{OC}}}{6}=\\overrightarrow{0}\\)．
         以上より，
-        \\(\\overrightarrow{\\mathrm{OC}}=-\\dfrac{1}{3}\\overrightarrow{\\mathrm{OA}}-\\dfrac{2}{3}\\overrightarrow{\\mathrm{OB}}\\)．
+        \\(\\overrightarrow{\\mathrm{OC}}=-\\frac{1}{3}\\overrightarrow{\\mathrm{OA}}-\\frac{2}{3}\\overrightarrow{\\mathrm{OB}}\\)．
       </p>
     `
   }
