@@ -54,7 +54,7 @@ window.dictionaryData.push(
         通りである．
       </p>
     `,
-    relatedIds: ["baai_no_kazu", "seki_no_housoku", "ha hanjishou"]
+    relatedIds: ["baai_no_kazu", "seki_no_housoku", "haihanjishou"]
   },
   {
     id: "seki_no_housoku",
@@ -536,10 +536,10 @@ window.dictionaryData.push(
     relatedIds: ["jishou", "kakuritsu", "zenshishou"]
   },
   {
-    id: "ha hanjishou",
+    id: "haihanjishou",
     term: "排反事象",
     kana: "はいはんじしょう",
-    yomi: "hahanjishou",
+    yomi: "haihanjishou",
     group: "は",
     type: "定義",
     subject: "数学A",
@@ -679,7 +679,7 @@ window.dictionaryData.push(
         \\(P(A)+P(B)\\)とすると，\\(A\\)と\\(B\\)の両方が起こる部分，つまり\\(A\\cap B\\)を2回数えてしまう．そこで，重複して数えた分\\(P(A\\cap B)\\)を1回ひく必要がある．
       </p>
     `,
-    relatedIds: ["wajishou", "sekijishou", "ha hanjishou"]
+    relatedIds: ["wajishou", "sekijishou", "haihanjishou"]
   },
   {
     id: "dokuritsu",
@@ -814,7 +814,7 @@ window.dictionaryData.push(
         確率を重みとして考えた平均値を期待値という．
       </p>
       <p>
-        ある数量\\(X\\)が値\\(x_1,x_2,\\cdots,x_n\\)をとり，それぞれの確率が\\(p_1,p_2,\\cdots,p_n\\)であるとき，期待値\\(E(X)\\)は，
+        ある数量\\(X\\)が値\\(x_1,x_2,\\cdots,x_n\\)をとり，それぞれの確率が\\(p_1,p_2,\cdots,p_n\\)であるとき，期待値\\(E(X)\\)は，
       </p>
       <div class="math-block">
         \\[
