@@ -28,14 +28,52 @@ function findDictionaryItemById(id) {
   });
 }
 
+function normalizeDictionaryGroupKana(group) {
+  const groupMap = {
+    が: "か",
+    ぎ: "き",
+    ぐ: "く",
+    げ: "け",
+    ご: "こ",
+    ざ: "さ",
+    じ: "し",
+    ず: "す",
+    ぜ: "せ",
+    ぞ: "そ",
+    だ: "た",
+    ぢ: "ち",
+    づ: "つ",
+    で: "て",
+    ど: "と",
+    ば: "は",
+    び: "ひ",
+    ぶ: "ふ",
+    べ: "へ",
+    ぼ: "ほ",
+    ぱ: "は",
+    ぴ: "ひ",
+    ぷ: "ふ",
+    ぺ: "へ",
+    ぽ: "ほ"
+  };
+
+  return groupMap[group] || group;
+}
+
 function getDictionaryGroup(item) {
+  const explicitGroup = String(item.group || "").trim();
+
+  if (explicitGroup) {
+    return normalizeDictionaryGroupKana(explicitGroup.charAt(0));
+  }
+
   const kana = String(item.kana || item.term || "").trim();
 
   if (!kana) {
     return "その他";
   }
 
-  return kana.charAt(0);
+  return normalizeDictionaryGroupKana(kana.charAt(0));
 }
 
 function getDictionaryGroupOrder(group) {
