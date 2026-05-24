@@ -73,10 +73,91 @@ function getDictionaryGroup(item) {
     return "その他";
   }
 
-  return normalizeDictionaryGroupKana(kana.charAt(0));
+  const firstChar = kana.charAt(0);
+
+  if (/^[A-Za-z]$/.test(firstChar)) {
+    return firstChar.toUpperCase();
+  }
+
+  return normalizeDictionaryGroupKana(firstChar);
 }
 
-function getDictionaryGroupOrder(group) {
+function getDictionaryRowGroup(item) {
+  const group = getDictionaryGroup(item);
+
+  if (["あ", "い", "う", "え", "お"].includes(group)) {
+    return "あ行";
+  }
+
+  if (["か", "き", "く", "け", "こ"].includes(group)) {
+    return "か行";
+  }
+
+  if (["さ", "し", "す", "せ", "そ"].includes(group)) {
+    return "さ行";
+  }
+
+  if (["た", "ち", "つ", "て", "と"].includes(group)) {
+    return "た行";
+  }
+
+  if (["な", "に", "ぬ", "ね", "の"].includes(group)) {
+    return "な行";
+  }
+
+  if (["は", "ひ", "ふ", "へ", "ほ"].includes(group)) {
+    return "は行";
+  }
+
+  if (["ま", "み", "む", "め", "も"].includes(group)) {
+    return "ま行";
+  }
+
+  if (["や", "ゆ", "よ"].includes(group)) {
+    return "や行";
+  }
+
+  if (["ら", "り", "る", "れ", "ろ"].includes(group)) {
+    return "ら行";
+  }
+
+  if (["わ", "を", "ん"].includes(group)) {
+    return "わ行";
+  }
+
+  if (/^[A-Z]$/.test(group)) {
+    return "英字";
+  }
+
+  return "その他";
+}
+
+function getDictionaryRowGroupOrder(rowGroup) {
+  const order = [
+    "あ行",
+    "か行",
+    "さ行",
+    "た行",
+    "な行",
+    "は行",
+    "ま行",
+    "や行",
+    "ら行",
+    "わ行",
+    "英字",
+    "その他"
+  ];
+
+  const index = order.indexOf(rowGroup);
+
+  if (index === -1) {
+    return 999;
+  }
+
+  return index;
+}
+
+function getDictionaryKanaOrder(group) {
   const order = [
     "あ", "い", "う", "え", "お",
     "か", "き", "く", "け", "こ",
@@ -320,6 +401,129 @@ function createDictionarySearchBox() {
   updateClearButton();
 }
 
+function getAvailableDictionaryRowGroups(dictionaryData) {
+  const rowGroups = [];
+
+  dictionaryData.forEach(function (item) {
+    const rowGroup = getDictionaryRowGroup(item);
+
+    if (!rowGroups.includes(rowGroup)) {
+      rowGroups.push(rowGroup);
+    }
+  });
+
+  return rowGroups.sort(function (a, b) {
+    const orderA = getDictionaryRowGroupOrder(a);
+    const orderB = getDictionaryRowGroupOrder(b);
+
+    if (orderA !== orderB) {
+      return orderA - orderB;
+    }
+
+    return a.localeCompare(b, "ja");
+  });
+}
+
+function createDictionaryFilterHtml(rowGroups) {
+  const filterButtonsHtml = rowGroups.map(function (rowGroup) {
+    return `
+      <button
+        type="button"
+        class="dictionary-filter-button is-selected"
+        data-row-group="${rowGroup}"
+      >
+        ${rowGroup}
+      </button>
+    `;
+  }).join("");
+
+  return `
+    <div class="dictionary-filter-area" id="dictionaryFilterArea">
+      <div class="dictionary-filter-heading">表示する行</div>
+      <div class="dictionary-filter-button-list">
+        ${filterButtonsHtml}
+      </div>
+      <div class="dictionary-filter-control-list">
+        <button type="button" class="dictionary-filter-control-button" id="dictionaryFilterSelectAll">
+          すべて選択
+        </button>
+        <button type="button" class="dictionary-filter-control-button" id="dictionaryFilterClearAll">
+          すべてクリア
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function createDictionaryIndexHtml(dictionaryData, selectedRowGroups) {
+  if (selectedRowGroups.length === 0) {
+    return `
+      <p class="dictionary-filter-empty-message">
+        表示する行を選んでください．
+      </p>
+    `;
+  }
+
+  const groupedItems = {};
+
+  dictionaryData.forEach(function (item) {
+    const rowGroup = getDictionaryRowGroup(item);
+
+    if (!selectedRowGroups.includes(rowGroup)) {
+      return;
+    }
+
+    if (!groupedItems[rowGroup]) {
+      groupedItems[rowGroup] = [];
+    }
+
+    groupedItems[rowGroup].push(item);
+  });
+
+  const rowGroupKeys = Object.keys(groupedItems).sort(function (a, b) {
+    const orderA = getDictionaryRowGroupOrder(a);
+    const orderB = getDictionaryRowGroupOrder(b);
+
+    if (orderA !== orderB) {
+      return orderA - orderB;
+    }
+
+    return a.localeCompare(b, "ja");
+  });
+
+  return rowGroupKeys.map(function (rowGroup) {
+    const items = groupedItems[rowGroup].sort(function (a, b) {
+      const groupA = getDictionaryGroup(a);
+      const groupB = getDictionaryGroup(b);
+      const orderA = getDictionaryKanaOrder(groupA);
+      const orderB = getDictionaryKanaOrder(groupB);
+
+      if (orderA !== orderB) {
+        return orderA - orderB;
+      }
+
+      return (a.kana || a.term).localeCompare(b.kana || b.term, "ja");
+    });
+
+    const itemLinksHtml = items.map(function (item) {
+      return `
+        <li>
+          <a href="${getDictionaryTermUrlFromDictionaryFolder(item)}">${item.term}</a>
+        </li>
+      `;
+    }).join("");
+
+    return `
+      <section class="dictionary-row-group" data-row-group="${rowGroup}">
+        <h2 class="dictionary-kana-heading">【${rowGroup}】</h2>
+        <ul class="dictionary-term-list">
+          ${itemLinksHtml}
+        </ul>
+      </section>
+    `;
+  }).join("");
+}
+
 function renderDictionaryIndex() {
   const dictionaryIndexArea = document.getElementById("dictionaryIndexArea");
 
@@ -336,53 +540,77 @@ function renderDictionaryIndex() {
     return;
   }
 
-  const groupedItems = {};
+  const rowGroups = getAvailableDictionaryRowGroups(dictionaryData);
+  let selectedRowGroups = rowGroups.slice();
 
-  dictionaryData.forEach(function (item) {
-    const group = getDictionaryGroup(item);
+  dictionaryIndexArea.innerHTML = `
+    ${createDictionaryFilterHtml(rowGroups)}
+    <div class="dictionary-index-grid" id="dictionaryIndexGrid"></div>
+  `;
 
-    if (!groupedItems[group]) {
-      groupedItems[group] = [];
-    }
+  const filterButtons = dictionaryIndexArea.querySelectorAll(".dictionary-filter-button");
+  const selectAllButton = document.getElementById("dictionaryFilterSelectAll");
+  const clearAllButton = document.getElementById("dictionaryFilterClearAll");
+  const indexGrid = document.getElementById("dictionaryIndexGrid");
 
-    groupedItems[group].push(item);
-  });
+  function updateFilterButtonState() {
+    filterButtons.forEach(function (button) {
+      const rowGroup = button.dataset.rowGroup;
 
-  const groupKeys = Object.keys(groupedItems).sort(function (a, b) {
-    const orderA = getDictionaryGroupOrder(a);
-    const orderB = getDictionaryGroupOrder(b);
-
-    if (orderA !== orderB) {
-      return orderA - orderB;
-    }
-
-    return a.localeCompare(b, "ja");
-  });
-
-  const indexHtml = groupKeys.map(function (group) {
-    const items = groupedItems[group].sort(function (a, b) {
-      return (a.kana || a.term).localeCompare(b.kana || b.term, "ja");
+      if (selectedRowGroups.includes(rowGroup)) {
+        button.classList.add("is-selected");
+      } else {
+        button.classList.remove("is-selected");
+      }
     });
+  }
 
-    const itemLinksHtml = items.map(function (item) {
-      return `
-        <li>
-          <a href="${getDictionaryTermUrlFromDictionaryFolder(item)}">${item.term}</a>
-        </li>
-      `;
-    }).join("");
+  function updateIndex() {
+    indexGrid.innerHTML = createDictionaryIndexHtml(dictionaryData, selectedRowGroups);
+  }
 
-    return `
-      <div class="dictionary-group">
-        <h2 class="dictionary-kana-heading">【${group}】</h2>
-        <ul class="dictionary-term-list">
-          ${itemLinksHtml}
-        </ul>
-      </div>
-    `;
-  }).join("");
+  filterButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      const rowGroup = button.dataset.rowGroup;
 
-  dictionaryIndexArea.innerHTML = indexHtml;
+      if (selectedRowGroups.includes(rowGroup)) {
+        selectedRowGroups = selectedRowGroups.filter(function (selectedRowGroup) {
+          return selectedRowGroup !== rowGroup;
+        });
+      } else {
+        selectedRowGroups.push(rowGroup);
+      }
+
+      selectedRowGroups.sort(function (a, b) {
+        const orderA = getDictionaryRowGroupOrder(a);
+        const orderB = getDictionaryRowGroupOrder(b);
+
+        if (orderA !== orderB) {
+          return orderA - orderB;
+        }
+
+        return a.localeCompare(b, "ja");
+      });
+
+      updateFilterButtonState();
+      updateIndex();
+    });
+  });
+
+  selectAllButton.addEventListener("click", function () {
+    selectedRowGroups = rowGroups.slice();
+    updateFilterButtonState();
+    updateIndex();
+  });
+
+  clearAllButton.addEventListener("click", function () {
+    selectedRowGroups = [];
+    updateFilterButtonState();
+    updateIndex();
+  });
+
+  updateFilterButtonState();
+  updateIndex();
 }
 
 function renderDictionaryTermDetail() {
