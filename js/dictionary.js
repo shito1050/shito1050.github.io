@@ -424,6 +424,43 @@ function getAvailableDictionaryRowGroups(dictionaryData) {
   });
 }
 
+function getDictionaryIndexColumnCount() {
+  if (window.matchMedia("(max-width: 768px)").matches) {
+    return 2;
+  }
+
+  return 3;
+}
+
+function getDictionaryColumnMajorRowGroupKeys(rowGroupKeys) {
+  const columnCount = Math.min(getDictionaryIndexColumnCount(), rowGroupKeys.length);
+
+  if (columnCount <= 1) {
+    return rowGroupKeys.slice();
+  }
+
+  const rowCount = Math.ceil(rowGroupKeys.length / columnCount);
+  const columns = [];
+
+  for (let columnIndex = 0; columnIndex < columnCount; columnIndex++) {
+    const startIndex = columnIndex * rowCount;
+    const endIndex = startIndex + rowCount;
+    columns.push(rowGroupKeys.slice(startIndex, endIndex));
+  }
+
+  const displayKeys = [];
+
+  for (let rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+    columns.forEach(function (column) {
+      if (column[rowIndex]) {
+        displayKeys.push(column[rowIndex]);
+      }
+    });
+  }
+
+  return displayKeys;
+}
+
 function createDictionaryFilterHtml(rowGroups) {
   const filterButtonsHtml = rowGroups.map(function (rowGroup) {
     return `
@@ -453,33 +490,6 @@ function createDictionaryFilterHtml(rowGroups) {
       </div>
     </div>
   `;
-}
-
-function getDictionaryBalancedRowGroupKeys(rowGroupKeys, groupedItems) {
-  const orderedKeys = rowGroupKeys.slice();
-
-  if (orderedKeys.length <= 3) {
-    return orderedKeys;
-  }
-
-  const firstKey = orderedKeys[0];
-  const restKeys = orderedKeys.slice(1);
-
-  let bestIndex = 0;
-  let bestScore = -1;
-
-  restKeys.forEach(function (rowGroup, index) {
-    const count = groupedItems[rowGroup] ? groupedItems[rowGroup].length : 0;
-
-    if (count > bestScore) {
-      bestScore = count;
-      bestIndex = index;
-    }
-  });
-
-  const pickedKey = restKeys.splice(bestIndex, 1)[0];
-
-  return [firstKey, pickedKey].concat(restKeys);
 }
 
 function createDictionaryIndexHtml(dictionaryData, selectedRowGroups) {
@@ -518,9 +528,9 @@ function createDictionaryIndexHtml(dictionaryData, selectedRowGroups) {
     return a.localeCompare(b, "ja");
   });
 
-  const balancedRowGroupKeys = getDictionaryBalancedRowGroupKeys(rowGroupKeys, groupedItems);
+  const displayRowGroupKeys = getDictionaryColumnMajorRowGroupKeys(rowGroupKeys);
 
-  return balancedRowGroupKeys.map(function (rowGroup) {
+  return displayRowGroupKeys.map(function (rowGroup) {
     const items = groupedItems[rowGroup].sort(function (a, b) {
       const groupA = getDictionaryGroup(a);
       const groupB = getDictionaryGroup(b);
@@ -571,6 +581,7 @@ function renderDictionaryIndex() {
 
   const rowGroups = getAvailableDictionaryRowGroups(dictionaryData);
   let selectedRowGroups = rowGroups.slice();
+  let currentColumnCount = getDictionaryIndexColumnCount();
 
   dictionaryIndexArea.innerHTML = `
     ${createDictionaryFilterHtml(rowGroups)}
@@ -635,6 +646,17 @@ function renderDictionaryIndex() {
   clearAllButton.addEventListener("click", function () {
     selectedRowGroups = [];
     updateFilterButtonState();
+    updateIndex();
+  });
+
+  window.addEventListener("resize", function () {
+    const newColumnCount = getDictionaryIndexColumnCount();
+
+    if (newColumnCount === currentColumnCount) {
+      return;
+    }
+
+    currentColumnCount = newColumnCount;
     updateIndex();
   });
 
