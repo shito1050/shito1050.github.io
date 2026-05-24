@@ -55,9 +55,52 @@
 
   /*
      辞書データ
+     数学I・A・II・B・III・C の順に読み込む
+  */
+
+  /*
+     数学I
   */
   loadScript("data/dictionary/math1/numbers-and-expressions.js");
+  loadScript("data/dictionary/math1/sets-and-propositions.js");
+  loadScript("data/dictionary/math1/quadratic-functions.js");
+  loadScript("data/dictionary/math1/figures-and-measurement.js");
+  loadScript("data/dictionary/math1/data-analysis.js");
+
+  /*
+     数学A
+  */
+  loadScript("data/dictionary/matha/geometry-properties.js");
+  loadScript("data/dictionary/matha/counting-and-probability.js");
+
+  /*
+     数学II
+  */
+  loadScript("data/dictionary/math2/various-expressions.js");
+  loadScript("data/dictionary/math2/geometry-and-equations.js");
+  loadScript("data/dictionary/math2/exponential-and-logarithmic-functions.js");
+  loadScript("data/dictionary/math2/trigonometric-functions.js");
+  loadScript("data/dictionary/math2/calculus.js");
+
+  /*
+     数学B
+  */
+  loadScript("data/dictionary/mathb/sequences.js");
+  loadScript("data/dictionary/mathb/statistical-inference.js");
+
+  /*
+     数学III
+  */
+  loadScript("data/dictionary/math3/limits.js");
   loadScript("data/dictionary/math3/differentiation.js");
+  loadScript("data/dictionary/math3/integration.js");
+
+  /*
+     数学C
+  */
+  loadScript("data/dictionary/mathc/vector.js");
+  loadScript("data/dictionary/mathc/plane-curves.js");
+  loadScript("data/dictionary/mathc/complex-plane.js");
 
   /*
      授業データ
