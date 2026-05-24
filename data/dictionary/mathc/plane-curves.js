@@ -434,7 +434,7 @@ window.dictionaryData.push(
       </p>
       <div class="math-block">
         \\[
-        x=a(t-\sin t),\quad y=a(1-\cos t)
+        x=a(t-\\sin t),\\quad y=a(1-\\cos t)
         \\]
       </div>
       <p>
