@@ -10,9 +10,10 @@ window.practiceProblems = window.practiceProblems || [];
   }
 
   /*
-     数学I
+     数学I｜数と式
   */
-  window.siteLoader.loadScript("data/practice/math1-suutoshiki.js");
+  window.siteLoader.loadScript("data/practice/math1/numbers-and-expressions/rationalize-001.js");
+  window.siteLoader.loadScript("data/practice/math1/numbers-and-expressions/double-radical-001.js");
 
   /*
      数学II｜図形と方程式
