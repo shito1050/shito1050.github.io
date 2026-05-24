@@ -809,7 +809,7 @@ window.dictionaryData.push(
     relatedIds: ["zenkasiki", "touhi_suuretsu"]
   },
   {
-    id: "suugaku_teki_ki nohou",
+    id: "suugakuteki_kinouhou",
     term: "数学的帰納法",
     kana: "すうがくてききのうほう",
     yomi: "suugakuteki_kinouhou",
