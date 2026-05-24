@@ -399,31 +399,5 @@ window.entranceProblemsMath3 = [
     ],
     correctIndex: 0,
     explanationHtml: "積分区間の幅が \\(0\\) であるから，\\(\\int_a^a f(x)\\,dx=0\\) である．"
-  },
-  {
-    id: "entrance-math3-integration-010",
-    unitIds: ["math3_integration"],
-    questionHtml: "不定積分 \\(\\int \\frac{1}{1+x^2}\\,dx\\) はどれか．",
-    choices: [
-      "\\(\\tan^{-1}x+C\\)",
-      "\\(\\sin^{-1}x+C\\)",
-      "\\(\\log|x|+C\\)",
-      "\\(\\frac{1}{2}x^2+C\\)"
-    ],
-    correctIndex: 0,
-    explanationHtml: "\\(\\tan^{-1}x\\) の導関数は \\(\\frac{1}{1+x^2}\\) であるから，\\(\\int \\frac{1}{1+x^2}\\,dx=\\tan^{-1}x+C\\) である．"
-  },
-  {
-    id: "entrance-math3-integration-011",
-    unitIds: ["math3_integration"],
-    questionHtml: "不定積分 \\(\\int \\frac{1}{\\sqrt{1-x^2}}\\,dx\\) はどれか．",
-    choices: [
-      "\\(\\cos^{-1}x+C\\)",
-      "\\(\\sin^{-1}x+C\\)",
-      "\\(\\tan^{-1}x+C\\)",
-      "\\(\\log|x|+C\\)"
-    ],
-    correctIndex: 1,
-    explanationHtml: "\\(\\sin^{-1}x\\) の導関数は \\(\\frac{1}{\\sqrt{1-x^2}}\\) であるから，\\(\\int \\frac{1}{\\sqrt{1-x^2}}\\,dx=\\sin^{-1}x+C\\) である．"
   }
 ];
