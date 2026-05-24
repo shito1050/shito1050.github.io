@@ -6,7 +6,7 @@
   const currentScript = document.currentScript;
   const scriptSrc = currentScript ? currentScript.getAttribute("src") : "common-loader.js";
   const prefix = scriptSrc.replace(/common-loader\.js$/, "");
-  const version = "20260524-01";
+  const version = "20260524-02";
 
   function addVersion(path) {
     if (path.includes("?")) {
@@ -70,7 +70,7 @@
   /*
      数学A
   */
-  loadScript("data/dictionary/matha/geometry-properties.js");
+  loadScript("data/dictionary/matha/properties-of-figures.js");
   loadScript("data/dictionary/matha/counting-and-probability.js");
 
   /*
