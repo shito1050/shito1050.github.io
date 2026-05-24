@@ -69,7 +69,7 @@ window.practiceProblems.push(
         |\\overrightarrow{\\mathrm{OP}}|^2
         -\\frac{\\overrightarrow{\\mathrm{OA}}+2\\overrightarrow{\\mathrm{OB}}+3\\overrightarrow{\\mathrm{OC}}}{3}
         \\cdot\\overrightarrow{\\mathrm{OP}}
-        =\\mathrm{const.}
+        =(定数)
         \\]
       </div>
 
@@ -79,7 +79,7 @@ window.practiceProblems.push(
         \\overrightarrow{\\mathrm{OP}}
         -\\frac{\\overrightarrow{\\mathrm{OA}}+2\\overrightarrow{\\mathrm{OB}}+3\\overrightarrow{\\mathrm{OC}}}{6}
         \\right|^2
-        =\\mathrm{const.}
+        =(定数)
         \\]
       </div>
 
