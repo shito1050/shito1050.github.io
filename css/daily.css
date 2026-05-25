@@ -14,3 +14,84 @@
 .daily-main .content-section {
   margin-top: 0;
 }
+
+.daily-heading-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.daily-heading-row h2 {
+  margin-bottom: 0;
+}
+
+.daily-practiced-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 28px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: #e5e5e5;
+  color: #555;
+  font-size: 0.85rem;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.daily-practiced-badge.is-hidden {
+  display: none;
+}
+
+.daily-action-area {
+  margin: 0 0 18px;
+}
+
+.daily-reselect-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 8px 18px;
+  border: 1px solid rgba(217, 95, 152, 0.35);
+  border-radius: 999px;
+  background: var(--white);
+  color: var(--deep-pink);
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(217, 95, 152, 0.12);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.daily-reselect-button:hover {
+  transform: translateY(-1px);
+  background: var(--light-pink);
+  box-shadow: 0 6px 16px rgba(217, 95, 152, 0.16);
+}
+
+.daily-reselect-button:active {
+  transform: translateY(0);
+  box-shadow: 0 3px 8px rgba(217, 95, 152, 0.12);
+}
+
+@media (max-width: 768px) {
+  .daily-main .hero {
+    padding: 24px 22px;
+  }
+
+  .daily-heading-row {
+    align-items: flex-start;
+  }
+
+  .daily-action-area {
+    margin-bottom: 16px;
+  }
+
+  .daily-reselect-button {
+    width: 100%;
+  }
+}
