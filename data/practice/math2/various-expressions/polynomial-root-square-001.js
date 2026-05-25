@@ -62,7 +62,7 @@ window.practiceProblems.push(
       </div>
 
       <p>
-        となり，これは \\(\\alpha_1^2,\\alpha_2^2,\\alpha_3^2,\\cdots,\\alpha_{11}^2\\) を解にもつ11次の項の係数が1である多項式である．
+        となり，これは \\(\\alpha_1^2,\\alpha_2^2,\\alpha_3^2,\\cdots,\\alpha_{11}^2\\) を解にもつ，11次の項の係数が1である多項式である．
       </p>
 
       <p>
@@ -75,9 +75,6 @@ window.practiceProblems.push(
         \\]
       </div>
 
-      <p class="end-mark">
-        （終）
-      </p>
     `
   }
 );
