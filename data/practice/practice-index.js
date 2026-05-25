@@ -16,6 +16,11 @@ window.practiceProblems = window.practiceProblems || [];
   window.siteLoader.loadScript("data/practice/math1/numbers-and-expressions/double-radical-001.js");
 
   /*
+     数学II｜いろいろな式
+  */
+  window.siteLoader.loadScript("data/practice/math2/various-expressions/polynomial-root-square-001.js");
+
+  /*
      数学II｜図形と方程式
   */
   window.siteLoader.loadScript("data/practice/math2/geometry-and-equations/moving-range-001.js");
