@@ -85,7 +85,12 @@ function startEntranceActivityTracking() {
   });
 }
 
-function enableEntranceCloseButton(closeButton) {
+function showEntranceCloseButton(countdownArea, closeButton) {
+  if (countdownArea) {
+    countdownArea.classList.add("is-hidden");
+    countdownArea.textContent = "";
+  }
+
   if (!closeButton) {
     return;
   }
@@ -95,10 +100,10 @@ function enableEntranceCloseButton(closeButton) {
 }
 
 function startEntranceWrongAnswerCountdown(countdownArea, closeButton) {
-  let count = 3;
+  let count = 5;
 
   if (!countdownArea || !closeButton) {
-    enableEntranceCloseButton(closeButton);
+    showEntranceCloseButton(countdownArea, closeButton);
     return;
   }
 
@@ -114,9 +119,7 @@ function startEntranceWrongAnswerCountdown(countdownArea, closeButton) {
     }
 
     window.clearInterval(countdownTimer);
-    countdownArea.classList.add("is-hidden");
-    countdownArea.textContent = "";
-    enableEntranceCloseButton(closeButton);
+    showEntranceCloseButton(countdownArea, closeButton);
   }, 1000);
 }
 
@@ -158,15 +161,17 @@ function createEntranceProblemModal() {
 
       <div class="entrance-result" id="entranceResult"></div>
 
-      <div class="entrance-countdown is-hidden" id="entranceCountdown"></div>
-
       <div class="entrance-explanation is-hidden" id="entranceExplanation">
         ${problem.explanationHtml}
       </div>
 
-      <button class="entrance-close-button is-hidden" id="entranceCloseButton" disabled>
-        サイトに入る
-      </button>
+      <div class="entrance-gate-area" id="entranceGateArea">
+        <div class="entrance-countdown is-hidden" id="entranceCountdown"></div>
+
+        <button class="entrance-close-button is-hidden" id="entranceCloseButton" disabled>
+          サイトに入る
+        </button>
+      </div>
     </div>
   `;
 
@@ -176,8 +181,8 @@ function createEntranceProblemModal() {
 
   const choiceButtons = modal.querySelectorAll(".entrance-choice-button");
   const resultArea = modal.querySelector("#entranceResult");
-  const countdownArea = modal.querySelector("#entranceCountdown");
   const explanationArea = modal.querySelector("#entranceExplanation");
+  const countdownArea = modal.querySelector("#entranceCountdown");
   const closeButton = modal.querySelector("#entranceCloseButton");
 
   choiceButtons.forEach(function (button) {
@@ -189,19 +194,19 @@ function createEntranceProblemModal() {
         choiceButton.disabled = true;
       });
 
+      explanationArea.classList.remove("is-hidden");
+
       if (isCorrect) {
         resultArea.textContent = "正解です．";
         resultArea.classList.add("is-correct");
         resultArea.classList.remove("is-wrong");
-        enableEntranceCloseButton(closeButton);
+        showEntranceCloseButton(countdownArea, closeButton);
       } else {
         resultArea.textContent = "不正解です．";
         resultArea.classList.add("is-wrong");
         resultArea.classList.remove("is-correct");
         startEntranceWrongAnswerCountdown(countdownArea, closeButton);
       }
-
-      explanationArea.classList.remove("is-hidden");
 
       typesetMathInElement(explanationArea);
     });
