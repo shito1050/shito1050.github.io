@@ -60,6 +60,11 @@
   opacity: 0.75;
 }
 
+.entrance-choice-button:disabled:hover {
+  transform: none;
+  background: var(--white);
+}
+
 .entrance-result {
   margin-top: 16px;
   font-weight: bold;
@@ -74,6 +79,18 @@
   color: var(--deep-pink);
 }
 
+.entrance-countdown {
+  margin-top: 12px;
+  color: var(--deep-pink);
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.entrance-countdown.is-hidden {
+  display: none;
+}
+
 .entrance-explanation {
   margin-top: 14px;
   padding: 14px;
@@ -81,6 +98,10 @@
   background: var(--light-pink);
   line-height: 1.8;
   overflow-x: auto;
+}
+
+.entrance-explanation.is-hidden {
+  display: none;
 }
 
 .entrance-close-button {
@@ -96,4 +117,13 @@
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
+}
+
+.entrance-close-button.is-hidden {
+  display: none;
+}
+
+.entrance-close-button:disabled {
+  cursor: default;
+  opacity: 0.65;
 }
