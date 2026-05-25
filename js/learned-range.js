@@ -135,6 +135,12 @@ function updateCourseCheckboxState(courseElement) {
   courseCheckbox.indeterminate = checkedCount > 0 && checkedCount < unitCheckboxes.length;
 }
 
+function updatePagesAfterLearnedRangeChange() {
+  if (typeof renderPracticeProblemList === "function") {
+    renderPracticeProblemList();
+  }
+}
+
 function createLearnedRangeSelector(container, options) {
   const settings = options || {};
   const shouldOpenAll = settings.openAll === true;
@@ -211,8 +217,7 @@ function createLearnedRangeSelector(container, options) {
         updateCourseCheckboxState(courseElement);
 
         if (!settings.skipAfterChange) {
-          showDailyProblem();
-          renderPracticeProblemList();
+          updatePagesAfterLearnedRangeChange();
         }
       });
     });
@@ -229,8 +234,7 @@ function createLearnedRangeSelector(container, options) {
       updateLearnedUnitsFromContainer(container);
 
       if (!settings.skipAfterChange) {
-        showDailyProblem();
-        renderPracticeProblemList();
+        updatePagesAfterLearnedRangeChange();
       }
     });
 
@@ -327,9 +331,18 @@ function createInitialLearnedRangeModal() {
     completeInitialLearnedRangeSetting();
     modal.remove();
     renderLearnedRangeSetting();
-    showDailyProblem();
-    renderPracticeProblemList();
-    createEntranceProblemModal();
+
+    if (typeof showDailyProblem === "function") {
+      showDailyProblem();
+    }
+
+    if (typeof renderPracticeProblemList === "function") {
+      renderPracticeProblemList();
+    }
+
+    if (typeof createEntranceProblemModal === "function") {
+      createEntranceProblemModal();
+    }
   });
 }
 
