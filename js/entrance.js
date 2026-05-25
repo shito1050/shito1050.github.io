@@ -85,6 +85,41 @@ function startEntranceActivityTracking() {
   });
 }
 
+function enableEntranceCloseButton(closeButton) {
+  if (!closeButton) {
+    return;
+  }
+
+  closeButton.disabled = false;
+  closeButton.classList.remove("is-hidden");
+}
+
+function startEntranceWrongAnswerCountdown(countdownArea, closeButton) {
+  let count = 3;
+
+  if (!countdownArea || !closeButton) {
+    enableEntranceCloseButton(closeButton);
+    return;
+  }
+
+  countdownArea.classList.remove("is-hidden");
+  countdownArea.textContent = String(count);
+
+  const countdownTimer = window.setInterval(function () {
+    count -= 1;
+
+    if (count > 0) {
+      countdownArea.textContent = String(count);
+      return;
+    }
+
+    window.clearInterval(countdownTimer);
+    countdownArea.classList.add("is-hidden");
+    countdownArea.textContent = "";
+    enableEntranceCloseButton(closeButton);
+  }, 1000);
+}
+
 function createEntranceProblemModal() {
   const oldModal = document.getElementById("entranceModal");
 
@@ -123,11 +158,13 @@ function createEntranceProblemModal() {
 
       <div class="entrance-result" id="entranceResult"></div>
 
+      <div class="entrance-countdown is-hidden" id="entranceCountdown"></div>
+
       <div class="entrance-explanation is-hidden" id="entranceExplanation">
         ${problem.explanationHtml}
       </div>
 
-      <button class="entrance-close-button is-hidden" id="entranceCloseButton">
+      <button class="entrance-close-button is-hidden" id="entranceCloseButton" disabled>
         サイトに入る
       </button>
     </div>
@@ -139,6 +176,7 @@ function createEntranceProblemModal() {
 
   const choiceButtons = modal.querySelectorAll(".entrance-choice-button");
   const resultArea = modal.querySelector("#entranceResult");
+  const countdownArea = modal.querySelector("#entranceCountdown");
   const explanationArea = modal.querySelector("#entranceExplanation");
   const closeButton = modal.querySelector("#entranceCloseButton");
 
@@ -155,20 +193,25 @@ function createEntranceProblemModal() {
         resultArea.textContent = "正解です．";
         resultArea.classList.add("is-correct");
         resultArea.classList.remove("is-wrong");
+        enableEntranceCloseButton(closeButton);
       } else {
         resultArea.textContent = "不正解です．";
         resultArea.classList.add("is-wrong");
         resultArea.classList.remove("is-correct");
+        startEntranceWrongAnswerCountdown(countdownArea, closeButton);
       }
 
       explanationArea.classList.remove("is-hidden");
-      closeButton.classList.remove("is-hidden");
 
       typesetMathInElement(explanationArea);
     });
   });
 
   closeButton.addEventListener("click", function () {
+    if (closeButton.disabled) {
+      return;
+    }
+
     saveEntranceActivityTime();
     modal.remove();
   });
