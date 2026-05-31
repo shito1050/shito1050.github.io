@@ -5,9 +5,13 @@
 const dailyProblemArea = document.getElementById("dailyProblemArea");
 const dailyPracticedBadge = document.getElementById("dailyPracticedBadge");
 const dailyReselectButton = document.getElementById("dailyReselectButton");
+const dailyDifficultyButtons = Array.from(document.querySelectorAll("[data-daily-difficulty]"));
 
 const dailyProblemStorageKey = "dailyProblemState";
 const dailyPracticedStorageKey = "dailyPracticedState";
+const dailyDifficultyStorageKey = "dailyDifficultyState";
+
+const defaultDailyDifficulties = [1, 2, 3];
 
 function getDailyProblemDateKey() {
   const now = new Date();
@@ -86,6 +90,94 @@ function clearDailyPracticedState() {
   localStorage.removeItem(dailyPracticedStorageKey);
 }
 
+function loadDailyDifficultyState() {
+  try {
+    const rawState = localStorage.getItem(dailyDifficultyStorageKey);
+
+    if (!rawState) {
+      return defaultDailyDifficulties.slice();
+    }
+
+    const parsedState = JSON.parse(rawState);
+
+    if (!Array.isArray(parsedState)) {
+      return defaultDailyDifficulties.slice();
+    }
+
+    const difficulties = parsedState
+      .map(function (difficulty) {
+        return Number(difficulty);
+      })
+      .filter(function (difficulty) {
+        return defaultDailyDifficulties.includes(difficulty);
+      });
+
+    if (difficulties.length === 0) {
+      return defaultDailyDifficulties.slice();
+    }
+
+    return Array.from(new Set(difficulties)).sort(function (a, b) {
+      return a - b;
+    });
+  } catch (error) {
+    return defaultDailyDifficulties.slice();
+  }
+}
+
+function saveDailyDifficultyState(difficulties) {
+  localStorage.setItem(dailyDifficultyStorageKey, JSON.stringify(difficulties));
+}
+
+function getSelectedDailyDifficulties() {
+  return loadDailyDifficultyState();
+}
+
+function isDifficultySelected(difficulty) {
+  const selectedDifficulties = getSelectedDailyDifficulties();
+
+  return selectedDifficulties.includes(Number(difficulty));
+}
+
+function updateDailyDifficultyButtons() {
+  const selectedDifficulties = getSelectedDailyDifficulties();
+
+  dailyDifficultyButtons.forEach(function (button) {
+    const difficulty = Number(button.dataset.dailyDifficulty);
+    const isSelected = selectedDifficulties.includes(difficulty);
+
+    button.classList.toggle("is-selected", isSelected);
+    button.setAttribute("aria-pressed", String(isSelected));
+  });
+}
+
+function toggleDailyDifficulty(difficulty) {
+  const selectedDifficulties = getSelectedDailyDifficulties();
+  const numericDifficulty = Number(difficulty);
+  const isSelected = selectedDifficulties.includes(numericDifficulty);
+
+  if (isSelected && selectedDifficulties.length === 1) {
+    return;
+  }
+
+  let nextDifficulties;
+
+  if (isSelected) {
+    nextDifficulties = selectedDifficulties.filter(function (selectedDifficulty) {
+      return selectedDifficulty !== numericDifficulty;
+    });
+  } else {
+    nextDifficulties = selectedDifficulties.concat(numericDifficulty);
+  }
+
+  nextDifficulties = Array.from(new Set(nextDifficulties)).sort(function (a, b) {
+    return a - b;
+  });
+
+  saveDailyDifficultyState(nextDifficulties);
+  updateDailyDifficultyButtons();
+  reselectDailyProblemFromCurrentScopeIfNeeded();
+}
+
 function isDailyProblemPracticed(problem) {
   if (!problem) {
     return false;
@@ -130,7 +222,8 @@ function getDailyProblemFromCandidates(problems) {
   }
 
   const dateKey = getDailyProblemDateKey();
-  const seedText = dateKey + "|" + problems.map(function (problem) {
+  const selectedDifficultyKey = getSelectedDailyDifficulties().join("-");
+  const seedText = dateKey + "|" + selectedDifficultyKey + "|" + problems.map(function (problem) {
     return problem.id;
   }).join(",");
 
@@ -149,6 +242,26 @@ function getLearnedRangeSortedPracticeProblems() {
   );
 }
 
+function getSelectedDifficultySortedPracticeProblems() {
+  const selectedDifficulties = getSelectedDailyDifficulties();
+
+  return getLearnedRangeSortedPracticeProblems().filter(function (problem) {
+    return selectedDifficulties.includes(Number(problem.difficulty));
+  });
+}
+
+function isProblemInCurrentDailyScope(problem) {
+  if (!problem) {
+    return false;
+  }
+
+  const scopedProblems = getSelectedDifficultySortedPracticeProblems();
+
+  return scopedProblems.some(function (scopedProblem) {
+    return scopedProblem.id === problem.id;
+  });
+}
+
 function getSavedDailyProblem() {
   const state = loadDailyProblemState();
 
@@ -160,7 +273,13 @@ function getSavedDailyProblem() {
     return null;
   }
 
-  return getProblemById(state.problemId);
+  const savedProblem = getProblemById(state.problemId);
+
+  if (!isProblemInCurrentDailyScope(savedProblem)) {
+    return null;
+  }
+
+  return savedProblem;
 }
 
 function getOrCreateDailyProblem() {
@@ -170,7 +289,7 @@ function getOrCreateDailyProblem() {
     return savedProblem;
   }
 
-  const filteredProblems = getLearnedRangeSortedPracticeProblems();
+  const filteredProblems = getSelectedDifficultySortedPracticeProblems();
   const problem = getDailyProblemFromCandidates(filteredProblems);
 
   if (problem) {
@@ -180,27 +299,15 @@ function getOrCreateDailyProblem() {
   return problem;
 }
 
-function isProblemInCurrentLearnedRange(problem) {
-  if (!problem) {
-    return false;
-  }
-
-  const learnedProblems = getLearnedRangeSortedPracticeProblems();
-
-  return learnedProblems.some(function (learnedProblem) {
-    return learnedProblem.id === problem.id;
-  });
-}
-
 function reselectDailyProblemFromCurrentScopeIfNeeded() {
   const currentProblem = getOrCreateDailyProblem();
 
-  if (currentProblem && isProblemInCurrentLearnedRange(currentProblem)) {
+  if (currentProblem && isProblemInCurrentDailyScope(currentProblem)) {
     showDailyProblem();
     return;
   }
 
-  const filteredProblems = getLearnedRangeSortedPracticeProblems();
+  const filteredProblems = getSelectedDifficultySortedPracticeProblems();
   const nextProblem = getDailyProblemFromCandidates(filteredProblems);
 
   if (nextProblem) {
@@ -222,7 +329,7 @@ function showDailyProblem() {
     dailyProblemArea.innerHTML = `
       <div class="problem-box">
         <p class="problem-label">問題</p>
-        <p>現在，既習範囲内の問題は準備中です．</p>
+        <p>現在，選択中の範囲内の問題は準備中です．</p>
       </div>
     `;
 
@@ -253,10 +360,17 @@ function showDailyProblem() {
   typesetMathInElement(dailyProblemArea);
 }
 
+dailyDifficultyButtons.forEach(function (button) {
+  button.addEventListener("click", function () {
+    toggleDailyDifficulty(button.dataset.dailyDifficulty);
+  });
+});
+
 if (dailyReselectButton) {
   dailyReselectButton.addEventListener("click", function () {
     reselectDailyProblemFromCurrentScopeIfNeeded();
   });
 }
 
+updateDailyDifficultyButtons();
 showDailyProblem();
