@@ -13,13 +13,10 @@ window.practiceProblems.push(
     difficulty: 3,
     questionHtml: `
       <p>
-        《一直線上にあることの証明》
+        四角形 \\(\\mathrm{ABCD}\\) の \\(\\mathrm{AD}\\) および \\(\\mathrm{BC}\\) の中点を \\(\\mathrm{E}\\)，\\(\\mathrm{F}\\) とするこのとき，線分 \\(\\mathrm{AB}\\)，\\(\\mathrm{EF}\\)，\\(\\mathrm{DC}\\) の中点 \\(\\mathrm{G}\\)，\\(\\mathrm{H}\\)，\\(\\mathrm{I}\\) は同一直線上にあることを証明せよ．
       </p>
-
-      <p>
-        四角形 ABCD の AD および BC の中点を E，F とするこのとき，線分 AB，EF，DC の中点 G，H，I は同一直線上にあることを証明せよ．
-      </p>
-
+    `,
+    answerHtml: `
       <p>
         およそ，次のような図を思い浮かべることになったと思います．辺上の点はすべて中点です．
       </p>
@@ -32,20 +29,21 @@ window.practiceProblems.push(
       </figure>
 
       <div class="thinking-box">
+        <p class="problem-label">考え方</p>
+
         <p>
           図形問題では道具の選択が重要です．今回のような一般的な状況には，ベクトルは強力な武器となります．ここでは，はじめにベクトルを用いた方法を考えることにします．
         </p>
 
         <p>
-          示すべきことは \\(\\overrightarrow{\\mathrm{GI}}=k\\overrightarrow{\\mathrm{GH}}\\) となる実数 \\(k\\) が存在することです．平面上のベクトルの問題なので，基本となるベクトルを 2つ用意してそれらですべてを表そうとするのが最初の一手でしょう．しかし，例えば \\(\\overrightarrow{\\mathrm{AB}}\\) と \\(\\overrightarrow{\\mathrm{AD}}\\) を基準にとってみても，H や I を表せないことに気がつきます．とにもかくにも，G，H，I の位置を（2つといわず）同じ種類のベクトルを用いて表現しようとします．ここで証明したいことは点の位置そのものの議論ではなく，相対的な位置関係です．A\\((\\vec{a})\\)，B\\((\\vec{b})\\)，C\\((\\vec{c})\\)，D\\((\\vec{d})\\) のようにおいても解くことはできますが，\\(\\overrightarrow{\\mathrm{AB}}\\)，\\(\\overrightarrow{\\mathrm{AD}}\\)，\\(\\overrightarrow{\\mathrm{BC}}\\) があれば G，H，I のすべてを表現することができます．
+          示すべきことは \\(\\overrightarrow{\\mathrm{GI}}=k\\overrightarrow{\\mathrm{GH}}\\) となる実数 \\(k\\) が存在することです．平面上のベクトルの問題なので，基本となるベクトルを 2つ用意してそれらですべてを表そうとするのが最初の一手でしょう．しかし，例えば \\(\\overrightarrow{\\mathrm{AB}}\\) と \\(\\overrightarrow{\\mathrm{AD}}\\) を基準にとってみても，\\(\\mathrm{H}\\) や \\(\\mathrm{I}\\) を表せないことに気がつきます．とにもかくにも，\\(\\mathrm{G}\\)，\\(\\mathrm{H}\\)，\\(\\mathrm{I}\\) の位置を（2つといわず）同じ種類のベクトルを用いて表現しようとします．ここで証明したいことは点の位置そのものの議論ではなく，相対的な位置関係です．\\(\\mathrm{A}(\\vec{a})\\)，\\(\\mathrm{B}(\\vec{b})\\)，\\(\\mathrm{C}(\\vec{c})\\)，\\(\\mathrm{D}(\\vec{d})\\) のようにおいても解くことはできますが，\\(\\overrightarrow{\\mathrm{AB}}\\)，\\(\\overrightarrow{\\mathrm{AD}}\\)，\\(\\overrightarrow{\\mathrm{BC}}\\) があれば \\(\\mathrm{G}\\)，\\(\\mathrm{H}\\)，\\(\\mathrm{I}\\) のすべてを表現することができます．
         </p>
       </div>
-    `,
-    answerHtml: `
+
       <p class="problem-label">解答</p>
 
       <p>
-        \\(2\\vec{b}=\\overrightarrow{\\mathrm{AB}},\\ 2\\vec{d}=\\overrightarrow{\\mathrm{AD}},\\ 2\\vec{c}=\\overrightarrow{\\mathrm{BC}}\\) とおく．
+        \\(2\\vec{b}=\\overrightarrow{\\mathrm{AB}}\\)，\\(2\\vec{d}=\\overrightarrow{\\mathrm{AD}}\\)，\\(2\\vec{c}=\\overrightarrow{\\mathrm{BC}}\\) とおく．
       </p>
 
       <div class="math-block">
@@ -73,13 +71,13 @@ window.practiceProblems.push(
       </div>
 
       <p>
-        であるから，\\(\\overrightarrow{\\mathrm{GI}}=2\\overrightarrow{\\mathrm{GH}}\\) であり，G，H，I は一直線上にある．
+        であるから，\\(\\overrightarrow{\\mathrm{GI}}=2\\overrightarrow{\\mathrm{GH}}\\) であり，\\(\\mathrm{G}\\)，\\(\\mathrm{H}\\)，\\(\\mathrm{I}\\) は一直線上にある．
       </p>
 
       <p class="problem-label">別解</p>
 
       <p>
-        △ABD に中点連結定理を適用して，\\(GE=BD\\) かつ \\(GE\\parallel BD\\)．△CDB に中点連結定理を適用して，\\(BD=FI\\) かつ \\(BD\\parallel FI\\)．よって，四角形 EGFI は平行四辺形であるから，H は線分 GI の中点であり，G，H，I は一直線上に並ぶ．
+        \\(\\triangle \\mathrm{ABD}\\) に中点連結定理を適用して，\\(\\mathrm{GE}=\\mathrm{BD}\\) かつ \\(\\mathrm{GE}\\parallel \\mathrm{BD}\\)．\\(\\triangle \\mathrm{CDB}\\) に中点連結定理を適用して，\\(\\mathrm{BD}=\\mathrm{FI}\\) かつ \\(\\mathrm{BD}\\parallel \\mathrm{FI}\\)．よって，四角形 \\(\\mathrm{EGFI}\\) は平行四辺形であるから，\\(\\mathrm{H}\\) は線分 \\(\\mathrm{GI}\\) の中点であり，\\(\\mathrm{G}\\)，\\(\\mathrm{H}\\)，\\(\\mathrm{I}\\) は一直線上に並ぶ．
       </p>
     `
   }
