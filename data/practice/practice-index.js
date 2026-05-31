@@ -30,4 +30,5 @@ window.practiceProblems = window.practiceProblems || [];
      数学C｜ベクトル
   */
   window.siteLoader.loadScript("data/practice/mathc/vector/triangle-moving-point-center-001.js");
+  window.siteLoader.loadScript("data/practice/mathc/vector/collinear-midpoints-quadrilateral-001.js");
 })();
