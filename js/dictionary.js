@@ -462,9 +462,7 @@ function createDictionarySearchBox() {
         return;
       }
 
-      input.value = selectedItem.term;
-      updateClearButton();
-      showPreview(selectedItem);
+      window.location.href = getDictionaryTermUrl(selectedItem);
     }
 
     suggestionButtons.forEach(function (button) {
