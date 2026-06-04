@@ -462,7 +462,7 @@ function createDictionarySearchBox() {
         return;
       }
 
-      window.location.href = getDictionaryTermUrl(selectedItem);
+      window.open(getDictionaryTermUrl(selectedItem), "_blank", "noopener,noreferrer");
     }
 
     suggestionButtons.forEach(function (button) {
