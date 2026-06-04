@@ -28,6 +28,48 @@ function findDictionaryItemById(id) {
   });
 }
 
+function escapeDictionaryHtml(value) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function stripDictionaryHtml(value) {
+  const temporaryElement = document.createElement("div");
+  temporaryElement.innerHTML = String(value || "");
+
+  return temporaryElement.textContent || temporaryElement.innerText || "";
+}
+
+function getDictionaryShortPreviewText(item) {
+  const shortDescription = String(item.shortDescription || "").trim();
+
+  if (shortDescription) {
+    return shortDescription;
+  }
+
+  const description = String(item.description || "").trim();
+
+  if (description) {
+    return description;
+  }
+
+  const bodyText = stripDictionaryHtml(item.bodyHtml || "").replace(/\s+/g, " ").trim();
+
+  if (bodyText) {
+    if (bodyText.length > 80) {
+      return bodyText.slice(0, 80) + "…";
+    }
+
+    return bodyText;
+  }
+
+  return "簡単な説明は準備中です．";
+}
+
 function normalizeDictionaryGroupKana(group) {
   const groupMap = {
     が: "か",
@@ -232,6 +274,7 @@ function createDictionarySearchBox() {
   const input = document.getElementById("dictionarySearchInput");
   const clearButton = document.getElementById("dictionarySearchClearButton");
   const panel = document.getElementById("dictionarySearchPanel");
+  const canUseHoverPreview = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
   function closePanel() {
     panel.classList.remove("is-open");
@@ -263,6 +306,12 @@ function createDictionarySearchBox() {
     });
   }
 
+  function getDictionaryItemById(id) {
+    return dictionaryData.find(function (item) {
+      return item.id === id;
+    });
+  }
+
   function getSuggestions(inputText) {
     if (!inputText) {
       return [];
@@ -282,11 +331,11 @@ function createDictionarySearchBox() {
   }
 
   function showPreview(item) {
-    const previewText = item.shortDescription || item.description || "";
+    const previewText = getDictionaryShortPreviewText(item);
 
     panel.innerHTML = `
-      <h2 class="dictionary-search-preview-title">${item.term}</h2>
-      <p class="dictionary-search-preview-text">${previewText}</p>
+      <h2 class="dictionary-search-preview-title">${escapeDictionaryHtml(item.term)}</h2>
+      <p class="dictionary-search-preview-text">${escapeDictionaryHtml(previewText)}</p>
       <a
         class="dictionary-search-preview-link"
         href="${getDictionaryTermUrl(item)}"
@@ -299,6 +348,59 @@ function createDictionarySearchBox() {
 
     openPanel();
     typesetMathInElement(panel);
+  }
+
+  function createHoverPreviewHtml(item) {
+    if (!item) {
+      return `
+        <div class="dictionary-search-hover-preview-inner">
+          <p class="dictionary-search-hover-preview-guide">
+            候補にカーソルを合わせると，簡単な説明がここに表示されます．
+          </p>
+        </div>
+      `;
+    }
+
+    const previewText = getDictionaryShortPreviewText(item);
+
+    return `
+      <div class="dictionary-search-hover-preview-inner">
+        <p class="dictionary-search-hover-preview-title">
+          ${escapeDictionaryHtml(item.term)}
+        </p>
+        <p class="dictionary-search-hover-preview-text">
+          ${escapeDictionaryHtml(previewText)}
+        </p>
+      </div>
+    `;
+  }
+
+  function updateHoverPreview(item) {
+    if (!canUseHoverPreview) {
+      return;
+    }
+
+    const hoverPreview = panel.querySelector("#dictionarySearchHoverPreview");
+
+    if (!hoverPreview) {
+      return;
+    }
+
+    hoverPreview.innerHTML = createHoverPreviewHtml(item);
+    hoverPreview.classList.add("is-visible");
+    typesetMathInElement(hoverPreview);
+  }
+
+  function updateHoveredSuggestionButton(activeButton) {
+    const suggestionButtons = panel.querySelectorAll(".dictionary-search-suggestion-button");
+
+    suggestionButtons.forEach(function (button) {
+      if (button === activeButton) {
+        button.classList.add("is-hovered");
+      } else {
+        button.classList.remove("is-hovered");
+      }
+    });
   }
 
   function showSuggestions(suggestions) {
@@ -315,19 +417,38 @@ function createDictionarySearchBox() {
         <button
           type="button"
           class="dictionary-search-suggestion-button"
-          data-term="${item.term}"
+          data-id="${escapeDictionaryHtml(item.id)}"
         >
-          ${item.term}
+          ${escapeDictionaryHtml(item.term)}
         </button>
       `;
     }).join("");
 
-    panel.innerHTML = `
-      <div class="dictionary-search-suggestion-title">候補</div>
-      <div class="dictionary-search-suggestion-list">
-        ${suggestionButtonsHtml}
-      </div>
-    `;
+    if (canUseHoverPreview) {
+      panel.innerHTML = `
+        <div class="dictionary-search-suggestion-layout">
+          <div class="dictionary-search-suggestion-area">
+            <div class="dictionary-search-suggestion-title">候補</div>
+            <div class="dictionary-search-suggestion-list">
+              ${suggestionButtonsHtml}
+            </div>
+          </div>
+          <div
+            class="dictionary-search-hover-preview"
+            id="dictionarySearchHoverPreview"
+          >
+            ${createHoverPreviewHtml(null)}
+          </div>
+        </div>
+      `;
+    } else {
+      panel.innerHTML = `
+        <div class="dictionary-search-suggestion-title">候補</div>
+        <div class="dictionary-search-suggestion-list">
+          ${suggestionButtonsHtml}
+        </div>
+      `;
+    }
 
     const suggestionButtons = panel.querySelectorAll(".dictionary-search-suggestion-button");
 
@@ -335,18 +456,40 @@ function createDictionarySearchBox() {
       event.preventDefault();
       event.stopPropagation();
 
-      const selectedTerm = button.dataset.term;
-      input.value = selectedTerm;
-      updateClearButton();
+      const selectedItem = getDictionaryItemById(button.dataset.id);
 
-      const selectedItem = getMatchedTerm(selectedTerm);
-
-      if (selectedItem) {
-        showPreview(selectedItem);
+      if (!selectedItem) {
+        return;
       }
+
+      input.value = selectedItem.term;
+      updateClearButton();
+      showPreview(selectedItem);
     }
 
     suggestionButtons.forEach(function (button) {
+      button.addEventListener("mouseenter", function () {
+        const hoveredItem = getDictionaryItemById(button.dataset.id);
+
+        if (!hoveredItem) {
+          return;
+        }
+
+        updateHoveredSuggestionButton(button);
+        updateHoverPreview(hoveredItem);
+      });
+
+      button.addEventListener("focus", function () {
+        const focusedItem = getDictionaryItemById(button.dataset.id);
+
+        if (!focusedItem) {
+          return;
+        }
+
+        updateHoveredSuggestionButton(button);
+        updateHoverPreview(focusedItem);
+      });
+
       button.addEventListener("pointerdown", function (event) {
         selectSuggestion(event, button);
       });
