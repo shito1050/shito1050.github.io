@@ -278,8 +278,6 @@ function createDictionarySearchBox() {
 
   function closePanel() {
     panel.classList.remove("is-open");
-    panel.classList.remove("is-hover-preview-open");
-    searchFloating.classList.remove("is-hover-preview-open");
     panel.innerHTML = "";
   }
 
@@ -335,9 +333,6 @@ function createDictionarySearchBox() {
   function showPreview(item) {
     const previewText = getDictionaryShortPreviewText(item);
 
-    panel.classList.remove("is-hover-preview-open");
-    searchFloating.classList.remove("is-hover-preview-open");
-
     panel.innerHTML = `
       <h2 class="dictionary-search-preview-title">${escapeDictionaryHtml(item.term)}</h2>
       <p class="dictionary-search-preview-text">${escapeDictionaryHtml(previewText)}</p>
@@ -383,8 +378,6 @@ function createDictionarySearchBox() {
 
     hoverPreview.innerHTML = createHoverPreviewHtml(item);
     hoverPreview.classList.add("is-visible");
-    panel.classList.add("is-hover-preview-open");
-    searchFloating.classList.add("is-hover-preview-open");
     typesetMathInElement(hoverPreview);
   }
 
@@ -400,10 +393,23 @@ function createDictionarySearchBox() {
     });
   }
 
-  function showSuggestions(suggestions) {
-    panel.classList.remove("is-hover-preview-open");
-    searchFloating.classList.remove("is-hover-preview-open");
+  function hideHoverPreview() {
+    const hoverPreview = panel.querySelector("#dictionarySearchHoverPreview");
+    const suggestionButtons = panel.querySelectorAll(".dictionary-search-suggestion-button");
 
+    suggestionButtons.forEach(function (button) {
+      button.classList.remove("is-hovered");
+    });
+
+    if (!hoverPreview) {
+      return;
+    }
+
+    hoverPreview.classList.remove("is-visible");
+    hoverPreview.innerHTML = "";
+  }
+
+  function showSuggestions(suggestions) {
     if (suggestions.length === 0) {
       panel.innerHTML = `
         <p class="dictionary-search-empty">一致する候補はありません．</p>
@@ -426,17 +432,13 @@ function createDictionarySearchBox() {
 
     if (canUseHoverPreview) {
       panel.innerHTML = `
-        <div class="dictionary-search-suggestion-layout">
-          <div class="dictionary-search-suggestion-area">
-            <div class="dictionary-search-suggestion-title">候補</div>
-            <div class="dictionary-search-suggestion-list">
-              ${suggestionButtonsHtml}
-            </div>
-          </div>
-          <div
-            class="dictionary-search-hover-preview"
-            id="dictionarySearchHoverPreview"
-          ></div>
+        <div
+          class="dictionary-search-hover-preview"
+          id="dictionarySearchHoverPreview"
+        ></div>
+        <div class="dictionary-search-suggestion-title">候補</div>
+        <div class="dictionary-search-suggestion-list">
+          ${suggestionButtonsHtml}
         </div>
       `;
     } else {
@@ -496,6 +498,8 @@ function createDictionarySearchBox() {
         selectSuggestion(event, button);
       });
     });
+
+    panel.addEventListener("mouseleave", hideHoverPreview);
 
     openPanel();
   }
