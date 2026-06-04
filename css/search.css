@@ -122,6 +122,15 @@
   text-decoration: underline;
 }
 
+.dictionary-search-suggestion-layout {
+  display: grid;
+  gap: 12px;
+}
+
+.dictionary-search-suggestion-area {
+  min-width: 0;
+}
+
 .dictionary-search-suggestion-title {
   margin: 0 0 8px;
   color: var(--deep-pink);
@@ -149,10 +158,48 @@
   transition: background 0.2s, color 0.2s, transform 0.2s;
 }
 
-.dictionary-search-suggestion-button:hover {
+.dictionary-search-suggestion-button:hover,
+.dictionary-search-suggestion-button.is-hovered {
   background: var(--main-pink);
   color: var(--white);
   transform: translateY(-1px);
+}
+
+.dictionary-search-hover-preview {
+  display: none;
+}
+
+.dictionary-search-hover-preview.is-visible {
+  display: block;
+}
+
+.dictionary-search-hover-preview-inner {
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(255, 246, 250, 0.95);
+  border: 1px solid rgba(217, 95, 152, 0.20);
+}
+
+.dictionary-search-hover-preview-title {
+  margin: 0 0 6px;
+  color: var(--deep-pink);
+  font-size: 0.95rem;
+  font-weight: bold;
+  line-height: 1.5;
+}
+
+.dictionary-search-hover-preview-text {
+  margin: 0;
+  color: var(--text-color);
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+
+.dictionary-search-hover-preview-guide {
+  margin: 0;
+  color: rgba(51, 51, 51, 0.58);
+  font-size: 0.85rem;
+  line-height: 1.7;
 }
 
 .dictionary-search-empty {
@@ -160,4 +207,34 @@
   color: rgba(51, 51, 51, 0.68);
   font-size: 0.9rem;
   line-height: 1.7;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .dictionary-search-floating {
+    width: min(520px, calc(100vw - 44px));
+  }
+
+  .dictionary-search-suggestion-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(180px, 220px);
+    align-items: start;
+  }
+
+  .dictionary-search-hover-preview {
+    display: block;
+    position: sticky;
+    top: 12px;
+  }
+}
+
+@media (max-width: 767px) {
+  .dictionary-search-floating {
+    top: 14px;
+    right: 14px;
+    width: min(320px, calc(100vw - 28px));
+  }
+
+  .dictionary-search-panel {
+    max-height: min(68vh, 520px);
+    overflow-y: auto;
+  }
 }
