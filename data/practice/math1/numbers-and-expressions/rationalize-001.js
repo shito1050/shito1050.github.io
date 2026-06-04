@@ -23,9 +23,11 @@ window.practiceProblems.push(
       </div>
     `,
     answerHtml: `
+      <p class="problem-label">解答</p>
+
       <p>
-        分母のうち，まず \\(1+\\sqrt{2}\\) を1つのかたまりと見て，
-        \\(1+\\sqrt{2}-\\sqrt{3}\\) をかける．
+        分母のうち，まず\\(1+\\sqrt{2}\\)を1つのかたまりと見て，
+        \\(1+\\sqrt{2}-\\sqrt{3}\\)をかける．
       </p>
 
       <div class="math-block">
