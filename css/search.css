@@ -10,10 +10,6 @@
   width: min(340px, calc(100vw - 44px));
 }
 
-.dictionary-search-floating.is-hover-preview-open {
-  width: min(520px, calc(100vw - 44px));
-}
-
 .dictionary-search-box {
   display: flex;
   align-items: center;
@@ -87,6 +83,7 @@
 
 .dictionary-search-panel {
   display: none;
+  position: relative;
   margin-top: 8px;
   padding: 12px;
   border-radius: 18px;
@@ -124,15 +121,6 @@
 
 .dictionary-search-preview-link:hover {
   text-decoration: underline;
-}
-
-.dictionary-search-suggestion-layout {
-  display: grid;
-  gap: 12px;
-}
-
-.dictionary-search-suggestion-area {
-  min-width: 0;
 }
 
 .dictionary-search-suggestion-title {
@@ -180,8 +168,9 @@
 .dictionary-search-hover-preview-inner {
   padding: 12px;
   border-radius: 14px;
-  background: rgba(255, 246, 250, 0.95);
+  background: rgba(255, 246, 250, 0.98);
   border: 1px solid rgba(217, 95, 152, 0.20);
+  box-shadow: var(--shadow);
 }
 
 .dictionary-search-hover-preview-title {
@@ -207,20 +196,17 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .dictionary-search-panel.is-hover-preview-open .dictionary-search-suggestion-layout {
-    grid-template-columns: minmax(0, 1fr) minmax(180px, 220px);
-    align-items: start;
-  }
-
-  .dictionary-search-panel.is-hover-preview-open .dictionary-search-hover-preview {
-    position: sticky;
+  .dictionary-search-hover-preview {
+    position: absolute;
     top: 12px;
+    right: calc(100% + 10px);
+    width: 230px;
+    z-index: 1;
   }
 }
 
 @media (max-width: 767px) {
-  .dictionary-search-floating,
-  .dictionary-search-floating.is-hover-preview-open {
+  .dictionary-search-floating {
     top: 14px;
     right: 14px;
     width: min(320px, calc(100vw - 28px));
