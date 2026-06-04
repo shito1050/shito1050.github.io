@@ -323,9 +323,9 @@ function createDictionarySearchBox() {
       const yomi = item.yomi || "";
 
       return (
-        term.includes(inputText) ||
-        kana.includes(inputText) ||
-        yomi.includes(inputText)
+        term.startsWith(inputText) ||
+        kana.startsWith(inputText) ||
+        yomi.startsWith(inputText)
       );
     });
   }
