@@ -22,6 +22,8 @@ window.practiceProblems.push(
     `,
     answerHtml: `
       <div class="thinking-box">
+        <p class="problem-label">考え方</p>
+
         <p>
           \\(\\mathrm{O}\\)を主役にするしかありません．
           生徒は与式を
