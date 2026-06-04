@@ -10,6 +10,10 @@
   width: min(340px, calc(100vw - 44px));
 }
 
+.dictionary-search-floating.is-hover-preview-open {
+  width: min(520px, calc(100vw - 44px));
+}
+
 .dictionary-search-box {
   display: flex;
   align-items: center;
@@ -195,13 +199,6 @@
   line-height: 1.7;
 }
 
-.dictionary-search-hover-preview-guide {
-  margin: 0;
-  color: rgba(51, 51, 51, 0.58);
-  font-size: 0.85rem;
-  line-height: 1.7;
-}
-
 .dictionary-search-empty {
   margin: 0;
   color: rgba(51, 51, 51, 0.68);
@@ -210,24 +207,20 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .dictionary-search-floating {
-    width: min(520px, calc(100vw - 44px));
-  }
-
-  .dictionary-search-suggestion-layout {
+  .dictionary-search-panel.is-hover-preview-open .dictionary-search-suggestion-layout {
     grid-template-columns: minmax(0, 1fr) minmax(180px, 220px);
     align-items: start;
   }
 
-  .dictionary-search-hover-preview {
-    display: block;
+  .dictionary-search-panel.is-hover-preview-open .dictionary-search-hover-preview {
     position: sticky;
     top: 12px;
   }
 }
 
 @media (max-width: 767px) {
-  .dictionary-search-floating {
+  .dictionary-search-floating,
+  .dictionary-search-floating.is-hover-preview-open {
     top: 14px;
     right: 14px;
     width: min(320px, calc(100vw - 28px));
