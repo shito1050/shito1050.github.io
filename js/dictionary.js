@@ -6,6 +6,10 @@ function getDictionaryTermUrl(item) {
   return makePath("dictionary/term.html?id=" + encodeURIComponent(item.id));
 }
 
+function getDictionaryTermUrlFromSearch(item) {
+  return makePath("dictionary/term.html?id=" + encodeURIComponent(item.id) + "&fromSearch=1");
+}
+
 function getDictionaryTermUrlFromDictionaryFolder(item) {
   return "term.html?id=" + encodeURIComponent(item.id);
 }
@@ -338,7 +342,7 @@ function createDictionarySearchBox() {
       <p class="dictionary-search-preview-text">${escapeDictionaryHtml(previewText)}</p>
       <a
         class="dictionary-search-preview-link"
-        href="${getDictionaryTermUrl(item)}"
+        href="${getDictionaryTermUrlFromSearch(item)}"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -462,7 +466,7 @@ function createDictionarySearchBox() {
         return;
       }
 
-      window.open(getDictionaryTermUrl(selectedItem), "_blank", "noopener,noreferrer");
+      window.open(getDictionaryTermUrlFromSearch(selectedItem), "_blank");
     }
 
     suggestionButtons.forEach(function (button) {
