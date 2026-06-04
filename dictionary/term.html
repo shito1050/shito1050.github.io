@@ -23,11 +23,36 @@
       </div>
 
       <div class="back-link-area">
-        <a href="index.html">定義・用語・公式集へ戻る</a>
+        <a href="index.html" id="dictionaryBackLink">定義・用語・公式集へ戻る</a>
       </div>
     </section>
   </main>
 
   <script src="../common-loader.js"></script>
+  <script>
+    (function () {
+      const backLink = document.getElementById("dictionaryBackLink");
+
+      if (!backLink) {
+        return;
+      }
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const fromSearch = urlParams.get("fromSearch");
+
+      backLink.addEventListener("click", function (event) {
+        if (fromSearch !== "1") {
+          return;
+        }
+
+        event.preventDefault();
+        window.close();
+
+        window.setTimeout(function () {
+          window.location.href = "index.html";
+        }, 150);
+      });
+    })();
+  </script>
 </body>
 </html>
