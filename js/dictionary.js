@@ -278,6 +278,8 @@ function createDictionarySearchBox() {
 
   function closePanel() {
     panel.classList.remove("is-open");
+    panel.classList.remove("is-hover-preview-open");
+    searchFloating.classList.remove("is-hover-preview-open");
     panel.innerHTML = "";
   }
 
@@ -333,6 +335,9 @@ function createDictionarySearchBox() {
   function showPreview(item) {
     const previewText = getDictionaryShortPreviewText(item);
 
+    panel.classList.remove("is-hover-preview-open");
+    searchFloating.classList.remove("is-hover-preview-open");
+
     panel.innerHTML = `
       <h2 class="dictionary-search-preview-title">${escapeDictionaryHtml(item.term)}</h2>
       <p class="dictionary-search-preview-text">${escapeDictionaryHtml(previewText)}</p>
@@ -351,16 +356,6 @@ function createDictionarySearchBox() {
   }
 
   function createHoverPreviewHtml(item) {
-    if (!item) {
-      return `
-        <div class="dictionary-search-hover-preview-inner">
-          <p class="dictionary-search-hover-preview-guide">
-            候補にカーソルを合わせると，簡単な説明がここに表示されます．
-          </p>
-        </div>
-      `;
-    }
-
     const previewText = getDictionaryShortPreviewText(item);
 
     return `
@@ -388,6 +383,8 @@ function createDictionarySearchBox() {
 
     hoverPreview.innerHTML = createHoverPreviewHtml(item);
     hoverPreview.classList.add("is-visible");
+    panel.classList.add("is-hover-preview-open");
+    searchFloating.classList.add("is-hover-preview-open");
     typesetMathInElement(hoverPreview);
   }
 
@@ -404,6 +401,9 @@ function createDictionarySearchBox() {
   }
 
   function showSuggestions(suggestions) {
+    panel.classList.remove("is-hover-preview-open");
+    searchFloating.classList.remove("is-hover-preview-open");
+
     if (suggestions.length === 0) {
       panel.innerHTML = `
         <p class="dictionary-search-empty">一致する候補はありません．</p>
@@ -436,9 +436,7 @@ function createDictionarySearchBox() {
           <div
             class="dictionary-search-hover-preview"
             id="dictionarySearchHoverPreview"
-          >
-            ${createHoverPreviewHtml(null)}
-          </div>
+          ></div>
         </div>
       `;
     } else {
